@@ -37,9 +37,6 @@ const PX_PER_DONUT = 150; // 150px drag = 1 donut slot (stable, weighted swipe)
 const TILT = 56;
 const RADIUS = 160;
 
-/** Strong ease-out — the house curve for enter/exit transitions. */
-const EASE_OUT = [0.23, 1, 0.32, 1] as const;
-
 function clamp(v: number, min: number, max: number) {
   return Math.min(max, Math.max(min, v));
 }
@@ -51,7 +48,8 @@ function wrapOffset(o: number, len: number) {
 }
 
 function slot(o: number, len: number) {
-  if (len <= 0) return { x: 0, y: 0, scale: 1, opacity: 1, blur: 0, zIndex: 10 };
+  if (len <= 0)
+    return { x: 0, y: 0, scale: 1, opacity: 1, blur: 0, zIndex: 10 };
   const angleDeg = (o / len) * 360;
   const rad = (angleDeg * Math.PI) / 180;
   const diskX = Math.sin(rad) * RADIUS;
@@ -86,6 +84,8 @@ function RingCard({
   isCenter,
   dragging,
   onCenter,
+  onSelect,
+  categoryLayoutId,
 }: {
   donut: Donut;
   index: number;
@@ -94,9 +94,13 @@ function RingCard({
   isCenter: boolean;
   dragging: boolean;
   onCenter: () => void;
+  onSelect: () => void;
+  categoryLayoutId?: string;
 }) {
-  const wrapped = useTransform(position, (p: number) => wrapOffset(index - p, len));
-  
+  const wrapped = useTransform(position, (p: number) =>
+    wrapOffset(index - p, len),
+  );
+
   // Single-pass slot calculation per card to keep 60/120 FPS high performance
   const x = useTransform(wrapped, (o) => slot(o, len).x);
   const y = useTransform(wrapped, (o) => slot(o, len).y);
@@ -110,7 +114,7 @@ function RingCard({
 
   return (
     <motion.button
-      onClick={onCenter}
+      onClick={isCenter ? onSelect : onCenter}
       style={{
         x,
         y,
@@ -121,15 +125,16 @@ function RingCard({
         transformStyle: "preserve-3d",
         rotateX: -TILT,
       }}
-      className="absolute left-1/2 top-1/2 flex size-48 -translate-x-1/2 -translate-y-1/2 touch-pan-y items-center justify-center cursor-pointer select-none sm:size-72"
+      className="absolute left-1/2 top-1/2 flex size-44 -translate-x-1/2 -translate-y-1/2 touch-pan-y items-center justify-center cursor-pointer select-none sm:size-72"
       aria-label={donut.name}
     >
-      <img
+      <motion.img
         src={donut.imgUrl}
         alt={donut.name}
+        layoutId={isCenter ? categoryLayoutId ?? `slider-donut-${donut.id}` : undefined}
         loading={isCenter ? "eager" : "lazy"}
         fetchPriority={isCenter ? "high" : "auto"}
-        className="size-72 object-contain sm:size-80 drop-shadow-xl select-none"
+        className="size-56 object-contain sm:size-80 drop-shadow-xl select-none"
         draggable={false}
       />
     </motion.button>
@@ -163,10 +168,8 @@ export function DonutSlider() {
   const [center, setCenter] = useState(0);
   const [qty, setQty] = useState(1);
   const [dragging, setDragging] = useState(false);
-  const [dir, setDir] = useState(1); // +1 → moving to next donut, -1 → previous
-
+  const [detailOpen, setDetailOpen] = useState(false);
   const dragStartPos = useRef(0);
-  const lastPos = useRef(0);
   const snapTarget = useRef(0);
 
   // Category change → reset picker state
@@ -185,12 +188,9 @@ export function DonutSlider() {
     }
   }, [filterType, len]);
 
-  // Real-time sync of center index (+ travel direction) with rotation.
+  // Real-time sync of center index with rotation.
   useMotionValueEvent(position, "change", (p) => {
     if (len <= 0) return;
-    const delta = p - lastPos.current;
-    if (Math.abs(delta) > 0.001) setDir(delta > 0 ? 1 : -1);
-    lastPos.current = p;
     const wrapped = ((Math.round(p) % len) + len) % len;
     setCenter((c) => (c === wrapped ? c : wrapped));
   });
@@ -253,7 +253,10 @@ export function DonutSlider() {
     const projected = currentPos + travel * 0.15;
 
     // Trigger dynamic swipe whoosh audio
-    const speedRatio = Math.min(2.5, Math.max(0.6, Math.abs(info.velocity.x) / 300));
+    const speedRatio = Math.min(
+      2.5,
+      Math.max(0.6, Math.abs(info.velocity.x) / 300),
+    );
     if (Math.abs(info.velocity.x) > 120) {
       playSwipe(speedRatio);
     }
@@ -266,7 +269,11 @@ export function DonutSlider() {
     } else {
       target = Math.round(currentPos);
     }
-    target = clamp(target, Math.ceil(currentPos) - 2, Math.floor(currentPos) + 2);
+    target = clamp(
+      target,
+      Math.ceil(currentPos) - 2,
+      Math.floor(currentPos) + 2,
+    );
 
     snapTo(target);
     setDragging(false);
@@ -280,6 +287,12 @@ export function DonutSlider() {
     if (delta > len / 2) delta -= len;
     if (delta < -len / 2) delta += len;
     snapTo(current + delta);
+  };
+
+  const openCurrentDetail = () => {
+    if (dragging) return;
+    playTap(560);
+    setDetailOpen(true);
   };
 
   if (loadingDonuts && allDonuts.length === 0) {
@@ -335,6 +348,10 @@ export function DonutSlider() {
   const current = donuts[center];
   if (!current) return null;
 
+  const currentLayoutId =
+    filterType && filterType !== "all"
+      ? `category-donut-${filterType}`
+      : `slider-donut-${current.id}`;
   const fav = favorites.some((f) => f.donutId === current.id);
 
   const onFav = async () => {
@@ -352,9 +369,15 @@ export function DonutSlider() {
       // Trigger Fly-to-Cart parabolic animation and harmonic chime
       const cartBtn = document.getElementById("dohnut-cart-btn");
       const cartRect = cartBtn?.getBoundingClientRect();
-      const startX = typeof window !== "undefined" ? window.innerWidth / 2 : 200;
-      const startY = typeof window !== "undefined" ? window.innerHeight * 0.42 : 300;
-      const targetX = cartRect ? cartRect.left + cartRect.width / 2 : (typeof window !== "undefined" ? window.innerWidth - 45 : 350);
+      const startX =
+        typeof window !== "undefined" ? window.innerWidth / 2 : 200;
+      const startY =
+        typeof window !== "undefined" ? window.innerHeight * 0.42 : 300;
+      const targetX = cartRect
+        ? cartRect.left + cartRect.width / 2
+        : typeof window !== "undefined"
+          ? window.innerWidth - 45
+          : 350;
       const targetY = cartRect ? cartRect.top + cartRect.height / 2 : 28;
 
       const flyId = `${Date.now()}-${Math.random()}`;
@@ -369,9 +392,16 @@ export function DonutSlider() {
       setAdded(true);
       if (addedTimer.current) clearTimeout(addedTimer.current);
       addedTimer.current = setTimeout(() => setAdded(false), 1400);
-      toast({ title: "Added to cart! 🛒", description: `${current.name} × ${qty}` });
+      toast({
+        title: "Added to cart! 🛒",
+        description: `${current.name} × ${qty}`,
+      });
     } catch {
-      toast({ title: "Couldn't add to cart", description: "Please try again.", variant: "destructive" });
+      toast({
+        title: "Couldn't add to cart",
+        description: "Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -416,172 +446,232 @@ export function DonutSlider() {
         </motion.div>
       ))}
 
-      {/* Back button */}
       <motion.button
         whileHover={{ scale: 1.1, x: -2 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => {
           playTap(380);
-          setFilterType("all");
-          setView("shop");
+          if (detailOpen) {
+            setDetailOpen(false);
+          } else {
+            setFilterType("all");
+            setView("shop");
+          }
         }}
         className="mb-1 inline-flex size-9 items-center justify-center rounded-full text-[var(--color-dowgnut-blue-dark)]/60 hover:bg-white/80 hover:text-[var(--color-dowgnut-blue-dark)] shadow-sm backdrop-blur-sm cursor-pointer transition-colors"
-        aria-label="Back to home"
+        aria-label={detailOpen ? "Back to donut slider" : "Back to home"}
       >
         <ArrowLeft className="size-5" />
       </motion.button>
 
-      {/* 3D ring — pan/drag handlers live on the container itself */}
-      <motion.div
-        className="relative w-full flex-1 overflow-hidden cursor-grab touch-pan-y active:cursor-grabbing"
-        style={{
-          perspective: "1600px",
-          minHeight: "min(60vh, 320px)",
-        }}
-        onPanStart={onPanStart}
-        onPan={onPan}
-        onPanEnd={onPanEnd}
-        role="group"
-        aria-label="Donut carousel"
-      >
+      <div className="relative flex min-h-0 flex-1 flex-col">
         <motion.div
-          className="absolute inset-0"
-          style={{
-            transformStyle: "preserve-3d",
-            rotateX: TILT,
-          }}
+          animate={{ opacity: detailOpen ? 0 : 1 }}
+          transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
+          className={cn(
+            "flex min-h-0 flex-1 flex-col",
+            detailOpen && "pointer-events-none",
+          )}
         >
-          {donuts.map((donut, i) => (
-            <RingCard
-              key={donut.id}
-              donut={donut}
-              index={i}
-              position={position}
-              len={len}
-              isCenter={i === center}
-              dragging={dragging}
-              onCenter={() => centerThis(i)}
-            />
-          ))}
-        </motion.div>
-      </motion.div>
-
-      {/* Active donut info — directional crossfade */}
-      <AnimatePresence mode="popLayout">
-        <motion.div
-          key={current.id}
-          initial={{ opacity: 0, y: 12, x: dir * 26, scale: 0.97 }}
-          animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -6, x: -dir * 18, scale: 0.98 }}
-          transition={{ duration: 0.19, ease: EASE_OUT }}
-          className="mt-2 flex flex-col items-center gap-1.5 rounded-3xl border-2 border-[var(--color-dowgnut-blue-dark)]/10 bg-white/85 px-4 pb-3 pt-3 text-center shadow-lg backdrop-blur-md"
-        >
-          <h2
-            aria-live="polite"
-            className="text-base font-black leading-tight text-[var(--color-dowgnut-blue-dark)] sm:text-lg"
+          {/* 3D ring — it remains mounted while the selected donut travels to detail. */}
+          <motion.div
+            className="relative min-h-[min(38vh,220px)] w-full flex-1 overflow-hidden cursor-grab touch-pan-y active:cursor-grabbing sm:min-h-[min(60vh,320px)]"
+            style={{ perspective: "1600px" }}
+            onPanStart={onPanStart}
+            onPan={onPan}
+            onPanEnd={onPanEnd}
+            role="group"
+            aria-label="Donut carousel"
           >
-            {current.name}{" "}
-            <span className="text-xs font-semibold text-[var(--color-dowgnut-blue-dark)]/45">
-              ★{current.rating.toFixed(1)}
-            </span>
-          </h2>
-          <p className="text-[11px] font-medium text-[var(--color-dowgnut-blue-dark)]/55">
-            {current.calories} kcal · {current.sugar}g sugar · {current.fat}g fat
-          </p>
-
-          <div className="flex items-center gap-2 mt-0.5">
-            <span className="text-base font-black tabular-nums text-[var(--color-dowgnut-blue-dark)]">
-              RM {(current.price * qty).toFixed(2)}
-            </span>
-
-            {/* Heart / Favorite with spring pop */}
-            <motion.button
-              whileHover={{ scale: 1.15 }}
-              whileTap={{ scale: 0.8 }}
-              onClick={onFav}
-              className={cn(
-                "inline-flex size-11 items-center justify-center rounded-full transition-colors hover:bg-white cursor-pointer",
-                fav ? "text-[var(--color-dowgnut-pink)]" : "text-[var(--color-dowgnut-blue-dark)]/30"
-              )}
-              aria-label={fav ? "Remove from favorites" : "Add to favorites"}
-              aria-pressed={fav}
+            <motion.div
+              className="absolute inset-0"
+              style={{ transformStyle: "preserve-3d", rotateX: TILT }}
             >
-              <motion.div
-                animate={fav ? { scale: [1, 1.4, 0.95, 1] } : { scale: 1 }}
-                transition={{ type: "spring", stiffness: 450, damping: 15 }}
-              >
-                <Heart className={cn("size-5 transition-colors", fav && "fill-current")} />
-              </motion.div>
-            </motion.button>
+              {donuts.map((donut, i) => (
+                <RingCard
+                  key={donut.id}
+                  donut={donut}
+                  index={i}
+                  position={position}
+                  len={len}
+                  isCenter={i === center}
+                  dragging={dragging}
+                  onCenter={() => centerThis(i)}
+                  onSelect={openCurrentDetail}
+                  categoryLayoutId={
+                    i === center &&
+                    filterType &&
+                    filterType !== "all"
+                      ? `category-donut-${filterType}`
+                      : undefined
+                  }
+                />
+              ))}
+            </motion.div>
+          </motion.div>
 
-            {/* Quantity Stepper with micro-bounce */}
-            <div className="inline-flex items-center rounded-full border border-[var(--color-dowgnut-blue-dark)]/15 bg-white/50 shadow-inner">
-              <motion.button
-                whileTap={{ scale: 0.94 }}
-                transition={{ type: "spring", stiffness: 450, damping: 20 }}
-                onClick={() => {
-                  playTap(380);
-                  setQty((q) => Math.max(1, q - 1));
-                }}
-                className="inline-flex size-11 items-center justify-center rounded-l-full text-[var(--color-dowgnut-blue-dark)] hover:bg-white/80 cursor-pointer transition-colors"
-                aria-label="Decrease quantity"
-              >
-                <Minus className="size-4" />
-              </motion.button>
-              <span
-                aria-live="polite"
-                aria-label={`Quantity ${qty}`}
-                className="min-w-8 text-center text-sm font-extrabold tabular-nums text-[var(--color-dowgnut-blue-dark)] select-none"
-              >
-                {qty}
+          {/* Active donut info — fixed panel; only the flavor content changes */}
+          <div className="relative z-10 -mt-12 flex w-full -translate-y-8 flex-col items-center gap-1.5 rounded-3xl border-2 border-[var(--color-dowgnut-blue-dark)]/10 bg-white/85 px-3 pb-6 pt-5 text-center shadow-lg backdrop-blur-md sm:-mt-6 sm:translate-y-0 sm:px-4 sm:pt-6">
+            <h2
+              aria-live="polite"
+              className="text-base font-black leading-tight text-[var(--color-dowgnut-blue-dark)] sm:text-lg"
+            >
+              {current.name}{" "}
+              <span className="text-xs font-semibold text-[var(--color-dowgnut-blue-dark)]/45">
+                ★{current.rating.toFixed(1)}
+              </span>
+            </h2>
+            <p className="text-[11px] font-medium text-[var(--color-dowgnut-blue-dark)]/55">
+              {current.calories} kcal · {current.sugar}g sugar · {current.fat}g fat
+            </p>
+            <div className="flex items-center gap-2 mt-0.5">
+              <span className="text-base font-black tabular-nums text-[var(--color-dowgnut-blue-dark)]">
+                RM {(current.price * qty).toFixed(2)}
               </span>
               <motion.button
-                whileTap={{ scale: 0.94 }}
-                transition={{ type: "spring", stiffness: 450, damping: 20 }}
-                onClick={() => {
-                  playTap(460);
-                  setQty((q) => q + 1);
-                }}
-                className="inline-flex size-11 items-center justify-center rounded-r-full text-[var(--color-dowgnut-blue-dark)] hover:bg-white/80 cursor-pointer transition-colors"
-                aria-label="Increase quantity"
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 0.8 }}
+                onClick={onFav}
+                className={cn(
+                  "inline-flex size-11 items-center justify-center rounded-full transition-colors hover:bg-white cursor-pointer",
+                  fav
+                    ? "text-[var(--color-dowgnut-pink)]"
+                    : "text-[var(--color-dowgnut-blue-dark)]/30",
+                )}
+                aria-label={fav ? "Remove from favorites" : "Add to favorites"}
+                aria-pressed={fav}
               >
-                <Plus className="size-4" />
+                <Heart className={cn("size-5", fav && "fill-current")} />
               </motion.button>
+              <div className="inline-flex items-center rounded-full border border-[var(--color-dowgnut-blue-dark)]/15 bg-white/50 shadow-inner">
+                <button
+                  type="button"
+                  onClick={() => setQty((q) => Math.max(1, q - 1))}
+                  className="inline-flex size-11 items-center justify-center rounded-l-full"
+                  aria-label="Decrease quantity"
+                >
+                  <Minus className="size-4" />
+                </button>
+                <span className="min-w-8 text-center text-sm font-extrabold">{qty}</span>
+                <button
+                  type="button"
+                  onClick={() => setQty((q) => q + 1)}
+                  className="inline-flex size-11 items-center justify-center rounded-r-full"
+                  aria-label="Increase quantity"
+                >
+                  <Plus className="size-4" />
+                </button>
+              </div>
             </div>
+            <button
+              type="button"
+              onClick={onAdd}
+              disabled={current.stock <= 0}
+              className="inline-flex h-11 min-w-44 items-center justify-center rounded-full bg-[var(--color-dowgnut-pink)] px-6 text-sm font-bold text-white shadow-md disabled:opacity-50"
+            >
+              {current.stock <= 0 ? "Sold out" : "Add to Cart"}
+            </button>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-dowgnut-blue-dark)]/40">
+              {filterType && filterType !== "all" ? `${filterType} · ` : ""}
+              {`${center + 1}/${len} · swipe or ← → to explore`}
+            </p>
           </div>
-
-          {/* Add to Cart button with animated success state */}
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.96 }}
-            onClick={onAdd}
-            disabled={current.stock <= 0}
-            className={cn(
-              "inline-flex h-11 min-w-44 items-center justify-center gap-1.5 rounded-full px-6 text-sm font-bold text-white shadow-md transition-[background-color,box-shadow,transform] duration-150 ease-out cursor-pointer",
-              added
-                ? "bg-emerald-500 shadow-emerald-500/30"
-                : "bg-[var(--color-dowgnut-pink)] hover:bg-[var(--color-dowgnut-pink-dark)] shadow-[var(--color-dowgnut-pink)]/25",
-              current.stock <= 0 && "opacity-50 cursor-not-allowed"
-            )}
-          >
-            {added ? (
-              <>
-                <Check className="size-4 stroke-[3]" />
-                <span>Added to cart!</span>
-              </>
-            ) : current.stock <= 0 ? (
-              "Sold out"
-            ) : (
-              "Add to Cart"
-            )}
-          </motion.button>
-
-          <p className="text-[10px] font-bold uppercase tracking-wider tabular-nums text-[var(--color-dowgnut-blue-dark)]/40 mt-0.5">
-            {filterType && filterType !== "all" ? `${filterType} · ` : ""}{`${center + 1}/${len} · swipe or ← → to explore`}
-          </p>
         </motion.div>
-      </AnimatePresence>
+
+        {detailOpen && (
+          <motion.div
+            key={`detail-${current.id}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.35, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 z-20 flex min-h-0 flex-col overflow-hidden"
+          >
+            <div className="grid min-h-[min(58vh,430px)] grid-cols-[42%_58%] items-center overflow-hidden px-2">
+              <div className="z-10 flex flex-col gap-2 pl-1 text-left">
+                <h2 className="text-lg font-black leading-tight text-[var(--color-dowgnut-blue-dark)]">
+                  {current.name}
+                </h2>
+                <p className="text-xs font-bold text-[var(--color-dowgnut-blue-dark)]/55">
+                  ★{current.rating.toFixed(1)} · {current.stock} in stock
+                </p>
+                <div className="mt-2 space-y-2">
+                  {[
+                    ["Salt", "Not listed"],
+                    ["Sugar", `${current.sugar}g`],
+                    ["Fat", `${current.fat}g`],
+                    ["Energy", `${current.calories} kcal`],
+                  ].map(([label, value]) => (
+                    <div
+                      key={label}
+                      className="rounded-full bg-white/80 px-2.5 py-1.5 text-[10px] shadow-sm"
+                    >
+                      <span className="font-bold text-[var(--color-dowgnut-blue-dark)]/65">
+                        {label}
+                      </span>{" "}
+                      <span className="font-black text-[var(--color-dowgnut-blue-dark)]">
+                        {value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="relative -mr-20 flex h-full items-center justify-start sm:-mr-28">
+                <motion.img
+                  layoutId={currentLayoutId}
+                  src={current.imgUrl}
+                  alt={current.name}
+                  className="size-[min(92vw,390px)] max-w-none object-contain drop-shadow-2xl"
+                  draggable={false}
+                  initial={{ rotate: 0 }}
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    layout: { duration: 1.45, ease: [0.22, 1, 0.36, 1] },
+                    rotate: { duration: 1.45, ease: [0.22, 1, 0.36, 1] },
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="mt-3 flex items-center justify-between rounded-3xl border-2 border-[var(--color-dowgnut-blue-dark)]/10 bg-white/85 p-3 shadow-lg">
+              <div>
+                <span className="text-[10px] font-bold uppercase text-[var(--color-dowgnut-blue-dark)]/55">
+                  Total
+                </span>
+                <div className="text-xl font-black text-[var(--color-dowgnut-blue-dark)]">
+                  RM {(current.price * qty).toFixed(2)}
+                </div>
+              </div>
+              <div className="inline-flex items-center rounded-full border border-[var(--color-dowgnut-blue-dark)]/15 bg-white/60">
+                <button
+                  type="button"
+                  onClick={() => setQty((q) => Math.max(1, q - 1))}
+                  className="size-10 text-lg font-black"
+                  aria-label="Decrease quantity"
+                >
+                  −
+                </button>
+                <span className="min-w-7 text-center text-sm font-black">{qty}</span>
+                <button
+                  type="button"
+                  onClick={() => setQty((q) => q + 1)}
+                  className="size-10 text-lg font-black"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={onAdd}
+              disabled={current.stock <= 0}
+              className="mt-2 h-11 w-full rounded-full bg-[var(--color-dowgnut-pink)] text-sm font-bold text-white shadow-md disabled:opacity-50"
+            >
+              {current.stock <= 0 ? "Sold out" : "Add to Cart"}
+            </button>
+          </motion.div>
+        )}
+      </div>
     </section>
   );
 }
-

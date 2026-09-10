@@ -72,4 +72,5 @@ Data mesin boleh dibaca: `src/lib/doh-language.ts` (dictionary DOH yang digunaka
 | Version | Timestamp (MYT) | Author | Why (Intent / Trigger) | How (Modifications & Touched Areas) | Validation Proof |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `1.2.0` | 2026-09-05 09:30:00 | Sovereign Conductor | Alignment semua dokumen (.md) | Tambah SMS-v1.0 frontmatter & ledger; indekskan 09-master-image-prompts.md | File verified |
+| `1.1.0` | 2026-09-10 10:25:00 | Copilot | Selaraskan indeks sistem jenama | Indeks kini merangkumi dokumen 01-09 dan mengekalkan brand system sebagai rujukan visual, bukan runtime behavior | README and source paths reviewed |
 | `1.0.0` | 2026-08-31 16:00:00 | Hermes Agent | Inisialisasi sistem jenama | Cipta indeks 01-08 dokumen jenama DOHNUT | Baseline documentation |

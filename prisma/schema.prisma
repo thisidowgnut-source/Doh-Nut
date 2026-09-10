@@ -73,8 +73,8 @@ model Order {
   zip            String
   notes          String   @default("")
   subtotal       Float
-  delivery       Float    @default(3.99)
-  sst            Float    @default(0)
+  delivery       Float
+  sst            Float
   total          Float
   status         String   @default("pending_payment") // pending_payment | payment_starting | payment_failed | payment_expired | payment_review | preparing | baking | out_for_delivery | delivered
   etaMinutes     Int      @default(25)
@@ -88,6 +88,8 @@ model Order {
 
   items OrderItem[]
   events OrderEvent[]
+
+  @@index([sessionId])
 }
 
 // ── Order events (status changes for live tracking) ────────

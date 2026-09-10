@@ -7,8 +7,9 @@ const SHELL = [
   "/manifest.json",
   "/brand/app-icon-192.png",
   "/brand/app-icon-512.png",
-  "/brand/dowgnut-logo-wordmark.png",
-  "/brand/dowgnut-mascot.png",
+  // Note: dowgnut-logo-wordmark.png + dowgnut-mascot.png deleted during 2026-09-05 rebrand audit.
+  // Restore these assets from git history before PWA install works fully.
+  // For now: keep SHELL minimal so install completes without 404.
 ];
 
 self.addEventListener("install", (e) => {

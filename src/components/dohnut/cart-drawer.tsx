@@ -233,7 +233,8 @@ export function CartDrawer() {
                           <button
                             onClick={() => updateCartQty(item.id, item.quantity + 1)}
                             aria-label={`Increase quantity for ${item.donut.name}`}
-                            className="relative inline-flex size-7 items-center justify-center rounded-r-full text-[var(--color-dowgnut-blue-dark)] transition-colors hover:bg-black/5 cursor-pointer active:scale-95"
+                            disabled={item.quantity >= item.donut.stock}
+                            className="relative inline-flex size-7 items-center justify-center rounded-r-full text-[var(--color-dowgnut-blue-dark)] transition-colors hover:bg-black/5 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer active:scale-95"
                           >
                             <Plus className="size-3" />
                           </button>

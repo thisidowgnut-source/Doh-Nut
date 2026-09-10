@@ -189,21 +189,6 @@ export const SEED_DONUTS: SeedDonut[] = [
     featured: false,
   },
   {
-    name: "Vanilla Bean Jimmie",
-    description:
-      "Madagascar vanilla glaze topped with rich dark chocolate vermicelli sprinkles for the ultimate crunch.",
-    price: 4.2,
-    type: "sprinkled",
-    imgUrl: "/brand/donuts/donut_sprinkled2.png",
-    tags: "vanilla,sprinkled,chocolate",
-    rating: 4.5,
-    calories: 270,
-    sugar: 12,
-    fat: 9,
-    stock: 70,
-    featured: false,
-  },
-  {
     name: "Confetti Fiesta Sparkle",
     description:
       "Lemony bright glaze loaded with sparkling multi-colored sugar crystals and confetti jimmies.",
@@ -216,6 +201,21 @@ export const SEED_DONUTS: SeedDonut[] = [
     sugar: 15,
     fat: 11,
     stock: 45,
+    featured: false,
+  },
+  {
+    name: "Vanilla Bean Jimmie",
+    description:
+      "Madagascar vanilla glaze topped with rich dark chocolate vermicelli sprinkles for the ultimate crunch.",
+    price: 4.2,
+    type: "sprinkled",
+    imgUrl: "/brand/donuts/donut_sprinkled2.png",
+    tags: "vanilla,sprinkled,chocolate",
+    rating: 4.5,
+    calories: 270,
+    sugar: 12,
+    fat: 9,
+    stock: 70,
     featured: false,
   },
   {

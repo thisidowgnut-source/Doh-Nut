@@ -1,5 +1,13 @@
 
 ---
+## 2026-09-10 — Documentation and workflow alignment
+
+- Reviewed the project-owned Markdown inventory and preserved historical research evidence instead of rewriting old audit claims.
+- Updated README, AGENTS, GEMINI, VERCEL_DEPLOY, and IMPROVEMENT_PLAN to document the current Home → Slider contract, local image source-of-truth, `/wireframe` preview, Bun validation commands, and build status.
+- Added historical-status notices to image, hardening, and verification reports so older findings are not confused with current runtime status.
+- Recorded the compatible Prisma Decimal rounding API (`toDecimalPlaces`) and current Copilot CLI Superpowers installation (`superpowers@superpowers-marketplace` v6.3.0, 14 skills).
+- Validation: `bun run build` passed; local `/` and `/wireframe` returned HTTP 200.
+
 Task ID: p0-security-fixes
 Agent: main (Z.ai Code)
 Task: Fix 7 isu kritikal P0/P1 dari code review — tanpa ubah konsep (pure improvements)
@@ -251,4 +259,22 @@ Stage Summary:
 - 8 fix diimplement + verified browser (golden rule: konsep 0% berubah — semua fix ialah bugfix/restoration/hardening).
 - Root cause dev poisoning diselesaikan: SW dev-only unregister + struktur view deterministic.
 - Repo DOHNUT-Creative-OS sudah dianalisis penuh — merge plan HIGH/MEDIUM/LOW disediakan (laporan ke user); kontrak integrasi mengesahkan 2-repo architecture yang sedia ada betul.
-- Backlog P2 tinggal (cadangan, belum implement): image diet WebP (~10MB→2MB), padam dead code ~22MB + deps ~20, stock guard detail-modal, serializeOrder paidAt, index Prisma, lazy deps dalam admin/tracking, sync docs README/VERCEL.
+- Backlog P2 tinggal (cadangan, belum implement): image diet WebP (~10MB→2MB), padam dead code ~22MB + deps ~20, serializeOrder paidAt, lazy deps dalam admin/tracking, sync docs README/VERCEL.
+
+---
+Task ID: audit-p1-p2-hardening
+Agent: main (Sovereign Conductor Autopilot)
+Task: Implementasikan semua fix audit P1/P2 (Security, Admin Revenue Accuracy, Stock Guards, PWA Offline Assets)
+
+Work Log:
+- Fix 1 (P1 - Admin Revenue Accuracy): src/app/api/admin/stats/route.ts — pertanyaan orders dan orderItems kini dihadkan kepada where: { paidAt: { not: null } } / { order: { paidAt: { not: null } } }. Pesanan terbengkalai (pending_payment) atau gagal (payment_failed) tidak lagi menggelembungkan totalRevenue dan totalOrders secara palsu.
+- Fix 2 (P1 - Timing-Safe Admin Bypass): src/lib/admin-auth.ts — fungsi timing-safe isAdminRequest(request) dieksport dan digunapakai di src/app/api/orders/[id]/route.ts untuk menggantikan semakan perbandingan string langsung `providedAdmin === adminKey`.
+- Fix 3 (P2 - Database Index): prisma/schema.prisma & src/lib/ensure-ready.ts — @@index([sessionId]) dan CREATE INDEX IF NOT EXISTS "Order_sessionId_idx" ON "Order" ("sessionId") ditambah bagi melajukan capaian pesanan pengguna.
+- Fix 4 (P2 - Local Brand Assets for PWA): src/components/dohnut/shop-home.tsx — URL luaran GitHub pada fallback TYPES diganti kepada aset lokal rasmi (/brand/donuts/donut_classic1.png, dll) bagi memastikan mod offline PWA kalis gangguan rangkaian luar.
+- Fix 5 (P2 - Out-of-Stock Guards): src/components/dohnut/detail-modal.tsx — fungsi onAdd menghalang penambahan produk stok habis (toast "Item Sold Out"), butang "Add to Cart" dan "Buy Now" disabled dengan status "Sold Out" / "Out of Stock" bila donut.stock <= 0.
+- Fix 6 (P2 - Cart Quantity Ceiling): src/components/dohnut/cart-drawer.tsx — butang Plus (+) dinyahaktifkan (disabled:opacity-30 disabled:cursor-not-allowed) apabila kuantiti bakul mencecah stok fizikal donut.stock.
+- Unit Tests: tests/admin-security-stats.test.ts dicipta dan disahkan dengan Bun test runner.
+
+Stage Summary:
+- 49/49 ujian unit lulus 100% (0 fail).
+- Semua 4 isu audit P1/P2 selesai diselesaikan tanpa sebarang perubahan konsep reka bentuk.

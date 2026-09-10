@@ -1,8 +1,8 @@
 ---
 title: "DOH-NUT Project Rules & Episodic Memory"
 document_id: "SMS-DOHNUT-GEMINI-001"
-version: "1.2.0"
-last_updated: "2026-09-05 09:30:00"
+version: "1.3.0"
+last_updated: "2026-09-10 10:25:00"
 maintainer: "Antigravity / Sovereign Architect"
 classification: "Internal / Core Rules"
 lifecycle_status: "Active / Living Standard"
@@ -37,11 +37,25 @@ lifecycle_status: "Active / Living Standard"
   - Dibetulkan ralat build Vercel `Production requires a persistent DATABASE_URL; refusing local SQLite fallback` pada [sqlite-path.ts](file:///g:/Doh-Nut/src/lib/sqlite-path.ts).
   - Ditambah laluan fallback selamat `file:/tmp/dowgnut.db` khusus persekitaran Vercel serverless tanpa persediaan DB luaran (Option A demo deploy).
   - Diuji dan diluluskan 45/45 ujian unit `bun test` dan binaan Next.js 13/13 halaman statik & pelayan.
-  - Berjaya dideploy ke Vercel production: status `● Ready` dalam 47 saat.
+- **2026-09-07 (Security Hardening, Admin Metrics Correction & PWA Offline Integrity)**:
+  - Dibetulkan kiraan hasil dan jumlah pesanan di [stats/route.ts](file:///g:/Doh-Nut/src/app/api/admin/stats/route.ts) agar hanya mengira pesanan sah berbayar (`paidAt !== null`).
+  - Dilaksanakan pengesahan `isAdminRequest` berasaskan `timingSafeEqual` pada [orders/[id]/route.ts](file:///g:/Doh-Nut/src/app/api/orders/[id]/route.ts) bagi menghapuskan risiko *timing attack*.
+  - Ditambah indeks pangkalan data `Order.sessionId` dalam [schema.prisma](file:///g:/Doh-Nut/prisma/schema.prisma) dan [ensure-ready.ts](file:///g:/Doh-Nut/src/lib/ensure-ready.ts).
+  - Ditukar fallback imej luaran pada [shop-home.tsx](file:///g:/Doh-Nut/src/components/dohnut/shop-home.tsx) kepada aset lokal `/brand/donuts/` bagi menjamin ketahanan PWA offline 100%.
+  - Diletakkan sekatan out-of-stock pada [detail-modal.tsx](file:///g:/Doh-Nut/src/components/dohnut/detail-modal.tsx) (`disabled={donut.stock <= 0}` & "Sold Out") serta ceiling stok pada [cart-drawer.tsx](file:///g:/Doh-Nut/src/components/dohnut/cart-drawer.tsx).
+  - Ditambah suite ujian unit [admin-security-stats.test.ts](file:///g:/Doh-Nut/tests/admin-security-stats.test.ts). 49/49 ujian `bun test` lulus (0 fail).
+- **2026-09-10 (Home → Slider transition and documentation alignment)**:
+  - Dikekalkan konsep transition yang diminta: `selectedType`, donut Home bergerak dengan `x`, `rotate: 360`, dan `scale` mengecil sebelum berpindah ke Slider kategori yang sama.
+  - Disambungkan `LayoutGroup`, `AnimatePresence`, dan `layoutId` antara `shop-home.tsx`, `donut-slider.tsx`, dan `page.tsx`; Home tidak membuka half-donut detail atau nutrition panel.
+  - Ditambah route wireframe interaktif `/wireframe`, disahkan root dan wireframe memberi HTTP 200 semasa preview.
+  - Dibaiki `Prisma.Decimal` rounding dalam `src/lib/money.ts` menggunakan `toDecimalPlaces`, dan build production berjaya.
+  - Plugin `superpowers@superpowers-marketplace` v6.3.0 dipasang dalam Copilot CLI dengan 14 skills.
 
 ## 📋 Audit & Revision Ledger (SMS-v1.0)
 | Version | Timestamp (MYT) | Author | Why (Intent / Trigger) | How (Modifications & Touched Areas) | Validation Proof |
 | :--- | :--- | :--- | :--- | :--- | :--- |
+| `1.4.0` | 2026-09-07 19:05:00 | Sovereign Conductor | Audit P1/P2 resolution & hardening | Admin stats paid filter, timing-safe bypass, local assets, stock guards, Order index | `bun test`: 49/49 tests pass (0 fail) |
+| `1.5.0` | 2026-09-10 10:25:00 | Copilot | Selaraskan interaction, build, preview, dan dokumentasi | Home → Slider shared transition, `/wireframe`, money API compatibility, Superpowers plugin | `bun run build`: berjaya; preview `/` dan `/wireframe`: HTTP 200 |
 | `1.3.0` | 2026-09-05 10:28:00 | Sovereign Conductor | Vercel build failure bugfix | Baiki `resolveDatabaseUrl` untuk /tmp fallback di Vercel & update tests | Vercel build: `● Ready` (47s), 45/45 tests pass |
 | `1.2.0` | 2026-09-05 09:30:00 | Sovereign Conductor | Alignment semua dokumen projek (.md) | Tambah SMS-v1.0 frontmatter & ledger, kemaskini milestone universal | `bun run build`: 13/13 pages OK |
 | `1.1.0` | 2026-09-05 05:25:00 | Sovereign Conductor | Penstabilan fizik 3D slider | Buang `tiltZ`, matikan pulse scale, tune spring critically damped | Manual slider drag test |

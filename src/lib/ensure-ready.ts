@@ -11,6 +11,7 @@
 // seeded by `bun prisma/seed.ts`).
 
 import { db } from "@/lib/db";
+import { verifyProductionDBConfig } from "@/lib/db-production-architecture";
 import { SEED_DONUTS } from "@/lib/seed-data";
 
 // Raw DDL mirroring prisma/schema.prisma (SQLite flavour). Using IF NOT EXISTS
@@ -106,6 +107,7 @@ const DDL = [
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "Review_donutId_fkey" FOREIGN KEY ("donutId") REFERENCES "Donut" ("id") ON DELETE CASCADE
   )`,
+  `CREATE INDEX IF NOT EXISTS "Order_sessionId_idx" ON "Order" ("sessionId")`,
 ];
 
 // Migration patches for databases created by an OLDER version of this DDL
@@ -174,6 +176,8 @@ async function ensureReadyOnce(): Promise<void> {
  * warm instance. Safe to call from any API route; no-op after the first run.
  */
 export function ensureReady(): Promise<void> {
+  // Fail-closed: verify production DB config before serving requests (§18 master prompt)
+  verifyProductionDBConfig();
   if (!ready) {
     ready = ensureReadyOnce().catch((err) => {
       // Reset so a subsequent request can retry.

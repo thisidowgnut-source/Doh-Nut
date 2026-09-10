@@ -1,8 +1,8 @@
 ---
 title: "DOH-NUT Repository Guidelines"
 document_id: "SMS-DOHNUT-AGENTS-001"
-version: "1.2.0"
-last_updated: "2026-09-05 09:30:00"
+version: "1.3.0"
+last_updated: "2026-09-10 10:25:00"
 maintainer: "Antigravity / Sovereign Architect"
 classification: "Internal / Developer Guidelines"
 lifecycle_status: "Active / Living Standard"
@@ -12,7 +12,7 @@ lifecycle_status: "Active / Living Standard"
 
 ## Project Structure & Module Organization
 
-This is a Next.js 16 App Router storefront written in TypeScript. Pages, layouts, and route handlers live in `src/app`; API endpoints are under `src/app/api`. Product components belong in `src/components/dohnut`, reusable shadcn/Radix primitives in `src/components/ui`, shared logic in `src/lib`, and client state in `src/store`. Prisma schema and seed data (curating **31 unique donut flavors**) live in `prisma/` and `src/lib/seed-data.ts`. Static assets and the service worker belong in `public/`. Deployment helper tests are Bash scripts under `tests/`; `mini-services/order-tracking` is a separate Bun service. Treat `research/`, `brand-system/`, and `examples/` as supporting material.
+This is a Next.js 16 App Router storefront written in TypeScript. Pages, layouts, and route handlers live in `src/app`; API endpoints are under `src/app/api`. Product components belong in `src/components/dohnut`, reusable shadcn/Radix primitives in `src/components/ui`, shared logic in `src/lib`, and client state in `src/store`. Prisma schema and seed data (curating **31 donut flavors**) live in `prisma/` and `src/lib/seed-data.ts`. Static assets and the service worker belong in `public/`. Deployment helper tests are Bash scripts under `tests/`; `mini-services/order-tracking` is a separate Bun service. Treat `research/`, `brand-system/`, and `examples/` as supporting material. Catalog image references must resolve to local files; historical image-audit reports may document older duplicates or intentional deletions.
 
 ## Build, Test, and Development Commands
 
@@ -23,6 +23,8 @@ This is a Next.js 16 App Router storefront written in TypeScript. Pages, layouts
 - `bun run db:generate` regenerates Prisma Client after schema changes.
 - `bun run db:migrate` creates and applies a local development migration.
 - `bash tests/database-runtime-build.sh` runs a deployment-script integration test. Run the other `tests/*.sh` similarly; the container test also requires Docker.
+- `bun test` runs the repository's Bun tests.
+- `bun run build` is the release gate after UI, route, or shared-library changes.
 
 ## Coding Style & Naming Conventions
 
@@ -30,7 +32,7 @@ Use two-space indentation, double quotes, semicolons, and TypeScript types at mo
 
 ## Testing Guidelines
 
-No JavaScript unit-test runner or coverage gate is currently configured. For every change, lint and build locally, then exercise the affected UI or API flow. Add regression tests beside the existing Bash integration tests when changing `.zscripts`; name them after the behavior, such as `database-runtime-build.sh`.
+Bun is the JavaScript test runner; there is no Jest/Vitest coverage gate. For every change, lint and build locally, then exercise the affected UI or API flow. Add regression tests beside the existing Bash integration tests when changing `.zscripts`; name them after the behavior, such as `database-runtime-build.sh`.
 
 ## Commit & Pull Request Guidelines
 
@@ -44,4 +46,5 @@ Copy `.env.example` to `.env.local`; never commit credentials or database files.
 | Version | Timestamp (MYT) | Author | Why (Intent / Trigger) | How (Modifications & Touched Areas) | Validation Proof |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `1.2.0` | 2026-09-05 09:30:00 | Sovereign Conductor | Alignment dokumen projek (.md) | Tambah SMS-v1.0 frontmatter, ledger, dan segerakkan 31 perisa katalog | `bun run build`: 13/13 pages OK |
+| `1.3.0` | 2026-09-10 10:25:00 | Copilot | Selaraskan dokumentasi dengan transition Home → Slider, wireframe, preview, dan plugin workflow | Dokumentasikan `LayoutGroup`/`AnimatePresence`, `layoutId`, `/wireframe`, build gate, dan Bun tests | `bun run build`: berjaya |
 | `1.0.0` | 2026-08-25 12:00:00 | Core Team | Inisialisasi garis panduan repositori | Asas panduan kod, struktur modul, dan sekuriti | Baseline approval |

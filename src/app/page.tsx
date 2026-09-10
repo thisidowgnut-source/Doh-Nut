@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, LayoutGroup, motion, type Variants } from "framer-motion";
 import { useShop } from "@/store/use-shop";
 import { useToast } from "@/hooks/use-toast";
 import { SplashScreen } from "@/components/dohnut/splash-screen";
@@ -23,6 +23,27 @@ import { ErrorBoundary } from "@/components/dohnut/error-boundary";
 import { apiFetch } from "@/lib/api";
 import { classifyPaymentState } from "@/lib/payment-state";
 import type { Order } from "@/lib/types";
+
+const viewVariants: Variants = {
+  initial: { opacity: 0, x: 40 },
+  animate: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.25, ease: "easeOut" },
+  },
+  exit: (nextView: string) =>
+    nextView === "slider"
+      ? {
+          opacity: 1,
+          x: 0,
+          transition: { duration: 1.45, ease: [0.22, 1, 0.36, 1] },
+        }
+      : {
+          opacity: 0,
+          x: -24,
+          transition: { duration: 0.25, ease: "easeOut" },
+        },
+};
 
 // NOTE: AdminDashboard (recharts) + OrderTrackingView (socket.io-client) were
 // trialled as next/dynamic code-splits but that deadlocks with
@@ -133,25 +154,31 @@ export default function Home() {
             stacked above the active view that swallowed every click — which
             is what broke the payment flow e2e. Deterministic > decorative
             exit animations. */}
-          <motion.div
-            key={view}
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            // RX-12: pb must account for safe-area-inset-bottom, otherwise
-            // an iPhone home indicator creates a 34px gap between the last
-            // row of content and the bottom nav.
-            className="absolute inset-0 pb-[calc(4rem+env(safe-area-inset-bottom,0px))] flex flex-col overflow-y-auto overscroll-contain"
-          >
-            {view === "shop" && <ShopHome />}
-            {view === "slider" && <DonutSlider />}
-            {view === "swipe" && <SwipeView />}
-            {view === "favorites" && <FavoritesView />}
-            {view === "checkout" && <CheckoutView />}
-            {view === "orders" && <OrdersView />}
-            {view === "tracking" && <OrderTrackingView />}
-            {view === "admin" && <AdminDashboard />}
-          </motion.div>
+          <LayoutGroup>
+            <AnimatePresence initial={false} mode="sync">
+              <motion.div
+                key={view}
+                custom={view}
+                variants={viewVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                // RX-12: pb must account for safe-area-inset-bottom, otherwise
+                // an iPhone home indicator creates a 34px gap between the last
+                // row of content and the bottom nav.
+                className="absolute inset-0 pb-[calc(4rem+env(safe-area-inset-bottom,0px))] flex flex-col overflow-y-auto overscroll-contain"
+              >
+                {view === "shop" && <ShopHome />}
+                {view === "slider" && <DonutSlider />}
+                {view === "swipe" && <SwipeView />}
+                {view === "favorites" && <FavoritesView />}
+                {view === "checkout" && <CheckoutView />}
+                {view === "orders" && <OrdersView />}
+                {view === "tracking" && <OrderTrackingView />}
+                {view === "admin" && <AdminDashboard />}
+              </motion.div>
+            </AnimatePresence>
+          </LayoutGroup>
         </main>
       </ErrorBoundary>
 

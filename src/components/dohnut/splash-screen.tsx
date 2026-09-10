@@ -6,8 +6,7 @@ import { useShop } from "@/store/use-shop";
 import { cn } from "@/lib/utils";
 
 /**
- * SplashScreen — cinematic brand moment with original wordmark logo.
- * Logo fade-in + glow pulse + sprinkle particles.
+ * SplashScreen — cinematic claymation brand moment.
  */
 
 const SPRINKLES = Array.from({ length: 20 }).map((_, i) => ({
@@ -66,17 +65,19 @@ export function SplashScreen() {
           role="dialog"
           aria-label="DowgNut splash screen"
         >
-          {/* Radial glow pulse */}
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: [0, 1.5, 1.2], opacity: [0, 0.4, 0.25] }}
-            transition={{ duration: 2, ease: "easeOut" }}
-            className="pointer-events-none absolute size-[500px] rounded-full"
-            style={{
-              background: "radial-gradient(circle, #fde047 0%, transparent 60%)",
-              filter: "blur(40px)",
-            }}
-          />
+          <video
+            className="pointer-events-none absolute inset-0 size-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+          >
+            <source src="/videos/dohnut-splash.mp4" type="video/mp4" />
+          </video>
+
+          <div className="pointer-events-none absolute inset-0 bg-[var(--color-dowgnut-blue-dark)]/25" />
 
           {/* Sprinkle particles */}
           {SPRINKLES.map((s, i) => (

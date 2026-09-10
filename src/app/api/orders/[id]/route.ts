@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { ensureReady } from "@/lib/ensure-ready";
 import { getSessionId } from "@/lib/session";
 import { serializeOrder } from "@/lib/serialize";
+import { isAdminRequest } from "@/lib/admin-auth";
 
 // GET /api/orders/[id]  →  Order (with items)
 // Ownership check: the order's session must match the caller's session.
@@ -26,11 +27,7 @@ export async function GET(
     }
 
     // Fail-closed ownership check (admin key may bypass).
-    const adminKey = process.env.ADMIN_API_KEY;
-    const providedAdmin = request.headers.get("x-admin-key");
-    const isAdmin =
-      !!adminKey && !!providedAdmin && providedAdmin === adminKey;
-    if (!isAdmin) {
+    if (!isAdminRequest(request)) {
       const sessionId = getSessionId(request);
       if (order.sessionId !== sessionId) {
         // 404 (not 403) to avoid confirming the order id exists.

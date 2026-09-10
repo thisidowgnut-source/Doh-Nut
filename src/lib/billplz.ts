@@ -142,6 +142,7 @@ export async function verifyWebhook(
     false,
     ["sign"],
   );
+  // hmac: used for webhook signature verification (crypto.subtle "HMAC" algorithm)
   const sig = await crypto.subtle.sign("HMAC", key, enc.encode(source));
   const hex = Array.from(new Uint8Array(sig))
     .map((b) => b.toString(16).padStart(2, "0"))

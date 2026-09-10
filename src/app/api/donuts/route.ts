@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { serializeDonut } from "@/lib/serialize";
 import { ensureReady } from "@/lib/ensure-ready";
+import { SEED_DONUTS } from "@/lib/seed-data";
 
 // GET /api/donuts?type=all|classic|sprinkled|stuffed|specialty&search=&sort=featured|price-asc|price-desc|rating|name&featured=true
 export async function GET(request: Request) {
@@ -47,6 +48,16 @@ export async function GET(request: Request) {
 
     const rows = await db.donut.findMany({ where, orderBy });
     const donuts = rows.map(serializeDonut);
+    if (sort === "catalog") {
+      const catalogOrder = new Map(
+        SEED_DONUTS.map((donut, index) => [donut.name, index]),
+      );
+      donuts.sort(
+        (a, b) =>
+          (catalogOrder.get(a.name) ?? Number.MAX_SAFE_INTEGER) -
+          (catalogOrder.get(b.name) ?? Number.MAX_SAFE_INTEGER),
+      );
+    }
     return NextResponse.json(donuts);
   } catch (err) {
     console.error("[api/donuts GET]", err);

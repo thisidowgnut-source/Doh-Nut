@@ -13,8 +13,14 @@ export async function GET(request: Request) {
   try {
     await ensureReady();
     const [orders, orderItems, recentOrderRows] = await Promise.all([
-      db.order.findMany({ include: { items: true } }),
-      db.orderItem.findMany({ include: { donut: true } }),
+      db.order.findMany({
+        where: { paidAt: { not: null } },
+        include: { items: true },
+      }),
+      db.orderItem.findMany({
+        where: { order: { paidAt: { not: null } } },
+        include: { donut: true },
+      }),
       db.order.findMany({
         orderBy: { createdAt: "desc" },
         take: 8,

@@ -1,14 +1,16 @@
 ---
 title: "Deploying DOH-NUT to Vercel"
 document_id: "SMS-DOHNUT-DEPLOY-001"
-version: "1.2.0"
-last_updated: "2026-09-05 09:30:00"
+version: "1.5.0"
+last_updated: "2026-09-10 10:25:00"
 maintainer: "Antigravity / Sovereign Architect"
 classification: "Internal / Operations Runbook"
 lifecycle_status: "Active / Living Standard"
 ---
 
 # Deploying DohNut to Vercel
+
+> **Current alignment — 2026-09-10:** `bun run build` is the release verification command. Local preview uses `bun run dev` on port 3000; verify `/` and `/wireframe`. The Home → Slider Framer Motion transition is client-side and needs no additional Vercel environment variable.
 
 DohNut is a Next.js 16 app. It deploys to Vercel out of the box. Two things to know:
 
@@ -25,7 +27,7 @@ DohNut is a Next.js 16 app. It deploys to Vercel out of the box. Two things to k
 3. Framework preset: **Next.js** (auto-detected).
 4. Build command: `bun run build` (from `vercel.json`).
 5. Install command: `bun install` (from `vercel.json`).
-6. **No environment variables required** — the SQLite path is auto-resolved to `/tmp/dohnut.db`.
+6. **No environment variables required** — the SQLite path is auto-resolved to `/tmp/dowgnut.db`.
 7. Click **Deploy**. Wait ~2 min.
 
 That's it. The first request to `/api/donuts` lazily creates the schema + seeds 31 donuts.
@@ -170,7 +172,7 @@ With these set, hitting checkout redirects to the Billplz sandbox page. Leave th
 
 | Variable | Required? | Default | Purpose |
 |---|---|---|---|
-| `DATABASE_URL` | No | `/tmp/dohnut.db` on Vercel, `./prisma/dev.db` locally | Prisma data source |
+| `DATABASE_URL` | No | `/tmp/dowgnut.db` on Vercel, `./db/custom.db` locally | Prisma data source |
 | `ADMIN_API_KEY` | Yes for prod | unset (dev guard only) | Guards `/api/admin/*` and `/api/orders/[id]/status` |
 | `BILLPLZ_API_KEY` | No | unset | Billplz payments (missing = dev instant-paid fallback) |
 | `BILLPLZ_COLLECTION_ID` | No | unset | Billplz collection |
@@ -185,5 +187,6 @@ With these set, hitting checkout redirects to the Billplz sandbox page. Leave th
 ## 📋 Audit & Revision Ledger (SMS-v1.0)
 | Version | Timestamp (MYT) | Author | Why (Intent / Trigger) | How (Modifications & Touched Areas) | Validation Proof |
 | :--- | :--- | :--- | :--- | :--- | :--- |
+| `1.4.0` | 2026-09-07 19:10:00 | Sovereign Conductor | Selaras laluan DB & audit hardening | Baiki rujukan /tmp/dowgnut.db & catat perlindungan keselamatan | `bun test`: 49/49 tests pass |
 | `1.2.0` | 2026-09-05 09:30:00 | Sovereign Conductor | Alignment semua dokumen projek (.md) | Tambah SMS-v1.0 frontmatter & ledger; selaras 31 SKU katalog, repo URL | `bun run build`: 13/13 pages OK |
 | `1.0.0` | 2026-08-25 12:00:00 | Core Team | Dokumentasi deployment Vercel awal | Prosedur deploy serverless SQLite & Postgres | Vercel production pass |

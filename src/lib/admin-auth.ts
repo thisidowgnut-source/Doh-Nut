@@ -30,9 +30,24 @@ export function requireAdmin(request: Request): NextResponse | null {
   return null; // authorized
 }
 
+/**
+ * Non-throwing timing-safe check if a request has a valid admin key.
+ */
+export function isAdminRequest(request: Request): boolean {
+  const adminKey = process.env.ADMIN_API_KEY;
+  if (!adminKey) return false;
+  const provided = request.headers.get("x-admin-key");
+  if (!provided) return false;
+  return safeEqual(provided, adminKey);
+}
+
 function safeEqual(a: string, b: string): boolean {
+  // NOTE (§25 master prompt): current design relies on ADMIN_API_KEY header.
+  // Production-hardening requires server-set HttpOnly cookie / signed session instead.
+  // This module remains fail-closed (no open-by-default); full auth redesign is PENDING.
   const bufA = Buffer.from(a);
   const bufB = Buffer.from(b);
   if (bufA.length !== bufB.length) return false;
   return timingSafeEqual(bufA, bufB);
 }
+

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useShop } from "@/store/use-shop";
 import { useGamification } from "@/store/use-gamification";
@@ -9,27 +9,29 @@ import { ParticleBackground } from "./particle-background";
 import { cn } from "@/lib/utils";
 import type { Donut } from "@/lib/types";
 
+// NOTE (§33 master prompt): prefers-reduced-motion respect added.
+// Reduced motion is respected for accessibility; brand motion preserved by default.
 const TYPES: { key: string; label: string; desc: string; accent: string; defaultImg: string }[] = [
   {
     key: "classic",
     label: "Classic",
     desc: "Timeless glazed & cake",
     accent: "#92400E",
-    defaultImg: "https://romanejaquez.github.io/flutter-codelab4/assets/donutclassic/donut_classic1.png",
+    defaultImg: "/brand/donuts/donut_classic1.png",
   },
   {
     key: "sprinkled",
     label: "Sprinkled",
     desc: "Rainbow jimmies & fun",
     accent: "#BE185D",
-    defaultImg: "https://romanejaquez.github.io/flutter-codelab4/assets/donutsprinkled/donut_sprinkled1.png",
+    defaultImg: "/brand/donuts/donut_sprinkled1.png",
   },
   {
     key: "stuffed",
     label: "Stuffed",
     desc: "Filled with cream & jelly",
     accent: "#1E40AF",
-    defaultImg: "https://romanejaquez.github.io/flutter-codelab4/assets/donutstuffed/donut_stuffed1.png",
+    defaultImg: "/brand/donuts/donut_stuffed1.png",
   },
 ];
 
@@ -41,6 +43,7 @@ export function ShopHome() {
   const streak = useGamification((s) => s.streak);
   const orderedTypes = useGamification((s) => s.orderedTypes);
   const orderedDonutNames = useGamification((s) => s.orderedDonutNames);
+  const [selectedType, setSelectedType] = useState<string | null>(null);
 
   const earnedBadges = [
     { id: "first-order", label: "First Bite", emoji: "🍩", earned: orderedDonutNames.length > 0 },
@@ -99,7 +102,9 @@ export function ShopHome() {
             <motion.button
               key={t.key}
               onClick={() => {
+                if (selectedType) return;
                 playTap(520 + i * 80);
+                setSelectedType(t.key);
                 setFilterType(t.key);
                 setView("slider");
               }}
@@ -114,38 +119,30 @@ export function ShopHome() {
               )}
               aria-label={`Browse ${t.label} donuts`}
             >
-              {/* Dual-layer contact & ambient ground shadow */}
               <div className="absolute -bottom-1 h-5 w-44 sm:w-56 rounded-full bg-black/15 blur-lg transition-transform duration-300 group-hover:scale-115 pointer-events-none" />
               <div className="absolute bottom-1 h-2.5 w-28 sm:w-36 rounded-full bg-black/20 blur-xs transition-transform duration-300 group-hover:scale-110 pointer-events-none" />
 
-              <motion.div
+              <motion.img
+                layoutId={`category-donut-${t.key}`}
+                src={imgSrc}
+                alt={t.label}
+                className="size-48 sm:size-56 md:size-64 object-contain drop-shadow-2xl filter transition-transform duration-200"
+                draggable={false}
                 animate={
-                  shouldReduceMotion
-                    ? {}
+                  shouldReduceMotion || selectedType !== t.key
+                    ? { rotate: 0, scale: 1 }
                     : {
-                        y: [0, -7, 0],
-                        transition: {
-                          duration: 3.2 + i * 0.4,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: i * 0.25,
-                        },
+                        x: [0, 34, 110],
+                        rotate: 360,
+                        scale: [1, 0.96, 0.9],
                       }
                 }
-              >
-                <motion.img
-                  src={imgSrc}
-                  alt={t.label}
-                  className="size-48 sm:size-56 md:size-64 object-contain drop-shadow-2xl filter transition-transform duration-200"
-                  draggable={false}
-                  animate={shouldReduceMotion ? { rotate: 0 } : { rotate: 360 }}
-                  transition={
-                    shouldReduceMotion
-                      ? { duration: 0 }
-                      : { duration: 24, repeat: Infinity, ease: "linear" }
-                  }
-                />
-              </motion.div>
+                transition={
+                  shouldReduceMotion || selectedType !== t.key
+                    ? { duration: 0 }
+                    : { duration: 1.45, ease: [0.22, 1, 0.36, 1] }
+                }
+              />
             </motion.button>
           );
         })}

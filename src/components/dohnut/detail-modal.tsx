@@ -72,6 +72,14 @@ export function DetailModal() {
     .slice(0, 4);
 
   const onAdd = async (buyNow = false) => {
+    if (donut.stock <= 0) {
+      toast({
+        title: "Item Sold Out",
+        description: `${donut.name} is currently out of stock.`,
+        variant: "destructive",
+      });
+      return;
+    }
     try {
       await addToCart(donut.id, qty);
       toast({
@@ -178,7 +186,6 @@ export function DetailModal() {
         <div className="flex-1 overflow-y-auto px-5 pb-6 pt-1 space-y-4">
           {/* Floating Donut Visual Showcase */}
           <div className="relative flex h-52 items-center justify-center py-2">
-            {/* Ground soft radial shadow */}
             <div className="absolute bottom-2 h-5 w-44 rounded-full bg-black/12 blur-md" />
 
             <motion.img
@@ -375,17 +382,19 @@ export function DetailModal() {
         <div className="border-t border-[rgba(239,159,189,0.2)] bg-white/95 p-4 backdrop-blur-md flex gap-2">
           <Button
             onClick={() => onAdd(false)}
+            disabled={donut.stock <= 0}
             variant="outline"
-            className="flex-1 h-12 rounded-full border-2 border-[var(--color-dowgnut-blue)] text-[var(--color-dowgnut-blue)] font-black text-sm hover:bg-[var(--color-dowgnut-blue)]/10 active:scale-95 transition-transform"
+            className="flex-1 h-12 rounded-full border-2 border-[var(--color-dowgnut-blue)] text-[var(--color-dowgnut-blue)] font-black text-sm hover:bg-[var(--color-dowgnut-blue)]/10 active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            Add to Cart
+            {donut.stock <= 0 ? "Sold Out" : "Add to Cart"}
           </Button>
 
           <Button
             onClick={() => onAdd(true)}
-            className="flex-1 h-12 rounded-full bg-[var(--color-dowgnut-pink)] text-white font-black text-sm hover:bg-[var(--color-dowgnut-pink-dark)] shadow-md active:scale-95 transition-transform"
+            disabled={donut.stock <= 0}
+            className="flex-1 h-12 rounded-full bg-[var(--color-dowgnut-pink)] text-white font-black text-sm hover:bg-[var(--color-dowgnut-pink-dark)] shadow-md active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            Buy Now • RM {(donut.price * qty).toFixed(2)}
+            {donut.stock <= 0 ? "Out of Stock" : `Buy Now • RM ${(donut.price * qty).toFixed(2)}`}
           </Button>
         </div>
       </DialogContent>

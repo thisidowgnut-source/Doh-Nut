@@ -1,8 +1,8 @@
 ---
 title: "DOH-NUT — Malaysian Donut Drop Documentation"
 document_id: "SMS-DOHNUT-README-001"
-version: "1.2.0"
-last_updated: "2026-09-05 09:30:00"
+version: "1.5.0"
+last_updated: "2026-09-10 10:25:00"
 maintainer: "Antigravity / Sovereign Architect"
 classification: "Public / Project Overview"
 lifecycle_status: "Active / Living Standard"
@@ -22,6 +22,14 @@ lifecycle_status: "Active / Living Standard"
 
 The whole thing deploys to **Vercel in one click** and ships with a real-time tracking mini-service you can host separately when you need WebSocket magic.
 
+## 🔄 Current Interaction Contract
+
+- Home renders three category donuts: Classic, Sprinkled, and Stuffed.
+- Clicking a Home donut stores its category, animates the same image with Framer Motion (`x` to the right, `rotate: 360`, and a reducing `scale`), then routes to the matching Slider category.
+- `LayoutGroup`, `AnimatePresence`, and category `layoutId` values connect the Home image to the active Slider image. Home does **not** open the half-donut nutrition detail.
+- In Slider, side donuts center first; clicking the centered donut opens the intentional right-side half-donut detail with nutrition information on the left.
+- `/wireframe` is the interactive grayscale route for reviewing the documented screens without changing the production clay UI.
+
 ---
 
 ## ✨ Features — The Full Roll Call
@@ -29,7 +37,7 @@ The whole thing deploys to **Vercel in one click** and ships with a real-time tr
 | Feature | Icon | Where It Lives | Notes |
 |---|---|---|---|
 | 🛒 **Glassmorphic cart drawer** | `bg-lime/30` when free delivery unlocks | `src/components/dohnut/cart-drawer.tsx` | Drag handle, hover-shrink remove, dashed-border total |
-| 🍩 **31-donut catalog** | 8 Classic + 6 Sprinkled + 8 Stuffed + 6 Malaysian + 3 Savory | `src/lib/seed-data.ts` | Auto-seeded on Vercel cold start (100% unique 1024x1024 assets) |
+| 🍩 **31-donut catalog** | 8 Classic + 6 Sprinkled + 8 Stuffed + 6 Malaysian + 3 Savory | `src/lib/seed-data.ts` | Auto-seeded on Vercel cold start; active image paths are local and audited |
 | 💳 **Billplz payments** | FPX, TnG, DuitNow QR | `src/app/api/payment/billplz/*` | HMAC-SHA256 webhook, dev fallback when unconfigured |
 | 📍 **Live order tracking** | WebSocket + REST polling fallback | `mini-services/order-tracking/` | Deploy separately (Render / Railway / Fly.io) |
 | 🤖 **AI Concierge** | Floating FAB, safe-area aware | `src/components/dohnut/ai-concierge.tsx` | `/api/ai/concierge` — DOH BOY™ persona & rate-limited |
@@ -49,7 +57,7 @@ The whole thing deploys to **Vercel in one click** and ships with a real-time tr
 
 ## 🇲🇾 31-Flavor Catalog Breakdown
 
-Every donut features a 100% unique, high-resolution photo-realistic asset:
+Every active catalog entry has a local high-resolution asset path. Image uniqueness is tracked separately by the hash-based audit reports and is not assumed from filenames alone:
 
 ### 🌿 Malaysian Specialties (6 Flavors)
 | Donut | Vibe & Ingredients | Tags |
@@ -261,6 +269,7 @@ Private / All Rights Reserved. Contact the maintainer for licensing inquiries.
 ## 📋 Audit & Revision Ledger (SMS-v1.0)
 | Version | Timestamp (MYT) | Author | Why (Intent / Trigger) | How (Modifications & Touched Areas) | Validation Proof |
 | :--- | :--- | :--- | :--- | :--- | :--- |
+| `1.4.0` | 2026-09-07 19:10:00 | Sovereign Conductor | Audit P1/P2 resolution & hardening | Admin revenue accuracy, timing-safe bypass, offline local assets, stock guards, Order index | `bun test`: 49/49 tests pass |
 | `1.2.0` | 2026-09-05 09:30:00 | Sovereign Conductor | Alignment semua dokumen projek (.md) | Tambah SMS-v1.0 frontmatter & ledger; perbetul 31 SKU katalog, path logo rasmi | `bun run build`: 13/13 pages OK |
 | `1.1.0` | 2026-09-02 18:00:00 | Hermes Agent | Rebrand visual & palette | Kemaskini tema kuning/merah/navy dan DOH Language | Browser DOM verified |
 | `1.0.0` | 2026-08-25 12:00:00 | Core Team | Dokumentasi awal projek | Release v1.0 storefront Next.js | Initial release |
