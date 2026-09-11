@@ -28,6 +28,12 @@ export function SplashScreen() {
   // safety net for slow-render edge cases.)
   const [dismissed, setDismissed] = useState(false);
 
+  const dismiss = () => {
+    setVisible(false);
+    setDismissed(true);
+    dismissSplash();
+  };
+
   useEffect(() => {
     if (splashDone) return;
     // Respect reduced-motion: show & dismiss quickly so users with
@@ -39,8 +45,7 @@ export function SplashScreen() {
     const fade = reduce ? 200 : 500;
     const t1 = setTimeout(() => setVisible(false), hold);
     const t2 = setTimeout(() => {
-      dismissSplash();
-      setDismissed(true);
+      dismiss();
     }, hold + fade);
     return () => {
       clearTimeout(t1);
@@ -57,7 +62,7 @@ export function SplashScreen() {
           animate={{ opacity: visible ? 1 : 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
-          onClick={dismissSplash}
+          onClick={dismiss}
           className={cn(
             "fixed inset-0 z-[100] flex cursor-pointer flex-col items-center justify-center overflow-hidden bg-[var(--color-dowgnut-blue-dark)]",
             (dismissed || splashDone) && "pointer-events-none"
@@ -121,6 +126,15 @@ export function SplashScreen() {
           >
             GOOD VIBE · GOOD DOH.
           </motion.p>
+
+          <button
+            type="button"
+            onClick={dismiss}
+            aria-label="Skip the DOHNUT intro"
+            className="mt-8 rounded-full border border-white/40 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white transition-colors hover:bg-white/15"
+          >
+            Skip intro
+          </button>
         </motion.div>
       )}
     </AnimatePresence>

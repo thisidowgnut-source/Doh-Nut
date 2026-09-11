@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import Image from "next/image";
 import { ArrowLeft, Loader2, ShoppingBag, Truck, Check, ShieldCheck, Zap } from "lucide-react";
 import { useShop } from "@/store/use-shop";
 import { useGamification } from "@/store/use-gamification";
@@ -26,6 +27,27 @@ import { getSessionId } from "@/lib/api";
 import { isAllowedBillplzPaymentUrl } from "@/lib/billplz-redirect";
 
 type PaymentMethod = "tng" | "duitnow" | "card";
+type CheckoutField =
+  | "customerName"
+  | "customerEmail"
+  | "customerPhone"
+  | "address"
+  | "city"
+  | "state"
+  | "zip"
+  | "notes";
+
+type CheckoutForm = Record<CheckoutField, string>;
+
+const VALIDATION_FIELDS: Exclude<CheckoutField, "notes">[] = [
+  "customerName",
+  "customerEmail",
+  "customerPhone",
+  "address",
+  "city",
+  "state",
+  "zip",
+];
 
 const PRESET_ADDRESSES = [
   { label: "KLCC, Kuala Lumpur", city: "Kuala Lumpur", state: "WP Kuala Lumpur", zip: "50450", address: "Suria KLCC, Jalan Ampang" },
@@ -81,7 +103,7 @@ export function CheckoutView() {
   // Pre-fill from saved profile + default address (return customer)
   const defaultAddr = profile?.addresses.find((a) => a.isDefault) ?? profile?.addresses[0];
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<CheckoutForm>({
     customerName: profile?.customerName ?? "",
     customerEmail: profile?.customerEmail ?? "",
     customerPhone: profile?.customerPhone ?? defaultAddr?.customerPhone ?? "",
@@ -93,12 +115,25 @@ export function CheckoutView() {
   });
   const [payment, setPayment] = useState<PaymentMethod>("tng");
   const [submitting, setSubmitting] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<CheckoutField, string>>>({});
+  const fieldRefs = useRef<Partial<Record<CheckoutField, HTMLElement | null>>>({});
 
   const subtotal = cart.reduce((sum, c) => sum + c.donut.price * c.quantity, 0);
   const { delivery, sst, total } = computePricing(subtotal);
 
-  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+  const setFieldRef = (field: CheckoutField) => (element: HTMLElement | null) => {
+    fieldRefs.current[field] = element;
+  };
+
+  const set = (k: CheckoutField) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((f) => ({ ...f, [k]: e.target.value }));
+    setFieldErrors((errors) => {
+      if (!errors[k]) return errors;
+      const next = { ...errors };
+      delete next[k];
+      return next;
+    });
+  };
 
   const applyPreset = (preset: typeof PRESET_ADDRESSES[0]) => {
     setForm((f) => ({
@@ -114,26 +149,40 @@ export function CheckoutView() {
     });
   };
 
-  const validate = () => {
-    const missing: string[] = [];
-    if (!form.customerName.trim()) missing.push("name");
-    if (!form.customerEmail.trim()) missing.push("email");
-    if (!form.customerPhone.trim()) missing.push("phone");
-    if (!form.address.trim()) missing.push("address");
-    if (!form.city.trim()) missing.push("city");
-    if (!form.state.trim()) missing.push("state");
-    if (!form.zip.trim()) missing.push("postcode");
-    if (form.zip && !/^\d{5}$/.test(form.zip.trim())) missing.push("postcode (5 digits)");
-    if (form.customerPhone && !/^[0-9+\-\s]{10,15}$/.test(form.customerPhone.trim())) missing.push("phone (valid number)");
-    return missing;
+  const validate = (): Partial<Record<CheckoutField, string>> => {
+    const errors: Partial<Record<CheckoutField, string>> = {};
+    if (!form.customerName.trim()) errors.customerName = "Recipient name is required.";
+    if (!form.customerEmail.trim()) {
+      errors.customerEmail = "Email address is required.";
+    } else if (!/^\S+@\S+\.\S+$/.test(form.customerEmail.trim())) {
+      errors.customerEmail = "Enter a valid email address.";
+    }
+    if (!form.customerPhone.trim()) {
+      errors.customerPhone = "Phone number is required.";
+    } else if (!/^[0-9+\-\s]{10,15}$/.test(form.customerPhone.trim())) {
+      errors.customerPhone = "Enter a valid phone number.";
+    }
+    if (!form.address.trim()) errors.address = "Street address is required.";
+    if (!form.city.trim()) errors.city = "City is required.";
+    if (!form.state.trim()) errors.state = "State is required.";
+    if (!form.zip.trim()) {
+      errors.zip = "Postcode is required.";
+    } else if (!/^\d{5}$/.test(form.zip.trim())) {
+      errors.zip = "Postcode must contain 5 digits.";
+    }
+    return errors;
   };
 
-  const onPlace = async () => {
-    const missing = validate();
-    if (missing.length > 0) {
+  const onPlace = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const errors = validate();
+    setFieldErrors(errors);
+    const firstInvalid = VALIDATION_FIELDS.find((field) => errors[field]);
+    if (firstInvalid) {
+      fieldRefs.current[firstInvalid]?.focus();
       toast({
         title: "Missing required fields",
-        description: `Please fill: ${missing.join(", ")}`,
+        description: "Please review the highlighted fields before paying.",
         variant: "destructive",
       });
       return;
@@ -275,6 +324,7 @@ export function CheckoutView() {
         </div>
       </header>
 
+      <form onSubmit={onPlace} noValidate>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_380px]">
         {/* Left: delivery + payment */}
         <div className="flex flex-col gap-6">
@@ -303,32 +353,38 @@ export function CheckoutView() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="name" className="text-xs font-bold text-[var(--color-dowgnut-blue-dark)]">Recipient Name *</Label>
-                <Input id="name" autoComplete="name" value={form.customerName} onChange={set("customerName")} placeholder="Megat Danial" className="h-11 bg-white rounded-xl" />
+                <Input id="name" ref={setFieldRef("customerName")} required autoComplete="name" value={form.customerName} onChange={set("customerName")} placeholder="Megat Danial" aria-invalid={fieldErrors.customerName ? true : undefined} aria-describedby={fieldErrors.customerName ? "customerName-error" : undefined} className="h-11 bg-white rounded-xl" />
+                {fieldErrors.customerName && <p id="customerName-error" className="text-xs font-semibold text-[var(--color-dowgnut-pink-dark)]">{fieldErrors.customerName}</p>}
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="email" className="text-xs font-bold text-[var(--color-dowgnut-blue-dark)]">Email Address *</Label>
-                <Input id="email" type="email" autoComplete="email" spellCheck={false} value={form.customerEmail} onChange={set("customerEmail")} placeholder="megat@dohnut.com" className="h-11 bg-white rounded-xl" />
+                <Input id="email" ref={setFieldRef("customerEmail")} required type="email" autoComplete="email" spellCheck={false} value={form.customerEmail} onChange={set("customerEmail")} placeholder="megat@dohnut.com" aria-invalid={fieldErrors.customerEmail ? true : undefined} aria-describedby={fieldErrors.customerEmail ? "customerEmail-error" : undefined} className="h-11 bg-white rounded-xl" />
+                {fieldErrors.customerEmail && <p id="customerEmail-error" className="text-xs font-semibold text-[var(--color-dowgnut-pink-dark)]">{fieldErrors.customerEmail}</p>}
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="phone" className="text-xs font-bold text-[var(--color-dowgnut-blue-dark)]">Phone Number *</Label>
-                <Input id="phone" type="tel" inputMode="tel" autoComplete="tel" value={form.customerPhone} onChange={set("customerPhone")} placeholder="012-345 6789" className="h-11 bg-white rounded-xl" />
+                <Input id="phone" ref={setFieldRef("customerPhone")} required type="tel" inputMode="tel" pattern="[0-9+\-\s]{10,15}" autoComplete="tel" value={form.customerPhone} onChange={set("customerPhone")} placeholder="012-345 6789" aria-invalid={fieldErrors.customerPhone ? true : undefined} aria-describedby={fieldErrors.customerPhone ? "customerPhone-error" : undefined} className="h-11 bg-white rounded-xl" />
+                {fieldErrors.customerPhone && <p id="customerPhone-error" className="text-xs font-semibold text-[var(--color-dowgnut-pink-dark)]">{fieldErrors.customerPhone}</p>}
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="zip" className="text-xs font-bold text-[var(--color-dowgnut-blue-dark)]">Postcode * (5 digits)</Label>
-                <Input id="zip" inputMode="numeric" autoComplete="postal-code" value={form.zip} onChange={set("zip")} placeholder="50450" maxLength={5} className="h-11 bg-white rounded-xl" />
+                <Input id="zip" ref={setFieldRef("zip")} required inputMode="numeric" pattern="\d{5}" autoComplete="postal-code" value={form.zip} onChange={set("zip")} placeholder="50450" maxLength={5} aria-invalid={fieldErrors.zip ? true : undefined} aria-describedby={fieldErrors.zip ? "zip-error" : undefined} className="h-11 bg-white rounded-xl" />
+                {fieldErrors.zip && <p id="zip-error" className="text-xs font-semibold text-[var(--color-dowgnut-pink-dark)]">{fieldErrors.zip}</p>}
               </div>
               <div className="flex flex-col gap-1.5 sm:col-span-2">
                 <Label htmlFor="address" className="text-xs font-bold text-[var(--color-dowgnut-blue-dark)]">Street Address *</Label>
-                <Input id="address" autoComplete="street-address" value={form.address} onChange={set("address")} placeholder="Unit / Street / Building" className="h-11 bg-white rounded-xl" />
+                <Input id="address" ref={setFieldRef("address")} required autoComplete="street-address" value={form.address} onChange={set("address")} placeholder="Unit / Street / Building" aria-invalid={fieldErrors.address ? true : undefined} aria-describedby={fieldErrors.address ? "address-error" : undefined} className="h-11 bg-white rounded-xl" />
+                {fieldErrors.address && <p id="address-error" className="text-xs font-semibold text-[var(--color-dowgnut-pink-dark)]">{fieldErrors.address}</p>}
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="city" className="text-xs font-bold text-[var(--color-dowgnut-blue-dark)]">City *</Label>
-                <Input id="city" autoComplete="address-level2" value={form.city} onChange={set("city")} placeholder="Kuala Lumpur" className="h-11 bg-white rounded-xl" />
+                <Input id="city" ref={setFieldRef("city")} required autoComplete="address-level2" value={form.city} onChange={set("city")} placeholder="Kuala Lumpur" aria-invalid={fieldErrors.city ? true : undefined} aria-describedby={fieldErrors.city ? "city-error" : undefined} className="h-11 bg-white rounded-xl" />
+                {fieldErrors.city && <p id="city-error" className="text-xs font-semibold text-[var(--color-dowgnut-pink-dark)]">{fieldErrors.city}</p>}
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="state" className="text-xs font-bold text-[var(--color-dowgnut-blue-dark)]">State *</Label>
-                <Select value={form.state} onValueChange={(v) => setForm((f) => ({ ...f, state: v }))}>
-                  <SelectTrigger id="state" className="h-11 rounded-xl border-[var(--color-dowgnut-blue-dark)]/15 bg-white text-sm font-semibold">
+                <Select value={form.state} onValueChange={(v) => { setForm((f) => ({ ...f, state: v })); setFieldErrors((errors) => ({ ...errors, state: undefined })); }}>
+                  <SelectTrigger id="state" ref={setFieldRef("state")} aria-required="true" aria-invalid={fieldErrors.state ? true : undefined} aria-describedby={fieldErrors.state ? "state-error" : undefined} className="h-11 rounded-xl border-[var(--color-dowgnut-blue-dark)]/15 bg-white text-sm font-semibold">
                     <SelectValue placeholder="Select state" />
                   </SelectTrigger>
                   <SelectContent>
@@ -337,6 +393,7 @@ export function CheckoutView() {
                     ))}
                   </SelectContent>
                 </Select>
+                {fieldErrors.state && <p id="state-error" className="text-xs font-semibold text-[var(--color-dowgnut-pink-dark)]">{fieldErrors.state}</p>}
               </div>
               <div className="flex flex-col gap-1.5 sm:col-span-2">
                 <Label htmlFor="notes" className="text-xs font-bold text-[var(--color-dowgnut-blue-dark)]">Delivery Notes (optional)</Label>
@@ -398,7 +455,7 @@ export function CheckoutView() {
           <ul className="flex flex-col gap-2 max-h-60 overflow-y-auto pr-1">
             {cart.map((item) => (
               <li key={item.id} className="flex items-center gap-3 rounded-2xl bg-[var(--color-dowgnut-cream)] p-2 border border-white/60">
-                <img src={item.donut.imgUrl} alt={item.donut.name} className="size-12 object-contain select-none" />
+                <Image src={item.donut.imgUrl} alt={item.donut.name} width={48} height={48} sizes="48px" className="size-12 object-contain select-none" />
                 <div className="flex min-w-0 flex-1 flex-col">
                   <span className="line-clamp-1 text-xs font-black text-[var(--color-dowgnut-blue-dark)]">{item.donut.name}</span>
                   <span className="text-[11px] font-semibold text-[var(--color-dowgnut-blue-dark)]/60">{item.quantity} × RM {item.donut.price.toFixed(2)}</span>
@@ -427,7 +484,7 @@ export function CheckoutView() {
           </div>
 
           <Button
-            onClick={onPlace}
+            type="submit"
             disabled={submitting}
             className="mt-3 h-12 w-full rounded-full bg-[var(--color-dowgnut-pink)] text-sm font-black text-white hover:bg-[var(--color-dowgnut-pink-dark)] shadow-md active:scale-95 transition-transform"
           >
@@ -439,6 +496,7 @@ export function CheckoutView() {
           </Button>
         </Card>
       </div>
+      </form>
     </section>
   );
 }

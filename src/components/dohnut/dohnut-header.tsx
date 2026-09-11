@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Menu, Sparkles } from "lucide-react";
 import { useShop } from "@/store/use-shop";
@@ -14,7 +15,12 @@ import {
 
 import { DowgNutLogo } from "@/components/dohnut/dohnut-logo";
 
-export function DohnutHeader() {
+interface DohnutHeaderProps {
+  scrollContainer?: HTMLElement | null;
+}
+
+
+export function DohnutHeader({ scrollContainer }: DohnutHeaderProps) {
   const view = useShop((s) => s.view);
   const setView = useShop((s) => s.setView);
   const cart = useShop((s) => s.cart);
@@ -27,10 +33,15 @@ export function DohnutHeader() {
   const cartCount = cart.reduce((n, c) => n + c.quantity, 0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const target = scrollContainer ?? window;
+    const onScroll = () => {
+      const scrollTop = target instanceof HTMLElement ? target.scrollTop : window.scrollY;
+      setScrolled(scrollTop > 10);
+    };
+    target.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => target.removeEventListener("scroll", onScroll);
+  }, [scrollContainer]);
 
   const go = (v: "shop" | "swipe" | "favorites" | "orders" | "admin") => {
     setView(v);

@@ -45,13 +45,13 @@ export function DetailModal() {
 
   useEffect(() => {
     if (open) {
-      setQty(1);
+      setQty(donut?.stock && donut.stock > 0 ? Math.min(1, donut.stock) : 0);
       setShowReviews(false);
       setAuthor("");
       setRating("5");
       setComment("");
     }
-  }, [open, donut?.id]);
+  }, [open, donut?.id, donut?.stock]);
 
   if (!donut) {
     return (
@@ -72,10 +72,13 @@ export function DetailModal() {
     .slice(0, 4);
 
   const onAdd = async (buyNow = false) => {
-    if (donut.stock <= 0) {
+    if (donut.stock <= 0 || qty <= 0 || qty > donut.stock) {
+      const description = donut.stock <= 0
+        ? donut.name + " is currently out of stock."
+        : "Only " + donut.stock + " " + donut.name + " item" + (donut.stock === 1 ? "" : "s") + " available.";
       toast({
-        title: "Item Sold Out",
-        description: `${donut.name} is currently out of stock.`,
+        title: donut.stock <= 0 ? "Item Sold Out" : "Stock limit reached",
+        description,
         variant: "destructive",
       });
       return;
@@ -268,9 +271,10 @@ export function DetailModal() {
             <div className="flex items-center gap-3">
               <button
                 type="button"
-                onClick={() => setQty(Math.max(1, qty - 1))}
+                onClick={() => setQty((q) => (donut.stock > 0 ? Math.max(1, q - 1) : 0))}
                 className="flex size-9 items-center justify-center rounded-full bg-[var(--color-dowgnut-cream)] text-[var(--color-dowgnut-blue-dark)] transition-transform active:scale-90 font-black shadow-xs cursor-pointer"
                 aria-label="Decrease quantity"
+                disabled={donut.stock <= 0 || qty <= 1}
               >
                 <Minus className="size-4" />
               </button>
@@ -283,9 +287,10 @@ export function DetailModal() {
               </span>
               <button
                 type="button"
-                onClick={() => setQty(qty + 1)}
+                onClick={() => setQty((q) => Math.min(donut.stock, q + 1))}
                 className="flex size-9 items-center justify-center rounded-full bg-[var(--color-dowgnut-blue)] text-white transition-transform active:scale-90 font-black shadow-xs cursor-pointer"
                 aria-label="Increase quantity"
+                disabled={donut.stock <= 0 || qty >= donut.stock}
               >
                 <Plus className="size-4" />
               </button>

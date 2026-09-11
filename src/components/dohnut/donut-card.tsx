@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useTransform } from "framer-motion";
+import Image from "next/image";
 import { Heart, Plus, Star } from "lucide-react";
 import { useShop } from "@/store/use-shop";
 import { useToast } from "@/hooks/use-toast";
@@ -40,7 +41,6 @@ export function DonutCard({ donut }: DonutCardProps) {
   const fav = isFavorite(donut.id);
 
   const onFav = async (e: React.MouseEvent) => {
-    e.stopPropagation();
     const wasFav = isFavorite(donut.id);
     await toggleFavorite(donut.id);
     toast({
@@ -54,7 +54,10 @@ export function DonutCard({ donut }: DonutCardProps) {
   };
 
   const onAdd = async (e: React.MouseEvent) => {
-    e.stopPropagation();
+    if (donut.stock <= 0) {
+      toast({ title: "Item Sold Out", description: `${donut.name} is currently out of stock.`, variant: "destructive" });
+      return;
+    }
     try {
       await addToCart(donut.id, 1);
       toast({ title: "Added to cart!", description: `${donut.name} × 1` });
@@ -71,21 +74,14 @@ export function DonutCard({ donut }: DonutCardProps) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, type: "spring", stiffness: 200, damping: 20 }}
-      role="button"
-      tabIndex={0}
-      onClick={() => openDetail(donut)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          openDetail(donut);
-        }
-      }}
+
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformPerspective: 600 }}
-      className="group relative flex cursor-pointer flex-col rounded-2xl border border-[var(--color-dowgnut-blue-dark)]/8 bg-[var(--color-dowgnut-cream)]/70 backdrop-blur-sm p-2 transition-shadow hover:shadow-lg"
+      className="group relative flex flex-col rounded-2xl border border-[var(--color-dowgnut-blue-dark)]/8 bg-[var(--color-dowgnut-cream)]/70 backdrop-blur-sm p-2 transition-shadow hover:shadow-lg"
     >
       <button
+        type="button"
         onClick={onFav}
         aria-label={fav ? "Remove from favorites" : "Add to favorites"}
         className={cn(
@@ -96,24 +92,33 @@ export function DonutCard({ donut }: DonutCardProps) {
         <Heart className={cn("size-5", fav && "fill-current")} />
       </button>
 
-      <div className="relative flex aspect-square items-center justify-center p-2">
-        <img
-          src={donut.imgUrl}
-          alt={donut.name}
-          className="size-full object-contain transition-transform duration-500 group-hover:scale-110"
-          loading="lazy"
-        />
-        {donut.featured && (
-          <span className="absolute bottom-1 left-1 inline-flex items-center gap-0.5 rounded-full bg-[var(--color-dowgnut-pink)] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-            <Star className="size-2.5 fill-current" /> Hot
-          </span>
-        )}
-      </div>
-
-      <div className="flex flex-1 flex-col gap-1 px-1 pb-1">
+<button
+        type="button"
+        onClick={() => openDetail(donut)}
+        aria-label={"View details for " + donut.name}
+        className="flex w-full flex-1 cursor-pointer flex-col gap-1 px-1 pb-1 text-left"
+      >
+        <div className="relative flex aspect-square items-center justify-center p-2">
+          <Image
+            src={donut.imgUrl}
+            alt={donut.name}
+            width={256}
+            height={256}
+            sizes="(min-width: 768px) 256px, 50vw"
+            className="size-full object-contain transition-transform duration-500 group-hover:scale-110"
+          />
+          {donut.featured && (
+            <span className="absolute bottom-1 left-1 inline-flex items-center gap-0.5 rounded-full bg-[var(--color-dowgnut-pink)] px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+              <Star className="size-2.5 fill-current" /> Hot
+            </span>
+          )}
+        </div>
         <h3 className="line-clamp-2 min-h-[2.5rem] text-sm font-semibold leading-tight text-[var(--color-dowgnut-blue-dark)]">
           {donut.name}
         </h3>
+      </button>
+
+      <div className="flex flex-1 flex-col gap-1 px-1 pb-1">
         <div className="flex items-center gap-1 text-xs">
           <Star className="size-3 fill-[var(--color-dowgnut-pink)] text-[var(--color-dowgnut-pink)]" />
           <span className="font-semibold text-[var(--color-dowgnut-blue-dark)]">{donut.rating.toFixed(1)}</span>
@@ -129,6 +134,7 @@ export function DonutCard({ donut }: DonutCardProps) {
           </p>
         )}
         <button
+          type="button"
           onClick={onAdd}
           disabled={donut.stock <= 0}
           aria-label={`Add ${donut.name} to cart`}

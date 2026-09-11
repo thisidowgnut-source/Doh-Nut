@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion, type Variants } from "framer-motion";
 import { useShop } from "@/store/use-shop";
 import { useToast } from "@/hooks/use-toast";
@@ -58,6 +58,10 @@ export default function Home() {
   const setView = useShop((s) => s.setView);
   const { toast } = useToast();
   const paymentReturnHandled = useRef(false);
+  const [scrollContainer, setScrollContainer] = useState<HTMLDivElement | null>(null);
+  const attachScrollContainer = useCallback((node: HTMLDivElement | null) => {
+    setScrollContainer(node);
+  }, []);
 
   useEffect(() => {
     init();
@@ -143,7 +147,7 @@ export default function Home() {
   return (
     <>
       <SplashScreen />
-      <DohnutHeader />
+      <DohnutHeader scrollContainer={scrollContainer} />
       <ErrorBoundary>
         <main className="relative flex flex-1 flex-col overflow-hidden">
           {/* Keyed motion.div WITHOUT AnimatePresence/exit: the old view
@@ -157,6 +161,7 @@ export default function Home() {
           <LayoutGroup>
             <AnimatePresence initial={false} mode="sync">
               <motion.div
+                ref={attachScrollContainer}
                 key={view}
                 custom={view}
                 variants={viewVariants}
