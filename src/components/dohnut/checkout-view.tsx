@@ -207,14 +207,20 @@ export function CheckoutView() {
     donutNames: string[],
     types: string[],
   ) => {
-    const billRes = await fetch("/api/payment/billplz/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-session-id": getSessionId(),
-      },
-      body: JSON.stringify({ orderId }),
-    });
+    let billRes: Response;
+    try {
+      billRes = await fetch("/api/payment/billplz/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-session-id": getSessionId(),
+        },
+        body: JSON.stringify({ orderId }),
+      });
+    } catch (error) {
+      rememberFailedPayment(orderId, customerName, paymentMethod, donutNames, types);
+      throw error instanceof Error ? error : new Error("Payment request failed");
+    }
     const billData = (await billRes.json().catch(() => ({}))) as {
       paymentUrl?: string;
       mode?: string;

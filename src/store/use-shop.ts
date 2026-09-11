@@ -290,7 +290,7 @@ export const useShop = create<ShopState>()(
             method: "POST",
             body: JSON.stringify({ donutId, quantity }),
           });
-          set({ cart: data || [] });
+          set({ cart: data || [], cartError: null });
         } catch (err) {
           throw err instanceof Error ? err : new Error("Failed to add to cart");
         }
@@ -301,7 +301,7 @@ export const useShop = create<ShopState>()(
             method: "PATCH",
             body: JSON.stringify({ quantity }),
           });
-          set({ cart: data || [] });
+          set({ cart: data || [], cartError: null });
         } catch (err) {
           throw err instanceof Error ? err : new Error("Failed to update quantity");
         }
@@ -311,7 +311,7 @@ export const useShop = create<ShopState>()(
           const data = await apiFetch<CartItem[]>(`/api/cart/${cartItemId}`, {
             method: "DELETE",
           });
-          set({ cart: data || [] });
+          set({ cart: data || [], cartError: null });
         } catch (err) {
           throw err instanceof Error ? err : new Error("Failed to remove item");
         }
@@ -322,7 +322,7 @@ export const useShop = create<ShopState>()(
         // some items are gone and others remain.
         try {
           await apiFetch<CartItem[]>(`/api/cart`, { method: "DELETE" });
-          set({ cart: [] });
+          set({ cart: [], cartError: null });
         } catch (err) {
           throw err instanceof Error ? err : new Error("Failed to clear cart");
         }
@@ -348,13 +348,13 @@ export const useShop = create<ShopState>()(
             const data = await apiFetch<Favorite[]>(`/api/favorites/${donutId}`, {
               method: "DELETE",
             });
-            set({ favorites: data || [] });
+            set({ favorites: data || [], favoritesError: null });
           } else {
             const data = await apiFetch<Favorite[]>(`/api/favorites`, {
               method: "POST",
               body: JSON.stringify({ donutId }),
             });
-            set({ favorites: data || [] });
+            set({ favorites: data || [], favoritesError: null });
           }
         } catch (err) {
           // Re-throw so the caller's toast actually fires (CZ-03). Previously

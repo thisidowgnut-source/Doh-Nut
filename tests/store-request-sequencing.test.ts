@@ -73,6 +73,35 @@ describe("commerce collection recovery", () => {
     expect(useShop.getState().favorites).toEqual(previousFavorites);
     expect(useShop.getState().favoritesError).toBe("Favorites service unavailable");
   });
+
+  test("clears collection errors after successful cart and favorite mutations", async () => {
+    const cartResponse = [{ id: "cart-2" }] as any;
+    apiFetch.mockImplementation(async () => cartResponse);
+
+    useShop.setState({ cartError: "Cart service unavailable" });
+    await useShop.getState().addToCart("donut-1");
+    expect(useShop.getState().cartError).toBeNull();
+
+    useShop.setState({ cartError: "Cart service unavailable" });
+    await useShop.getState().updateCartQty("cart-2", 2);
+    expect(useShop.getState().cartError).toBeNull();
+
+    useShop.setState({ cartError: "Cart service unavailable" });
+    await useShop.getState().removeFromCart("cart-2");
+    expect(useShop.getState().cartError).toBeNull();
+
+    useShop.setState({ cartError: "Cart service unavailable" });
+    await useShop.getState().clearCart();
+    expect(useShop.getState().cartError).toBeNull();
+
+    useShop.setState({ favorites: [], favoritesError: "Favorites service unavailable" });
+    await useShop.getState().toggleFavorite("donut-1");
+    expect(useShop.getState().favoritesError).toBeNull();
+
+    useShop.setState({ favorites: [{ donutId: "donut-1" }] as any, favoritesError: "Favorites service unavailable" });
+    await useShop.getState().toggleFavorite("donut-1");
+    expect(useShop.getState().favoritesError).toBeNull();
+  });
 });
 
 describe("catalog request sequencing", () => {
@@ -114,5 +143,11 @@ describe("same-order payment retry contract", () => {
     expect(retryBlock).toContain("failedPaymentOrderId");
     expect(retryBlock).toContain("startPayment(");
     expect(retryBlock).not.toContain("checkout(");
+    const fetchRecoveryBlock = checkoutSource.slice(
+      checkoutSource.indexOf("let billRes: Response;"),
+      checkoutSource.indexOf("const billData"),
+    );
+    expect(fetchRecoveryBlock).toContain("rememberFailedPayment(orderId, customerName, paymentMethod, donutNames, types);");
+    expect(fetchRecoveryBlock).toContain("throw error instanceof Error ? error : new Error(\"Payment request failed\");");
   });
 });
