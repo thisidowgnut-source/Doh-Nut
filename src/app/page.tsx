@@ -150,20 +150,15 @@ export default function Home() {
       <DohnutHeader scrollContainer={scrollContainer} />
       <ErrorBoundary>
         <main className="relative flex flex-1 flex-col overflow-hidden">
-          {/* Keyed motion.div WITHOUT AnimatePresence/exit: the old view
-            unmounts synchronously on view change and the new one animates
-            in via framer's initial→animate (proven reliable). AnimatePresence
-            exit tracking froze mid-flight in this environment (headless rAF
-            throttling + long dev sessions), leaving invisible absolute divs
-            stacked above the active view that swallowed every click — which
-            is what broke the payment flow e2e. Deterministic > decorative
-            exit animations. */}
-          <LayoutGroup>
-            <AnimatePresence initial={false} mode="sync">
-              <div
-                ref={attachScrollContainer}
-                className="absolute inset-0 overflow-y-auto overscroll-contain"
-              >
+          {/* Keep scrolling on a persistent host so keyed view transitions
+            cannot detach the header's scroll listener. AnimatePresence still
+            owns the keyed motion child directly, preserving exit transitions. */}
+          <div
+            ref={attachScrollContainer}
+            className="absolute inset-0 overflow-y-auto overscroll-contain"
+          >
+            <LayoutGroup>
+              <AnimatePresence initial={false} mode="sync">
                 <motion.div
                   key={view}
                   custom={view}
@@ -185,9 +180,9 @@ export default function Home() {
                   {view === "tracking" && <OrderTrackingView />}
                   {view === "admin" && <AdminDashboard />}
                 </motion.div>
-              </div>
-            </AnimatePresence>
-          </LayoutGroup>
+              </AnimatePresence>
+            </LayoutGroup>
+          </div>
         </main>
       </ErrorBoundary>
 

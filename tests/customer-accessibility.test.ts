@@ -41,6 +41,7 @@ describe("customer accessibility and stock contracts", () => {
     expect(headerSource).toContain('target.removeEventListener(\"scroll\"');
     expect(pageSource).toContain('className="absolute inset-0 overflow-y-auto overscroll-contain"');
     expect(pageSource).toContain("ref={attachScrollContainer}");
+    expect(pageSource).toMatch(/<AnimatePresence[^>]*>\s*<motion\.div[\s\S]*?key=\{view\}/);
     expect(pageSource).not.toMatch(/<motion\.div[\s\S]*?ref=\{attachScrollContainer\}/);
     expect(splashSource).toContain("Skip intro");
     expect(splashSource).toContain('type="button"');
