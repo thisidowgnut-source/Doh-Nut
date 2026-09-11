@@ -160,28 +160,32 @@ export default function Home() {
             exit animations. */}
           <LayoutGroup>
             <AnimatePresence initial={false} mode="sync">
-              <motion.div
+              <div
                 ref={attachScrollContainer}
-                key={view}
-                custom={view}
-                variants={viewVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                // RX-12: pb must account for safe-area-inset-bottom, otherwise
-                // an iPhone home indicator creates a 34px gap between the last
-                // row of content and the bottom nav.
-                className="absolute inset-0 pb-[calc(4rem+env(safe-area-inset-bottom,0px))] flex flex-col overflow-y-auto overscroll-contain"
+                className="absolute inset-0 overflow-y-auto overscroll-contain"
               >
-                {view === "shop" && <ShopHome />}
-                {view === "slider" && <DonutSlider />}
-                {view === "swipe" && <SwipeView />}
-                {view === "favorites" && <FavoritesView />}
-                {view === "checkout" && <CheckoutView />}
-                {view === "orders" && <OrdersView />}
-                {view === "tracking" && <OrderTrackingView />}
-                {view === "admin" && <AdminDashboard />}
-              </motion.div>
+                <motion.div
+                  key={view}
+                  custom={view}
+                  variants={viewVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  // RX-12: pb must account for safe-area-inset-bottom, otherwise
+                  // an iPhone home indicator creates a 34px gap between the last
+                  // row of content and the bottom nav.
+                  className="min-h-full pb-[calc(4rem+env(safe-area-inset-bottom,0px))] flex flex-col"
+                >
+                  {view === "shop" && <ShopHome />}
+                  {view === "slider" && <DonutSlider />}
+                  {view === "swipe" && <SwipeView />}
+                  {view === "favorites" && <FavoritesView />}
+                  {view === "checkout" && <CheckoutView />}
+                  {view === "orders" && <OrdersView />}
+                  {view === "tracking" && <OrderTrackingView />}
+                  {view === "admin" && <AdminDashboard />}
+                </motion.div>
+              </div>
             </AnimatePresence>
           </LayoutGroup>
         </main>
