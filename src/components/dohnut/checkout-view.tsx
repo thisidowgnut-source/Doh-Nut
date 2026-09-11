@@ -115,6 +115,11 @@ export function CheckoutView() {
   });
   const [payment, setPayment] = useState<PaymentMethod>("tng");
   const [submitting, setSubmitting] = useState(false);
+  const [failedPaymentOrderId, setFailedPaymentOrderId] = useState<string | null>(null);
+  const [failedPaymentCustomerName, setFailedPaymentCustomerName] = useState("");
+  const [failedPaymentMethod, setFailedPaymentMethod] = useState<PaymentMethod | null>(null);
+  const [failedPaymentDonutNames, setFailedPaymentDonutNames] = useState<string[]>([]);
+  const [failedPaymentTypes, setFailedPaymentTypes] = useState<string[]>([]);
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<CheckoutField, string>>>({});
   const fieldRefs = useRef<Partial<Record<CheckoutField, HTMLElement | null>>>({});
 
@@ -173,6 +178,129 @@ export function CheckoutView() {
     return errors;
   };
 
+  const clearFailedPayment = () => {
+    setFailedPaymentOrderId(null);
+    setFailedPaymentCustomerName("");
+    setFailedPaymentMethod(null);
+    setFailedPaymentDonutNames([]);
+    setFailedPaymentTypes([]);
+  };
+
+  const rememberFailedPayment = (
+    orderId: string,
+    customerName: string,
+    paymentMethod: PaymentMethod,
+    donutNames: string[],
+    types: string[],
+  ) => {
+    setFailedPaymentOrderId(orderId);
+    setFailedPaymentCustomerName(customerName);
+    setFailedPaymentMethod(paymentMethod);
+    setFailedPaymentDonutNames(donutNames);
+    setFailedPaymentTypes(types);
+  };
+
+  const startPayment = async (
+    orderId: string,
+    customerName: string,
+    paymentMethod: PaymentMethod,
+    donutNames: string[],
+    types: string[],
+  ) => {
+    const billRes = await fetch("/api/payment/billplz/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-session-id": getSessionId(),
+      },
+      body: JSON.stringify({ orderId }),
+    });
+    const billData = (await billRes.json().catch(() => ({}))) as {
+      paymentUrl?: string;
+      mode?: string;
+      error?: string;
+    };
+
+    if (billRes.ok && billData.paymentUrl) {
+      if (!isAllowedBillplzPaymentUrl(billData.paymentUrl)) {
+        rememberFailedPayment(orderId, customerName, paymentMethod, donutNames, types);
+        toast({
+          title: "Payment redirect blocked",
+          description:
+            "The gateway returned an invalid destination. No payment was completed.",
+          variant: "destructive",
+        });
+        return;
+      }
+      clearFailedPayment();
+      toast({
+        title: "Redirecting to payment…",
+        description: `${PAYMENTS.find((p) => p.id === paymentMethod)?.name} secured by Billplz.`,
+      });
+      celebrateOrderComplete();
+      playOrderComplete();
+      recordOrder(donutNames, types);
+      startTracking(orderId, customerName);
+      window.location.assign(billData.paymentUrl);
+      return;
+    }
+
+    if (billRes.ok && billData.mode === "dev") {
+      await loadCart();
+      clearFailedPayment();
+      toast({
+        title: "Payment successful! 🍩",
+        description: `Order confirmed via ${PAYMENTS.find((p) => p.id === paymentMethod)?.name}.`,
+      });
+      celebrateOrderComplete();
+      playOrderComplete();
+      recordOrder(donutNames, types);
+      startTracking(orderId, customerName);
+      return;
+    }
+
+    if (billRes.status === 409) {
+      clearFailedPayment();
+      toast({
+        title: "Order already paid 🍩",
+        description: "DOH BOLEH! Taking you straight to your order.",
+      });
+      startTracking(orderId, customerName);
+      return;
+    }
+
+    rememberFailedPayment(orderId, customerName, paymentMethod, donutNames, types);
+    toast({
+      title: "Payment could not be started",
+      description:
+        billData.error ??
+        "The payment gateway hiccuped. Your order is saved — please try again in a moment.",
+      variant: "destructive",
+    });
+  };
+
+  const onRetryPayment = async () => {
+    if (!failedPaymentOrderId || !failedPaymentCustomerName || !failedPaymentMethod) return;
+    setSubmitting(true);
+    try {
+      await startPayment(
+        failedPaymentOrderId,
+        failedPaymentCustomerName,
+        failedPaymentMethod,
+        failedPaymentDonutNames,
+        failedPaymentTypes,
+      );
+    } catch (err: any) {
+      toast({
+        title: "Couldn't retry payment",
+        description: err?.message ?? "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const onPlace = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const errors = validate();
@@ -187,88 +315,20 @@ export function CheckoutView() {
       });
       return;
     }
+    clearFailedPayment();
     setSubmitting(true);
     try {
-      // 1. Create the order on the server
       const order = await checkout({
         ...form,
         paymentMethod: payment,
       });
-
-      // 2. Ask Billplz (or dev fallback) for a payment URL
-      const billRes = await fetch("/api/payment/billplz/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-session-id": getSessionId(),
-        },
-        body: JSON.stringify({ orderId: order.id }),
-      });
-      const billData = await billRes.json().catch(() => ({} as any));
-
-      if (billRes.ok && billData.paymentUrl) {
-        if (!isAllowedBillplzPaymentUrl(billData.paymentUrl)) {
-          toast({
-            title: "Payment redirect blocked",
-            description:
-              "The gateway returned an invalid destination. No payment was completed.",
-            variant: "destructive",
-          });
-          return;
-        }
-        toast({
-          title: "Redirecting to payment…",
-          description: `${PAYMENTS.find((p) => p.id === payment)?.name} secured by Billplz.`,
-        });
-        celebrateOrderComplete();
-        playOrderComplete();
-        const donutNames = order.items.map((i: any) => i.name);
-        const types = cart.map((c) => c.donut.type);
-        recordOrder(donutNames, types);
-        startTracking(order.id, form.customerName);
-        window.location.assign(billData.paymentUrl);
-        return;
-      }
-
-      // Dev fallback — the server marked the order paid (no Billplz creds
-      // in dev), so the inline confirmation + tracking jump is genuine.
-      if (billRes.ok && billData.mode === "dev") {
-        await loadCart();
-        toast({
-          title: "Payment successful! 🍩",
-          description: `Order confirmed via ${PAYMENTS.find((p) => p.id === payment)?.name}.`,
-        });
-        celebrateOrderComplete();
-        playOrderComplete();
-        const donutNames = order.items.map((i: any) => i.name);
-        const types = cart.map((c) => c.donut.type);
-        recordOrder(donutNames, types);
-        startTracking(order.id, form.customerName);
-        return;
-      }
-
-      // 409 — this order was already paid (e.g. double submit). Jump to
-      // tracking instead of pretending a new payment went through.
-      if (billRes.status === 409) {
-        toast({
-          title: "Order already paid 🍩",
-          description: "DOH BOLEH! Taking you straight to your order.",
-        });
-        startTracking(order.id, form.customerName);
-        return;
-      }
-
-      // Real gateway failure (502/503/…) — the order is saved server-side,
-      // but the payment did NOT go through. Be honest about it so the
-      // customer can retry instead of being told it worked.
-      toast({
-        title: "Payment could not be started",
-        description:
-          billData?.error ??
-          "The payment gateway hiccuped. Your order is saved — please try again in a moment.",
-        variant: "destructive",
-      });
-      return;
+      await startPayment(
+        order.id,
+        form.customerName,
+        payment,
+        order.items.map((i: any) => i.name),
+        cart.map((c) => c.donut.type),
+      );
     } catch (err: any) {
       toast({
         title: "Couldn't place order",
@@ -279,7 +339,6 @@ export function CheckoutView() {
       setSubmitting(false);
     }
   };
-
   if (cart.length === 0) {
     return (
       <section className="mx-auto w-full max-w-3xl flex-1 px-4 pb-12 pt-8 sm:px-6">
@@ -482,6 +541,23 @@ export function CheckoutView() {
               <span className="text-lg text-[var(--color-dowgnut-pink-dark)]">RM {total.toFixed(2)}</span>
             </div>
           </div>
+
+          {failedPaymentOrderId && (
+            <div className="rounded-2xl border border-[var(--color-dowgnut-pink)]/30 bg-[var(--color-dowgnut-pink)]/5 p-3 text-center">
+              <p className="text-xs font-bold text-[var(--color-dowgnut-blue-dark)]">
+                Payment wasn&apos;t started. Your order is saved.
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => void onRetryPayment()}
+                disabled={submitting}
+                className="mt-2 h-9 rounded-full border-[var(--color-dowgnut-pink)] px-4 text-xs font-bold text-[var(--color-dowgnut-pink-dark)] hover:bg-[var(--color-dowgnut-pink)]/10"
+              >
+                Retry payment
+              </Button>
+            </div>
+          )}
 
           <Button
             type="submit"

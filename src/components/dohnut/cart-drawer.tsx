@@ -23,6 +23,8 @@ export function CartDrawer() {
   const setOpen = useShop((s) => s.setCartOpen);
   const cart = useShop((s) => s.cart);
   const loading = useShop((s) => s.cartLoading);
+  const cartError = useShop((s) => s.cartError);
+  const loadCart = useShop((s) => s.loadCart);
   const updateCartQty = useShop((s) => s.updateCartQty);
   const removeFromCart = useShop((s) => s.removeFromCart);
   const clearCart = useShop((s) => s.clearCart);
@@ -133,7 +135,19 @@ export function CartDrawer() {
 
         {/* Items List — compact & scrollable */}
         <div className="flex-1 overflow-y-auto scrollbar-dowgnut px-4 py-3 max-h-[42vh]">
-          {loading && cart.length === 0 ? (
+          {cartError ? (
+            <div className="flex flex-col items-center justify-center gap-2.5 py-10 text-center">
+              <p className="text-sm font-bold text-[var(--color-dowgnut-blue-dark)]">Couldn&apos;t load your box.</p>
+              <p className="max-w-xs text-xs text-[var(--color-dowgnut-blue-dark)]/60">{cartError}</p>
+              <Button
+                onClick={() => void loadCart()}
+                variant="outline"
+                className="mt-1 rounded-full border-[var(--color-dowgnut-pink)] px-5 text-xs font-bold text-[var(--color-dowgnut-pink-dark)] hover:bg-[var(--color-dowgnut-pink)]/10"
+              >
+                Try again
+              </Button>
+            </div>
+          ) : loading && cart.length === 0 ? (
             <div className="flex items-center justify-center py-12 text-[var(--color-dowgnut-blue)]">
               <p className="text-sm font-medium">Loading your box…</p>
             </div>

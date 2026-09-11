@@ -54,9 +54,11 @@ interface ShopState {
   cart: CartItem[];
   cartOpen: boolean;
   cartLoading: boolean;
+  cartError: string | null;
 
   // favorites
   favorites: Favorite[];
+  favoritesError: string | null;
 
   // detail modal
   selectedDonut: Donut | null;
@@ -137,6 +139,16 @@ function buildDonutsUrl(state: ShopState): string {
   return `/api/donuts?${params.toString()}`;
 }
 
+let catalogRequestSequence = 0;
+let catalogDebounceTimer: ReturnType<typeof setTimeout> | undefined;
+
+function clearCatalogDebounceTimer() {
+  if (catalogDebounceTimer) {
+    clearTimeout(catalogDebounceTimer);
+    catalogDebounceTimer = undefined;
+  }
+}
+
 export const useShop = create<ShopState>()(
   persist(
     (set, get) => ({
@@ -154,8 +166,10 @@ export const useShop = create<ShopState>()(
       cart: [],
       cartOpen: false,
       cartLoading: false,
+      cartError: null,
 
       favorites: [],
+      favoritesError: null,
 
       selectedDonut: null,
       detailOpen: false,
@@ -175,16 +189,22 @@ export const useShop = create<ShopState>()(
       setView: (v) => set({ view: v }),
       dismissSplash: () => set({ splashDone: true }),
       setFilterType: (t) => {
+        clearCatalogDebounceTimer();
         set({ filterType: t });
-        get().loadDonuts();
+        void get().loadDonuts();
       },
       setSearch: (s) => {
+        clearCatalogDebounceTimer();
         set({ search: s });
-        get().loadDonuts();
+        catalogDebounceTimer = setTimeout(() => {
+          catalogDebounceTimer = undefined;
+          void get().loadDonuts();
+        }, 300);
       },
       setSort: (s) => {
+        clearCatalogDebounceTimer();
         set({ sort: s });
-        get().loadDonuts();
+        void get().loadDonuts();
       },
 
       init: async () => {
@@ -195,18 +215,25 @@ export const useShop = create<ShopState>()(
       },
 
       loadDonuts: async () => {
+        const requestSequence = ++catalogRequestSequence;
         set({ loadingDonuts: true, donutsError: null });
         try {
           const url = buildDonutsUrl(get());
           const data = await apiFetch<Donut[]>(url);
-          set({ donuts: data || [], donutsError: null });
+          if (requestSequence === catalogRequestSequence) {
+            set({ donuts: data || [], donutsError: null });
+          }
         } catch (error) {
-          set({
-            donutsError:
-              error instanceof Error ? error.message : "Failed to load donuts",
-          });
+          if (requestSequence === catalogRequestSequence) {
+            set({
+              donutsError:
+                error instanceof Error ? error.message : "Failed to load donuts",
+            });
+          }
         } finally {
-          set({ loadingDonuts: false });
+          if (requestSequence === catalogRequestSequence) {
+            set({ loadingDonuts: false });
+          }
         }
       },
 
@@ -245,12 +272,14 @@ export const useShop = create<ShopState>()(
       },
 
       loadCart: async () => {
-        set({ cartLoading: true });
+        set({ cartLoading: true, cartError: null });
         try {
           const data = await apiFetch<CartItem[]>(`/api/cart`);
-          set({ cart: data || [] });
-        } catch {
-          set({ cart: [] });
+          set({ cart: data || [], cartError: null });
+        } catch (error) {
+          set({
+            cartError: error instanceof Error ? error.message : "Failed to load cart",
+          });
         } finally {
           set({ cartLoading: false });
         }
@@ -301,11 +330,15 @@ export const useShop = create<ShopState>()(
       setCartOpen: (open) => set({ cartOpen: open }),
 
       loadFavorites: async () => {
+        set({ favoritesError: null });
         try {
           const data = await apiFetch<Favorite[]>(`/api/favorites`);
-          set({ favorites: data || [] });
-        } catch {
-          set({ favorites: [] });
+          set({ favorites: data || [], favoritesError: null });
+        } catch (error) {
+          set({
+            favoritesError:
+              error instanceof Error ? error.message : "Failed to load favorites",
+          });
         }
       },
       toggleFavorite: async (donutId) => {

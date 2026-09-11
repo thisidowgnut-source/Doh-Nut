@@ -8,6 +8,7 @@ import { HeartCrack, ArrowLeft } from "lucide-react";
 
 export function FavoritesView() {
   const favorites = useShop((s) => s.favorites);
+  const favoritesError = useShop((s) => s.favoritesError);
   const loadFavorites = useShop((s) => s.loadFavorites);
   const setView = useShop((s) => s.setView);
 
@@ -37,7 +38,22 @@ export function FavoritesView() {
         </div>
       </header>
 
-      {favorites.length === 0 ? (
+      {favoritesError ? (
+        <div className="flex flex-col items-center gap-3 rounded-3xl border-2 border-dashed border-[var(--color-dowgnut-blue-dark)]/15 bg-[var(--color-dowgnut-cream)] p-10 text-center">
+          <HeartCrack className="size-10 text-[var(--color-dowgnut-pink)]" />
+          <h3 className="graffiti-text text-2xl text-[var(--color-dowgnut-blue-dark)]">
+            Favorites couldn&apos;t load
+          </h3>
+          <p className="max-w-md text-sm text-[var(--color-dowgnut-blue-dark)]/70">{favoritesError}</p>
+          <Button
+            onClick={() => void loadFavorites()}
+            variant="outline"
+            className="rounded-full border-[var(--color-dowgnut-pink)] px-6 text-[var(--color-dowgnut-pink-dark)] hover:bg-[var(--color-dowgnut-pink)]/10"
+          >
+            Try again
+          </Button>
+        </div>
+      ) : favorites.length === 0 ? (
         <div className="flex flex-col items-center gap-4 rounded-3xl border-2 border-dashed border-[var(--color-dowgnut-blue-dark)]/15 bg-[var(--color-dowgnut-cream)] p-10 text-center">
           <HeartCrack className="size-10 text-[var(--color-dowgnut-pink)]" />
           <img
