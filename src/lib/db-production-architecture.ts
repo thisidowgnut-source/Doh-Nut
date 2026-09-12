@@ -37,13 +37,16 @@ export function verifyProductionDBConfig(): void {
     );
   }
 
-  // Require PostgreSQL schema in production — reject SQLite file URLs,
-  // unless demo mode is explicitly opted in via DB_ALLOW_SQLITE_DEMO=1.
-  // The opt-in supports the documented one-click demo deploy
-  // (VERCEL_DEPLOY.md Option A): ephemeral SQLite /tmp with auto-seed on
-  // Vercel cold starts. Default remains fail-closed for real production.
-  const demoSqliteOptIn = process.env.DB_ALLOW_SQLITE_DEMO === "1";
-  if ((url.startsWith("file:") || url.includes("sqlite")) && !demoSqliteOptIn) {
+  // Explicit demo opt-in (DB_ALLOW_SQLITE_DEMO=1): allow the ephemeral SQLite
+  // deployment mode (VERCEL_DEPLOY.md Option A) — bypasses BOTH the SQLite
+  // rejection and the PostgreSQL-only requirement below. The opt-in is
+  // explicit and per-environment; default remains fail-closed.
+  if (process.env.DB_ALLOW_SQLITE_DEMO === "1") {
+    return;
+  }
+
+  // Require PostgreSQL schema in production — reject SQLite file URLs.
+  if (url.startsWith("file:") || url.includes("sqlite")) {
     throw new Error(
       "[DOH-NUT DB] PRODUCTION FAIL-CLOSED: DATABASE_URL points to SQLite (" +
         url + "). SQLite /tmp is NOT acceptable for production customer/order/payment persistence. " +
