@@ -354,7 +354,7 @@ export function CheckoutView() {
             Your cart is empty
           </h2>
           <p className="text-sm text-[var(--color-dowgnut-blue-dark)]/70">
-            Add some dowgs before checking out!
+            Add some donuts before checking out!
           </p>
           <Button
             onClick={() => setView("shop")}
@@ -394,7 +394,7 @@ export function CheckoutView() {
         {/* Left: delivery + payment */}
         <div className="flex flex-col gap-6">
           {/* Quick-Fill Presets */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <span className="inline-flex items-center gap-1 text-xs font-bold text-[var(--color-dowgnut-blue-dark)]/70 shrink-0">
               <Zap className="size-3.5 text-amber-500 fill-amber-400" /> Quick Fill:
             </span>

@@ -1,21 +1,33 @@
-import { db } from "./src/lib/db";
+// Simple direct SQLite smoke test for the local development database.
+import sqlite3Package from "sqlite3";
 
-async function main() {
-  try {
-    const count = await db.donut.count();
-    console.log("Donut count:", count);
-    
-    const donuts = await db.donut.findMany({
-      take: 3,
-      orderBy: { price: "desc" }
-    });
-    console.log("Top 3 most expensive donuts:");
-    donuts.forEach(d => console.log(`- ${d.name}: $${d.price}`));
-  } catch (error) {
-    console.error("Error:", error);
-  } finally {
-    await db.$disconnect();
-  }
-}
+const sqlite3 = sqlite3Package.verbose();
+const db = new sqlite3.Database("./db/custom.db");
 
-main();
+db.serialize(() => {
+  db.all("SELECT COUNT(*) as count FROM Donut", [], (countError, countRows) => {
+    if (countError) {
+      db.close();
+      throw countError;
+    }
+
+    console.log("Donut count:", countRows[0].count);
+
+    db.all(
+      "SELECT name, price FROM Donut ORDER BY price DESC LIMIT 3",
+      [],
+      (topDonutsError, topDonutsRows) => {
+        if (topDonutsError) {
+          db.close();
+          throw topDonutsError;
+        }
+
+        console.log("Top 3 most expensive donuts:");
+        topDonutsRows.forEach((row) => {
+          console.log(`- ${row.name}: RM ${row.price}`);
+        });
+        db.close();
+      },
+    );
+  });
+});

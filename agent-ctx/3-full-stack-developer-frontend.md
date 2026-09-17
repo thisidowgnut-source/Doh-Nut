@@ -1,8 +1,8 @@
 ---
 title: "Task 3 — Full Stack Developer (Frontend) — Work Record"
 document_id: "SMS-DOHNUT-CTX-FRONTEND-001"
-version: "1.2.0"
-last_updated: "2026-09-05 09:30:00"
+version: "1.6.4"
+last_updated: "2026-09-16 04:20:00"
 maintainer: "Antigravity / Sovereign Architect"
 classification: "Internal / Developer Context"
 lifecycle_status: "Active / Living Standard"
@@ -11,7 +11,7 @@ lifecycle_status: "Active / Living Standard"
 # Task 3 — full-stack-developer (frontend) — work record
 
 ## Task
-Build the entire DohNut frontend as a single-page SPA on the `/` route (Next.js 16 App Router). Splash, header, hero carousel, filter bar, donut grid/cards, detail modal with reviews, cart drawer, favorites, checkout, orders, real-time WebSocket order tracking, AI concierge, AI designer, AI flavor match, admin dashboard with recharts, sticky footer. Zustand store + apiFetch helper. Mobile-first, brand-faithful.
+Build the entire DohNut frontend as a single-page SPA on the `/` route (Next.js 16 App Router). Splash, header, 3-donut Home stack (`shop-home.tsx`), 3D Ring Slider (`donut-slider.tsx`), Half-Donut Split Detail view with nutrition metrics, continuous 360° rotation continuum (0° ➔ 360° ➔ 720° at 2.1s `easeInOutCubic`), `/wireframe` interactive testboard, detail modal with reviews, cart drawer, favorites, checkout, orders, real-time WebSocket order tracking, AI concierge, AI designer, admin dashboard with recharts, sticky footer. Zustand store + apiFetch helper. Mobile-first, brand-faithful.
 
 ## Files created (20)
 - `src/lib/api.ts` — apiFetch(path, init) injecting x-session-id header from localStorage `dohnut-session`; throws ApiError on non-2xx with server error message.
@@ -70,5 +70,6 @@ Path is `/`. No port in URL. XTransformPort=3004 in query. Emits `track-order { 
 ## 📋 Audit & Revision Ledger (SMS-v1.0)
 | Version | Timestamp (MYT) | Author | Why (Intent / Trigger) | How (Modifications & Touched Areas) | Validation Proof |
 | :--- | :--- | :--- | :--- | :--- | :--- |
+| `1.6.4` | 2026-09-16 04:20:00 | Sovereign Conductor & 8-Agent Squad | Putaran Donat 360° Menyeluruh (1 ➔ 2 ➔ 3) & Kelajuan 2.1s (-20%) | 0°(Home) ➔ 360°(Slider) ➔ 720°(Detail) durasi 2.1s [0.37, 0, 0.63, 1], popLayout AnimatePresence, delay siblings 0.7s | `bun test`: 62/62 pass, `bun run build`: 14/14 OK |
 | `1.2.0` | 2026-09-05 09:30:00 | Sovereign Conductor | Alignment semua dokumen (.md) | Tambah SMS-v1.0 frontmatter & ledger; segerakkan palet rasmi & admin gate | `bun run build`: 13/13 pages OK |
 | `1.0.0` | 2026-08-25 15:00:00 | Full Stack Dev | Rekod kerja pembangunan frontend | Scaffolding 20 fail komponen dan utiliti | Initial dev signoff |

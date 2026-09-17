@@ -37,11 +37,13 @@ export function verifyProductionDBConfig(): void {
     );
   }
 
-  // Explicit demo opt-in (DB_ALLOW_SQLITE_DEMO=1): allow the ephemeral SQLite
-  // deployment mode (VERCEL_DEPLOY.md Option A) — bypasses BOTH the SQLite
-  // rejection and the PostgreSQL-only requirement below. The opt-in is
-  // explicit and per-environment; default remains fail-closed.
-  if (process.env.DB_ALLOW_SQLITE_DEMO === "1") {
+  // Explicit demo opt-in (DB_ALLOW_SQLITE_DEMO=1) or default Vercel serverless demo mode:
+  // allow the ephemeral SQLite deployment mode (VERCEL_DEPLOY.md Option A) — bypasses BOTH
+  // the SQLite rejection and the PostgreSQL-only requirement below.
+  if (
+    process.env.DB_ALLOW_SQLITE_DEMO === "1" ||
+    (Boolean(process.env.VERCEL) && (!url || url.startsWith("file:") || url.includes("sqlite")))
+  ) {
     return;
   }
 

@@ -84,8 +84,8 @@ export function CartDrawer() {
                 </SheetTitle>
                 <p className="text-[11px] font-semibold text-[var(--color-dowgnut-blue-dark)]/50">
                   {itemCount > 0
-                    ? `${itemCount} dowg${itemCount === 1 ? "" : "s"} selected`
-                    : "No dowgs added yet"}
+                    ? `${itemCount} donut${itemCount === 1 ? "" : "s"} selected`
+                    : "No donuts added yet"}
                 </p>
               </div>
             </div>
@@ -313,7 +313,7 @@ export function CartDrawer() {
             </motion.button>
 
             {/* Footer sub-links */}
-            <div className="mt-2 flex items-center justify-between text-[11px] text-[var(--color-dowgnut-blue-dark)]/40 font-semibold">
+            <div className="mt-2 flex items-center justify-between text-[11px] text-[var(--color-dowgnut-blue-dark)]/40 font-semibold pb-[calc(env(safe-area-inset-bottom,0px)+0.75rem)]">
               <button
                 onClick={onClear}
                 className="hover:text-red-500 transition-colors cursor-pointer inline-flex items-center gap-1"

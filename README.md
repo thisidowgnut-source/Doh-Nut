@@ -1,8 +1,8 @@
 ---
 title: "DOH-NUT — Malaysian Donut Drop Documentation"
 document_id: "SMS-DOHNUT-README-001"
-version: "1.5.0"
-last_updated: "2026-09-10 10:25:00"
+version: "1.6.4"
+last_updated: "2026-09-16 04:20:00"
 maintainer: "Antigravity / Sovereign Architect"
 classification: "Public / Project Overview"
 lifecycle_status: "Active / Living Standard"
@@ -24,11 +24,13 @@ The whole thing deploys to **Vercel in one click** and ships with a real-time tr
 
 ## 🔄 Current Interaction Contract
 
-- Home renders three category donuts: Classic, Sprinkled, and Stuffed.
-- Clicking a Home donut stores its category, animates the same image with Framer Motion (`x` to the right, `rotate: 360`, and a reducing `scale`), then routes to the matching Slider category.
-- `LayoutGroup`, `AnimatePresence`, and category `layoutId` values connect the Home image to the active Slider image. Home does **not** open the half-donut nutrition detail.
-- In Slider, side donuts center first; clicking the centered donut opens the intentional right-side half-donut detail with nutrition information on the left.
-- `/wireframe` is the interactive grayscale route for reviewing the documented screens without changing the production clay UI.
+- **The 3-Screen Continuous 360° Rotation Continuum**:
+  - **Screen 1 (Home Stack)**: Three stacked category donuts (Classic, Sprinkled, Stuffed) sit upright at `rotate: 0°`.
+  - **Screen 2 (3D Ring Slider)**: Clicking a Home category donut transitions seamlessly into the 3D ring slider center via `layoutId`, performing a full clockwise roll to `rotate: 360°` at **`2.1s`** with an `easeInOutCubic` curve (`[0.37, 0, 0.63, 1]`). Sibling donuts around the ring smoothly fade in at `delay: 0.7s` (`scale: 0.6 ➔ 1`), and the bottom card slides up at `delay: 0.75s` (`y: 35 ➔ 0`).
+  - **Screen 3 (Half-Donut Split Detail)**: Clicking the centered donut glides it to the right (`-mr-24` bleed-off) while rolling another 360° clockwise to `rotate: 720°` at **`2.1s`**. Staggered nutrition pills (*Salt, Sugar, Fat, Energy*) slide from the left (`delay: 0.4s – 0.7s`), and the Total + Stepper card slides up (`delay: 0.7s`).
+  - **Back Navigation**: Perfectly reverses counter-clockwise (`720° ➔ 360° ➔ 0°`) without any visual blink, jump, or disappearing elements.
+- `LayoutGroup`, `AnimatePresence (mode="popLayout")`, and category `layoutId` values maintain visual continuity across all view states.
+- `/wireframe` is the interactive grayscale route for reviewing documented screens and developer specifications.
 
 ---
 
@@ -269,6 +271,7 @@ Private / All Rights Reserved. Contact the maintainer for licensing inquiries.
 ## 📋 Audit & Revision Ledger (SMS-v1.0)
 | Version | Timestamp (MYT) | Author | Why (Intent / Trigger) | How (Modifications & Touched Areas) | Validation Proof |
 | :--- | :--- | :--- | :--- | :--- | :--- |
+| `1.6.4` | 2026-09-16 04:20:00 | Sovereign Conductor & 8-Agent Squad | Putaran Donat 360° Menyeluruh (1 ➔ 2 ➔ 3) & Kelajuan 2.1s (-20%) | 0°(Home) ➔ 360°(Slider) ➔ 720°(Detail) durasi 2.1s [0.37, 0, 0.63, 1], siblings delay 0.7s, kad bawah 0.75s, nutrisi delay 0.4s-0.7s | `bun test`: 62/62 pass, `bun run build`: 14/14 OK |
 | `1.4.0` | 2026-09-07 19:10:00 | Sovereign Conductor | Audit P1/P2 resolution & hardening | Admin revenue accuracy, timing-safe bypass, offline local assets, stock guards, Order index | `bun test`: 49/49 tests pass |
 | `1.2.0` | 2026-09-05 09:30:00 | Sovereign Conductor | Alignment semua dokumen projek (.md) | Tambah SMS-v1.0 frontmatter & ledger; perbetul 31 SKU katalog, path logo rasmi | `bun run build`: 13/13 pages OK |
 | `1.1.0` | 2026-09-02 18:00:00 | Hermes Agent | Rebrand visual & palette | Kemaskini tema kuning/merah/navy dan DOH Language | Browser DOM verified |

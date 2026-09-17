@@ -183,7 +183,7 @@ export function AIConcierge() {
 
           {/* Suggestions — always visible so users always have a
               tap-to-start affordance, not only on the first message. */}
-          <div className="flex gap-2 overflow-x-auto scrollbar-dowgnut px-4 pb-2">
+          <div className="flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden px-4 pb-2">
             {SUGGESTIONS.map((s) => (
               <button
                 key={s}

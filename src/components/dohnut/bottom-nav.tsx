@@ -129,9 +129,9 @@ export function BottomNav() {
                 {item.badge && item.badge > 0 ? (
                   <motion.span
                     key={item.badge}
-                    initial={{ scale: 0.82, opacity: 0 }}
+                    initial={{ scale: 0.6, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                    transition={{ type: "spring", stiffness: 600, damping: 14 }}
                     className="absolute -right-2.5 -top-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-[var(--color-dowgnut-pink)] px-1 text-[9px] font-black text-white shadow-sm ring-2 ring-[var(--color-dowgnut-cream)]"
                   >
                     {item.badge}

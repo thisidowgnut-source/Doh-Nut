@@ -1,6 +1,6 @@
 # DOH-NUT Documentation Refresh Report
 
-> **Current status — 2026-09-10:** This report is a documentation audit record, not a substitute for runtime verification. The current application includes the Home → Slider shared transition, `/wireframe` preview route, Bun test workflow, Prisma Decimal compatibility fix, and Copilot Superpowers plugin setup. Historical audit findings below remain evidence and are not silently rewritten.
+> **Current status — 2026-09-16:** This report is a living documentation audit record. The current application includes the 3-screen continuous 360° donut rotation continuum (0° Home Stack ➔ 360° 3D Slider Center ➔ 720° Half-Donut Split Detail) calibrated to **2.1s** (`easeInOutCubic: [0.37, 0, 0.63, 1]`), `/wireframe` preview suite (10 screens), Bun test workflow (62/62 pass), and Next.js 16 production build gate (14/14 static and dynamic routes OK). Historical audit findings below remain evidence and are not silently rewritten.
 
 ## Overview
 This report documents the audit and update of all project-owned Markdown files in the DOH-NUT repository to align with current source, correct misleading claims, and ensure accuracy.
@@ -80,5 +80,5 @@ Total Markdown files audited: 32 (excluding node_modules, .bun-cache, .git, .nex
 - Files excluded: 0 (all project-owned .md processed)
 
 ## Completed
-Snapshot date: 2026-09-10 10:25 MYT
+Snapshot date: 2026-09-16 04:20 MYT
 Repairs in progress: None for the documentation alignment scope. Runtime changes remain governed by source code and current build/test output.

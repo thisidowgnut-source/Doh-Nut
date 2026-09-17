@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "buildCommand": "bun run build",
+  "installCommand": "bun install",
+  "env": {
+    "DB_ALLOW_SQLITE_DEMO": "1"
+  },
+  "build": {
+    "env": {
+      "DB_ALLOW_SQLITE_DEMO": "1"
+    }
+  },
+  "github": {
+    "silent": true
+  }
+}

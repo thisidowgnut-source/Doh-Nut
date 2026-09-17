@@ -70,3 +70,10 @@ tsc-out.txt
 # Tool results (verification artifacts)
 /tool-results/
 
+
+# Agent local cache & tooling
+.agents/
+.gemini/
+.playwright-cli/
+.superpowers/
+audit-screenshots/

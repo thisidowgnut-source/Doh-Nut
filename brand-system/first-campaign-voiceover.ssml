@@ -1,0 +1,32 @@
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="ms-MY">
+  <voice name="ms-MY-YasminNeural">
+    <prosody rate="+14%" pitch="+2Hz">
+      <!-- 00:00.0 - 00:02.0 [Hook] -->
+      <emphasis level="strong">DOH NUT PANIC!</emphasis>
+      <break time="120ms"/>
+      Tengok lelehan gebu ni, terus hilang stress kan?
+      <break time="200ms"/>
+
+      <!-- 00:02.0 - 00:04.5 [Knead & Stamp] -->
+      Uli sampai kembang,
+      <break time="80ms"/>
+      tekan acuan sampai <emphasis level="moderate">pop!</emphasis>
+      <break time="180ms"/>
+
+      <!-- 00:04.5 - 00:06.5 [Sizzle & Dip] -->
+      Goreng garing keemasan,
+      <break time="90ms"/>
+      lepastu celup sos strawberi tebal-tebal!
+      <break time="150ms"/>
+
+      <!-- 00:06.5 - 00:07.5 [Sprinkle] -->
+      Tabur sprinkles warna-warni...
+      <break time="120ms"/>
+      <emphasis level="strong">DOH SEDAP WEI!</emphasis>
+      <break time="180ms"/>
+
+      <!-- 00:07.5 - 00:08.8 [Loop Bridge Setup] -->
+      So bila hidup kau rasa serabut tu, ingat satu je...
+    </prosody>
+  </voice>
+</speak>

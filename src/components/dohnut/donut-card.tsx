@@ -138,7 +138,7 @@ export function DonutCard({ donut }: DonutCardProps) {
           onClick={onAdd}
           disabled={donut.stock <= 0}
           aria-label={`Add ${donut.name} to cart`}
-          className="mt-1.5 inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full bg-[var(--color-dowgnut-blue)] text-xs font-bold text-white transition-[background-color,transform] duration-150 ease-out hover:bg-[var(--color-dowgnut-blue-dark)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 shadow-xs cursor-pointer"
+          className="mt-1.5 inline-flex h-8 w-full items-center justify-center gap-1.5 rounded-full bg-[var(--color-dowgnut-pink)] text-xs font-bold text-white transition-[background-color,transform] duration-150 ease-out hover:bg-[var(--color-dowgnut-pink-dark)] active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 shadow-xs cursor-pointer"
         >
           <Plus className="size-3.5" /> Add to Cart
         </button>

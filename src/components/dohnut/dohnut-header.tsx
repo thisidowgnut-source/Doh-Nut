@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingCart, Menu, Sparkles } from "lucide-react";
+import { ShoppingCart, Menu, Sparkles, Volume2, VolumeX } from "lucide-react";
 import { useShop } from "@/store/use-shop";
+import { isSoundEnabled, setSoundEnabled, playTap } from "@/lib/sounds";
 import {
   Sheet,
   SheetContent,
@@ -29,8 +30,13 @@ export function DohnutHeader({ scrollContainer }: DohnutHeaderProps) {
   const setDesignerOpen = useShop((s) => s.setDesignerOpen);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [soundOn, setSoundOn] = useState(true);
 
   const cartCount = cart.reduce((n, c) => n + c.quantity, 0);
+
+  useEffect(() => {
+    setSoundOn(isSoundEnabled());
+  }, []);
 
   useEffect(() => {
     const target = scrollContainer ?? window;
@@ -61,7 +67,7 @@ export function DohnutHeader({ scrollContainer }: DohnutHeaderProps) {
         <button
           onClick={() => go("shop")}
           className="-ml-2 flex shrink-0 items-center gap-2 rounded-full px-2 py-1 transition-transform hover:scale-105 cursor-pointer"
-          aria-label="DowgNut home"
+          aria-label="Doh-Nut home"
         >
           <DowgNutLogo height={scrolled ? 38 : 48} variant={scrolled ? "pill" : "plain"} />
         </button>
@@ -161,6 +167,32 @@ export function DohnutHeader({ scrollContainer }: DohnutHeaderProps) {
                     {item.l}
                   </button>
                 ))}
+
+                <div className="mt-3 border-t border-[var(--color-dowgnut-blue-dark)]/10 pt-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const next = !soundOn;
+                      setSoundOn(next);
+                      setSoundEnabled(next);
+                      if (next) playTap(520);
+                    }}
+                    className="flex w-full items-center justify-between rounded-2xl bg-white/70 px-4 py-3 text-sm font-bold text-[var(--color-dowgnut-blue-dark)] shadow-xs transition-colors hover:bg-white cursor-pointer"
+                    aria-label={soundOn ? "Mute sound effects" : "Enable sound effects"}
+                  >
+                    <span className="flex items-center gap-2.5">
+                      {soundOn ? (
+                        <Volume2 className="size-4 text-emerald-600" />
+                      ) : (
+                        <VolumeX className="size-4 text-zinc-400" />
+                      )}
+                      Sound Effects
+                    </span>
+                    <span className="rounded-full bg-[var(--color-dowgnut-cream)] px-2.5 py-0.5 text-xs font-black text-[var(--color-dowgnut-pink)] border border-[var(--color-dowgnut-pink)]/20">
+                      {soundOn ? "ON" : "OFF"}
+                    </span>
+                  </button>
+                </div>
               </div>
             </SheetContent>
           </Sheet>

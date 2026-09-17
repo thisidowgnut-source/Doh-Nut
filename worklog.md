@@ -1,5 +1,21 @@
 
 ---
+## 2026-09-16 — Continuous 360° Donut Rotation Continuum (Screens 1 ➔ 2 ➔ 3) & 2.1s Motion Calibrations
+
+- **Task**: Penalaan putaran donat sinematik 360° menyeluruh merentasi 3 skrin dan pelarasan kelajuan 20% lebih laju (`2.6s ➔ 2.1s`).
+- **Implementasi**:
+  - `src/app/page.tsx`: Mod `AnimatePresence` diselaraskan ke `popLayout` dengan `viewVariants` (`duration: 2.1s`, `easeInOutCubic: [0.37, 0, 0.63, 1]`) bagi menghapuskan sebarang lonjakan koordinat atau pemotongan visual.
+  - `src/components/dohnut/shop-home.tsx`: Donat kategori Home stack bermula pada `rotate: 0°` dengan transisi `layout` dan `rotate` seragam `2.1s`.
+  - `src/components/dohnut/donut-slider.tsx`:
+    - `RingCard`: Donat tengah bersambung via `layoutId` dan berputar penuh ke `rotate: 360°` sepanjang `2.1s`. Donat jiran memudar masuk secara anggun (`initial: { opacity: 0, scale: 0.6 }`, `delay: 0.7s, duration: 0.65s`). Kad bawah meluncur naik pada `delay: 0.75s`.
+    - `Half-Donut Split Detail`: Unmount bersih pada `RingCard` semasa `detailOpen` membolehkan imej meluncur ke kanan (`-mr-24` bleed-off) sambil berputar lagi ke `rotate: 720°` sepanjang `2.1s`. Kad nutrisi muncul berperingkat pada `delay: 0.4s – 0.7s`. Kad Total bawah muncul pada `delay: 0.7s`.
+    - `Back Navigation`: Berputar balik secara lawan jam (`720° ➔ 360° ➔ 0°`) secara berterusan tanpa kelipan atau kehilangan elemen (*zero blink*).
+- **Validasi**:
+  - `bun test`: 62/62 ujian lulus 100% merentasi 15 fail ujian.
+  - `bun run build`: 14/14 laluan statik dan pelayan berjaya dijana dengan 0 ralat TypeScript.
+  - Pelayan pembangunan Turbo Next.js aktif pada `http://localhost:3000`.
+
+---
 ## 2026-09-10 — Documentation and workflow alignment
 
 - Reviewed the project-owned Markdown inventory and preserved historical research evidence instead of rewriting old audit claims.
@@ -278,3 +294,23 @@ Work Log:
 Stage Summary:
 - 49/49 ujian unit lulus 100% (0 fail).
 - Semua 4 isu audit P1/P2 selesai diselesaikan tanpa sebarang perubahan konsep reka bentuk.
+
+## 2026-09-16: Hermes social conductor integration review
+
+- Scope: Doh-Nut first, with Hermes-WebApp as the operating interface and Hermes as conductor. Proposal and read-only application inspection; no application code or publishing state changed.
+- Verified 105 schedule entries across five platforms, all referenced media files present, and missing local `mini-services/social-sync/posts_history.db`. Existing social script implements simulation rather than publication.
+- Normal validator run exited 1: Facebook blueprint contact/banner check, X blueprint bio length, and YouTube blueprint specification. These are local document checks, not live-account verification.
+- WebApp listener on 9220 and accounts GET endpoint responded; WebBridge reported daemon/extension connected. WebApp source has default simulated swarm execution, navigation-only publish, approval-only dispatch claims, static account labels and template-based generation.
+- Added `docs/hermes-social-conductor-integration-2026-09-16.md` with source evidence, system ownership, state contract, platform constraints, implementation slices and acceptance gates. Preserved existing dirty files and ongoing work in both repositories.
+
+## 2026-09-16: Unified Hermes synthesis
+
+- User requested synthesis of the discussion. Added `docs/hermes-conductor-synthesis-2026-09-16.md` covering Hermes conductor, WebApp operating interface, AGY worker contract, Doh-Nut workspace and Obsidian evidence memory.
+- Preserved verification levels: WebApp/WebBridge last observed online; source-presence and simulations distinct from functional execution; AGY print test timed out after 40 seconds with an empty response despite a SUCCESS envelope.
+- Defined M0-M5 implementation gates, with the first deliverable being a real WebApp-to-Hermes Doh-Nut mission producing artifacts and verifier evidence. No application implementation or external actions performed.
+
+## 2026-09-16: User correction - preserve existing AGY workflow
+
+- User clarified that AGY CLI and eight subagents were already set up for social media; the motivation for Hermes-WebApp is access without sitting at the PC.
+- Corrected the synthesis: prioritize authenticated remote conversation with existing AGY/project/session and reuse its workflows. Native Hermes replacement is no longer the first milestone. Earlier mock findings concern inspected WebApp/local simulator paths, not the whole AGY workflow.
+- Read-only verification: native `agy remote-control` exists but status is not registered; WebApp terminal opens a generic PowerShell session and Telegram handler forwards to n8n. No remote daemon started and downstream n8n not audited.

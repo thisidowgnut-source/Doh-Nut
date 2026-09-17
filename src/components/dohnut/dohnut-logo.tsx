@@ -17,23 +17,21 @@ export function DowgNutLogo({
   height = 48,
   variant = "plain",
   className,
-  alt = "DowgNut logo",
+  alt = "Doh-Nut logo",
 }: {
   height?: number;
   variant?: "plain" | "pill";
   className?: string;
   alt?: string;
 }) {
-  const width = Math.round(height * 2.5);
-
   const img = (
     <Image
       src="/brand/dohnut-logo-wordmark.png"
       alt={alt}
-      width={width}
+      width={height}
       height={height}
       priority
-      style={{ height, width: "auto" }}
+      style={{ width: `${height}px`, height: `${height}px` }}
       className="object-contain"
       draggable={false}
     />
@@ -54,3 +52,5 @@ export function DowgNutLogo({
 
   return <span className={cn("inline-flex items-center", className)}>{img}</span>;
 }
+
+export const DohnutLogo = DowgNutLogo;

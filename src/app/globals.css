@@ -292,6 +292,14 @@
     background: #1d355799;
     background-clip: content-box;
   }
+  /* Sleek native mobile app scrolling: hides raw desktop scrollbars while preserving full scrollability */
+  .overflow-y-auto {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .overflow-y-auto::-webkit-scrollbar {
+    display: none;
+  }
   .animate-float {
     animation: dowgnut-float 4s ease-in-out infinite;
   }

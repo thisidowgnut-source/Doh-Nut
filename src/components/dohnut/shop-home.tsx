@@ -62,15 +62,15 @@ export function ShopHome() {
   }, [donuts]);
 
   return (
-    <div className="relative flex h-full w-full flex-1 flex-col items-center justify-between px-4 py-1 overflow-hidden select-none">
+    <div className="relative flex h-full w-full flex-1 flex-col items-center justify-between px-4 py-1 overflow-visible select-none">
       {/* Floating sprinkle particles */}
       <ParticleBackground count={32} />
 
       {/* Iconic Heading */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
+        animate={{ opacity: selectedType ? 0 : 1, y: selectedType ? -12 : 0 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="relative z-10 text-center pt-1 shrink-0"
       >
         <h1 className="graffiti-text text-2xl tracking-wide text-[var(--color-dowgnut-blue-dark)] sm:text-3xl drop-shadow-xs">
@@ -82,8 +82,8 @@ export function ShopHome() {
       {streak > 0 && (
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 350, damping: 20 }}
+          animate={{ opacity: selectedType ? 0 : 1, scale: selectedType ? 0.8 : 1 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           className="relative z-10 -mt-1 inline-flex items-center gap-1 rounded-full bg-[var(--color-dowgnut-pink)]/10 px-3 py-0.5 shadow-xs shrink-0"
         >
           <span className="text-xs font-bold text-[var(--color-dowgnut-pink-dark)]">
@@ -97,6 +97,8 @@ export function ShopHome() {
         {TYPES.map((t, i) => {
           const preview = typePreview[t.key];
           const imgSrc = preview?.imgUrl || t.defaultImg;
+          const selectedIdx = TYPES.findIndex((x) => x.key === selectedType);
+          const isSibling = Boolean(selectedType && selectedType !== t.key);
 
           return (
             <motion.button
@@ -109,18 +111,41 @@ export function ShopHome() {
                 setView("slider");
               }}
               initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.05 + i * 0.08, type: "spring", stiffness: 240, damping: 22 }}
-              whileHover={{ scale: 1.08, zIndex: 40 }}
-              whileTap={{ scale: 0.93 }}
+              animate={{
+                opacity: isSibling ? 0 : 1,
+                scale: isSibling ? 0.82 : 1,
+                y: isSibling ? (i < selectedIdx ? -36 : 36) : 0,
+                filter: isSibling ? "blur(5px)" : "none",
+              }}
+              transition={{
+                delay: selectedType ? 0 : 0.05 + i * 0.08,
+                duration: selectedType ? 0.5 : undefined,
+                type: selectedType ? "tween" : "spring",
+                stiffness: 240,
+                damping: 22,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              whileHover={selectedType ? undefined : { scale: 1.08, zIndex: 40 }}
+              whileTap={selectedType ? undefined : { scale: 0.93 }}
               className={cn(
                 "group relative flex items-center justify-center cursor-pointer select-none transition-transform duration-200",
-                i === 0 ? "z-30" : i === 1 ? "z-20" : "z-10"
+                i === 0 ? "z-30" : i === 1 ? "z-20" : "z-10",
+                isSibling && "pointer-events-none"
               )}
               aria-label={`Browse ${t.label} donuts`}
             >
-              <div className="absolute -bottom-1 h-5 w-44 sm:w-56 rounded-full bg-black/15 blur-lg transition-transform duration-300 group-hover:scale-115 pointer-events-none" />
-              <div className="absolute bottom-1 h-2.5 w-28 sm:w-36 rounded-full bg-black/20 blur-xs transition-transform duration-300 group-hover:scale-110 pointer-events-none" />
+              <div
+                className={cn(
+                  "absolute -bottom-1 h-5 w-44 sm:w-56 rounded-full bg-black/15 blur-lg transition-transform duration-300 pointer-events-none",
+                  !selectedType && "group-hover:scale-115"
+                )}
+              />
+              <div
+                className={cn(
+                  "absolute bottom-1 h-2.5 w-28 sm:w-36 rounded-full bg-black/20 blur-xs transition-transform duration-300 pointer-events-none",
+                  !selectedType && "group-hover:scale-110"
+                )}
+              />
 
               <motion.img
                 layoutId={`category-donut-${t.key}`}
@@ -128,20 +153,11 @@ export function ShopHome() {
                 alt={t.label}
                 className="size-48 sm:size-56 md:size-64 object-contain drop-shadow-2xl filter transition-transform duration-200"
                 draggable={false}
-                animate={
-                  shouldReduceMotion || selectedType !== t.key
-                    ? { rotate: 0, scale: 1 }
-                    : {
-                        x: [0, 34, 110],
-                        rotate: 360,
-                        scale: [1, 0.96, 0.9],
-                      }
-                }
-                transition={
-                  shouldReduceMotion || selectedType !== t.key
-                    ? { duration: 0 }
-                    : { duration: 1.45, ease: [0.22, 1, 0.36, 1] }
-                }
+                animate={{ rotate: 0 }}
+                transition={{
+                  layout: { duration: 2.1, ease: [0.37, 0, 0.63, 1] },
+                  rotate: { duration: 2.1, ease: [0.37, 0, 0.63, 1] },
+                }}
               />
             </motion.button>
           );

@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, Instagram, Package, Store, Twitter } from "lucide-react";
+import { Facebook, Heart, Instagram, Package, Store, Twitter } from "lucide-react";
 import { useShop } from "@/store/use-shop";
 
 export function DowgnutFooter() {
@@ -108,13 +108,62 @@ export function DowgnutFooter() {
             Connect
           </p>
           <ul className="mt-3 space-y-2 text-sm text-white/80">
-            <li className="inline-flex items-center gap-2">
-              <Instagram className="size-4 text-[var(--color-dowgnut-pink-soft)]" />
-              @dowgnut.my
+            <li>
+              <a
+                href="https://www.tiktok.com/@thisisdohnut"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 hover:text-[var(--color-dowgnut-pink-soft)] transition-colors"
+              >
+                <svg className="size-4 text-[var(--color-dowgnut-pink-soft)] fill-current" viewBox="0 0 24 24">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.47 6.3 6.3 0 0 0 1.86-4.47V8.73a8.21 8.21 0 0 0 4.91 1.63v-3.44a4.85 4.85 0 0 1-1-.23z"/>
+                </svg>
+                TikTok: @thisisdohnut
+              </a>
             </li>
-            <li className="inline-flex items-center gap-2">
-              <Twitter className="size-4 text-[var(--color-dowgnut-pink-soft)]" />
-              @dowgnut_my
+            <li>
+              <a
+                href="https://www.instagram.com/thisisdohnut/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 hover:text-[var(--color-dowgnut-pink-soft)] transition-colors"
+              >
+                <Instagram className="size-4 text-[var(--color-dowgnut-pink-soft)]" />
+                Instagram: @thisisdohnut
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.threads.net/@thisisdohnut"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 hover:text-[var(--color-dowgnut-pink-soft)] transition-colors"
+              >
+                <span className="text-[var(--color-dowgnut-pink-soft)] font-bold text-sm">@</span>
+                Threads: @thisisdohnut
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.facebook.com/people/Doh-Nut/pfbid0JWqG7Lo6Mvwkx7NQFVaY6vuuCXWCSkoNBrxDuPLGyw4un6E2tezzw3GFTRAWb4F7l/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 hover:text-[var(--color-dowgnut-pink-soft)] transition-colors"
+              >
+                <Facebook className="size-4 text-[var(--color-dowgnut-pink-soft)]" />
+                Facebook: Doh Nut
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://x.com/thisisdohnut"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 hover:text-[var(--color-dowgnut-pink-soft)] transition-colors"
+              >
+                <Twitter className="size-4 text-[var(--color-dowgnut-pink-soft)]" />
+                X (Twitter): @thisisdohnut
+              </a>
             </li>
           </ul>
           <p className="mt-4 text-xs text-white/50">

@@ -1,0 +1,2339 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "metadata": {
+    "title": "DOH-NUT 7-Day Social Media Scheduling Matrix",
+    "document_id": "SMS-DOHNUT-SCHEDULE-MATRIX-001",
+    "version": "1.0.0",
+    "last_updated": "2026-09-12T09:00:00+08:00",
+    "maintainer": "Doh-Nut Social Autopilot (Autonomous Operations & Distribution Commander)",
+    "brand": "DOH-NUT™",
+    "official_handle": "@thisisdohnut",
+    "official_website": "https://dohnut.my",
+    "contact_email": "thisisdohnut@gmail.com",
+    "location": "Kuala Lumpur, Malaysia",
+    "timezone": "Asia/Kuala_Lumpur (GMT+8)",
+    "lifecycle_status": "ACTIVE_PRODUCTION_SCHEDULE",
+    "schedule_cycle": "Week 1: Launch & Craving Activation (Day 1 - Day 7)"
+  },
+  "peak_craving_windows": {
+    "slot_a": {
+      "slot_id": "SLOT_A_LUNCH_CRAVING",
+      "name": "Slot A (Lunch Craving)",
+      "time_window": "11:45 AM - 12:30 PM",
+      "scheduled_time": "11:45 AM",
+      "psychology": "Waktu pekerja pejabat mula lapar, browse food delivery, dan rancang dessert lepas makan tengah hari."
+    },
+    "slot_b": {
+      "slot_id": "SLOT_B_TEA_TIME",
+      "name": "Slot B (Tea-Time / Petang Mengantuk)",
+      "time_window": "03:30 PM - 04:30 PM",
+      "scheduled_time": "03:30 PM",
+      "psychology": "Waktu 'sugar drop' dan mengantuk di meja pejabat. Dorongan kuat untuk pesan Grab/delivery berkumpulan."
+    },
+    "slot_c": {
+      "slot_id": "SLOT_C_SUPPER_SCROLL",
+      "name": "Slot C (Supper / Night Scroll)",
+      "time_window": "08:45 PM - 10:30 PM",
+      "scheduled_time": "08:45 PM",
+      "psychology": "Waktu santai di rumah/katil selepas makan malam. Penggunaan FYP TikTok & Reels memuncak untuk visual ASMR dan craving lewat malam."
+    }
+  },
+  "hashtag_strategy_3tier": {
+    "tier_1_mega_niche": [
+      "#foodtiktok",
+      "#klfoodie",
+      "#malaysiafoodie",
+      "#viralfood"
+    ],
+    "tier_2_product_specific": [
+      "#dohnut",
+      "#kuihkeria",
+      "#donutviral",
+      "#bomboloni",
+      "#sirakuihkeria",
+      "#sirasambal",
+      "#pandangulamelaka",
+      "#musangkingdurian"
+    ],
+    "tier_3_brand_campaign": [
+      "#GoodVibeGoodDoh",
+      "#DohSedap",
+      "#DohNutWorry",
+      "#DohNutPanic",
+      "#DohBoleh"
+    ]
+  },
+  "anti_shadowban_stealth_config": {
+    "session_engine": "cookies.txt / Playwright storageState",
+    "jitter_seconds_range": {
+      "min": 3,
+      "max": 7
+    },
+    "history_ledger": "mini-services/social-sync/posts_history.db",
+    "ip_rotation": "Static Residential KL Proxy / Direct Fiber",
+    "max_posts_per_platform_daily": 3
+  },
+  "schedule": [
+    {
+      "day_number": 1,
+      "day_title": "Day 1 - Grand Launch & DOH-NUT PANIC Hype",
+      "campaign_phase": "Launch & Awareness",
+      "theme": "Pengenalan Rasmi Universe DOH-NUT, Claymation Art, dan 'DOH NUT PANIC' Delivery KL",
+      "slots": [
+        {
+          "slot_key": "slot_a",
+          "slot_name": "Slot A (Lunch Craving)",
+          "scheduled_time": "11:45 AM",
+          "target_audience": "Office crowd KL mencari pencuci mulut tengah hari",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Lapar tengah hari tapi bosan makan benda sama? DOH NUT PANIC! 🍩💥",
+              "caption": "DOH NUT PANIC! 🍩💥 Hari ni rasmi dilancarkan di KL! Donat artisan buatan Malaysia dengan tekstur gebu gila dan rasa ikonik. Tag kawan korang yang perlukan gula sekarang juga!",
+              "cta": "Tekan link bio dohnut.my untuk order batch pertama!",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#klfoodie", "#malaysiafoodie", "#viralfood"],
+                "tier_2": ["#dohnut", "#donutviral", "#bomboloni"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-hands-making-donut.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Tactile Claymation Hands Making Donut (5.1MB)"
+              },
+              "audio_track": "Original Sound - DOH-NUT ASMR Crunch & Sizzle"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "Something GOOD is officially taking shape in Kuala Lumpur... 🍩✨",
+              "caption": "🇲🇾 Malaysian-Born Artisan Donuts are HERE! DOH NUT PANIC! 🍩💥 Freshly glazed daily in KL. Tekstur bantal gebu dengan lelehan glaze berkilau. MAKE IT. PLAY IT. EAT IT. SHARE IT.",
+              "cta": "Link in bio to order delivery across Klang Valley 📦✨",
+              "doh_phrase": "DOH NUT PANIC",
+              "story_highlight_tag": "DONUT_MENU",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie", "#viralfood"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-commercial.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "High-energy DOH-NUT commercial reel"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "DOH NUT PANIC, lunch dessert korang dah settle. 🍩",
+              "caption": "DOH NUT PANIC, lunch korang dah settle ke belum? 🍩 Rasmi launch hari ni dekat KL. Siapa nak donat fresh panas-panas dari dapur?",
+              "cta": "Order kat dohnut.my sekarang wei!",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/dohnut-mascot.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Doh Boy Mascot Yellow Avatar"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Pengumuman Rasmi Pembukaan DOH-NUT™ Malaysia!",
+              "caption": "Bold, playful, authentic donuts — freshly glazed daily and delivered across Klang Valley, Malaysia. DOH NUT PANIC! 🍩💥 Nikmati 31 kombinasi perisa artisan bermula hari ini. Penghantaran terus ke pintu rumah atau pejabat anda.",
+              "cta": "Klik pautan https://dohnut.my atau WhatsApp kami untuk tempahan korporat & kenduri!",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_classic1.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Classic Golden Glazed Donut"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "DOH NUT PANIC 🍩💥",
+              "caption": "DOH NUT PANIC 🍩💥 Malaysian-born playful donut universe is officially LIVE. Freshly glazed & delivered in KL. GOOD VIBE. GOOD DOH. Order now 👇 dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/dohnut-logo-wordmark.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "16:9",
+                "description": "DOH-NUT Bold Wordmark"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_b",
+          "slot_name": "Slot B (Tea-Time / Petang Mengantuk)",
+          "scheduled_time": "03:30 PM",
+          "target_audience": "Pekerja pejabat yang perlukan 'sugar kick' pukul 3.30 petang",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Pukul 3.30 petang mata dah rabak? DOH SEDAP wei! 🥱🤤",
+              "caption": "Masa kritikal mengantuk kat ofis. Tengok macam mana tangan claymation ni knead doh gebu DOH-NUT! Bunyi ASMR doh ni confirm buat korang lapar balik. DOH SEDAP!",
+              "cta": "Komen 'DOH' kalau ofis korang perlukan Box of 6 petang ni!",
+              "doh_phrase": "DOH SEDAP",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#viralfood", "#klfoodie"],
+                "tier_2": ["#dohnut", "#bomboloni"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-splash.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Claymation Brand Creation Video"
+              },
+              "audio_track": "ASMR Frying Dough Bubble & Pop"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "carousel",
+              "hook": "3:30 PM Slump? We got the ultimate cure. ☕🍩",
+              "caption": "DOH SEDAP! Petang-petang macam ni memang kena ada gandingan teh tarik panas dan donat berkrim. DOH NUT STRESS, kongsi satu kotak dengan geng sekerja hari ni!",
+              "cta": "Tap save & share to your office group chat! Order link in bio.",
+              "doh_phrase": "DOH SEDAP",
+              "story_highlight_tag": "DELIVERY",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/teh-tarik-kaw.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Teh Tarik Kaw Artisan Donut"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "3.30 petang adalah waktu keramat Grab. DOH LAH!",
+              "caption": "DOH LAH wei, pukul 3.30 petang ni takkan nak tengok skrin laptop je kosong? DOH SEDAP makan donat glazed panas-panas.",
+              "cta": "Siapa belanja minum petang hari ni?",
+              "doh_phrase": "DOH LAH",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/teh-tarik-foam.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Teh Tarik Foam Donut Visual"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Minum Petang Bersama DOH-NUT™ — Fresh Dari Oven!",
+              "caption": "Mengantuk di tempat kerja? DOH NUT WORRY! Kami ada pelbagai pilihan donut gebu termasuk perisa tempatan Teh Tarik Kaw dan Keria Glaze. Sesuai untuk minum petang bersama rakan sekerja di seluruh Lembah Klang.",
+              "cta": "Pesan terus di https://dohnut.my untuk penghantaran segera sebelum 5 petang.",
+              "doh_phrase": "DOH NUT WORRY",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_sprinkled1.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sprinkled Rainbow Donut"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "3:30 PM vibe check: DOH SEDAP!",
+              "caption": "Pukul 3.30 petang otak jammed? DOH SEDAP layan donat glaze berkilat ni. GOOD VIBE. GOOD DOH. Order sekarang kat https://dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH SEDAP",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_classic2.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Glazed Donut Perfection"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_c",
+          "slot_name": "Slot C (Supper / Night Scroll)",
+          "scheduled_time": "08:45 PM",
+          "target_audience": "Night scrollers atas katil yang idamkan supper manis",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Scroll TikTok malam-malam ternampak donat meleleh ni... Jangan marah min! 🤤🌙",
+              "caption": "DOH GILER! Glaze leleh panas-panas pukul 8.45 malam. Siapa cakap tak boleh makan manis lepas dinner? DOH NUT WORRY, reward diri sendiri lepas penat seharian!",
+              "cta": "Tekan beg kuning atau link bio dohnut.my untuk slot esok pagi!",
+              "doh_phrase": "DOH GILER",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#viralfood", "#klfoodie"],
+                "tier_2": ["#dohnut", "#donutviral", "#bomboloni"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohGiler", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-hands-making-donut.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Night Glazing ASMR Video"
+              },
+              "audio_track": "Late Night Lofi Beat + Dough Glaze Drizzle"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "Night cravings hitting different tonight... 🌙✨",
+              "caption": "DOH MY GOSH! Bayangkan gigitan pertama donat panas ni cair kat lidah malam ni. DOH NUT PANIC, delivery kami buka setiap hari seawal 9 pagi. Tempah slot esok sekarang!",
+              "cta": "Save this reel for your midnight sweet tooth! Order link in bio.",
+              "doh_phrase": "DOH MY GOSH",
+              "story_highlight_tag": "REVIEWS",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie", "#viralfood"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-commercial.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Late Night Craving DOH-NUT reel"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "DOH NUT LIE, tengah scroll katil sambil craving benda manis kan? 🍩",
+              "caption": "DOH NUT LIE, korang tengah scroll telefon sambil fikir nak makan apa kan? Donat panas lembut menanti esok pagi.",
+              "cta": "Jumpa esok kat dohnut.my!",
+              "doh_phrase": "DOH NUT LIE",
+              "hashtags": {
+                "tier_1": ["#foodtiktok"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_stuffed1.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Stuffed Custard Donut"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Penutup Malam Yang Manis — DOH-NUT™ Malaysia",
+              "caption": "Tutup tirai hari anda dengan rasa yang membahagiakan. DOH NUT WORRY, anda boleh pra-pesan kotak DOH-NUT kegemaran anda sekarang untuk sarapan pagi esok. Dijamin segar setiap hari.",
+              "cta": "Pra-pesan sarapan esok di https://dohnut.my",
+              "doh_phrase": "DOH NUT WORRY",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_classic3.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Classic Donut Box"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "8:45 PM thoughts: DOH SEDAP.",
+              "caption": "Malam-malam macam ni kalau dapat sekotak donat panas... DOH SEDAP wei! Tidur lena impikan gula berkerak keria. Good night KL! 🍩🌙 https://dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH SEDAP",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-kuih-keria.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sira Kuih Keria Artisan Donut"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day_number": 2,
+      "day_title": "Day 2 - Heritage Twist (Sira Kuih Keria & Pandan Gula Melaka)",
+      "campaign_phase": "Product Deep Dive & Heritage Fusion",
+      "theme": "Gabungan Kuih Tradisi Malaysia dengan Artisan Donut: Sira Kuih Keria & Pandan Gula Melaka",
+      "slots": [
+        {
+          "slot_key": "slot_a",
+          "slot_name": "Slot A (Lunch Craving)",
+          "scheduled_time": "11:45 AM",
+          "target_audience": "Peminat kuih tradisional & makanan fusion tempatan",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Kuih Keria versi donat artisan? DOH, KAU DAH CUBA? 🍠🍩",
+              "caption": "DOH, KAU DAH CUBA? Kerak gula melaka berderap bila digigit, doh ubi keledek gebu gebas! Inilah Sira Kuih Keria Donut ciptaan DOH-NUT. Kombinasi tradisi yang confirm bikin ketagih!",
+              "cta": "Dapatkan perisa ikonik ni kat link bio!",
+              "doh_phrase": "DOH, KAU DAH CUBA?",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#kuihkeria", "#dohnut", "#sirakuihkeria"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-kuih-keria.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sira Kuih Keria Donut Close-up"
+              },
+              "audio_track": "Tradisi x Modern Lo-Fi Gamut"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "Malaysian Heritage Reimagined: The Sira Kuih Keria Donut. 🍠✨",
+              "caption": "DOH BOLEH! Kenapa pilih kuih keria biasa kalau boleh dapat tekstur artisan donut dengan kerak sira berkilat? Crafted with love & authentic Melaka palm sugar.",
+              "cta": "Drop a ❤️ if you love traditional kuih! Order via link in bio.",
+              "doh_phrase": "DOH BOLEH",
+              "story_highlight_tag": "DONUT_MENU",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#kuihkeria", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-hands-making-donut.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Glazing Keria Donut Reel"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "Debat paling panas: Kuih keria patut ada lubang ke tak? DOH APA NI?",
+              "caption": "DOH APA NI? Orang bergaduh kuih keria kena ada lubang ke tak, kami buat dua-dua terus jadi donat artisan! Kerak sira padu yakmat.",
+              "cta": "Order kat dohnut.my sekarang!",
+              "doh_phrase": "DOH APA NI?",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie"],
+                "tier_2": ["#kuihkeria", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-kuih-keria.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sira Kuih Keria Donut"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Warisan Rasa Malaysia — Sira Kuih Keria Donut",
+              "caption": "Kenangan kuih petang mak kini dijelmakan dalam bentuk donat artisan antarabangsa. DOH BOLEH! Kerak gula sira rangup di luar, lembut gebu di dalam. Sesuai untuk santapan sekeluarga.",
+              "cta": "Tempah kotak warisan kami di https://dohnut.my",
+              "doh_phrase": "DOH BOLEH",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#kuihkeria", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-kuih-keria.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sira Kuih Keria Facebook Showcase"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "Sira Kuih Keria Donut: DOH BOLEH!",
+              "caption": "Sira Kuih Keria Donut: Kerak gula sira berderap, isi doh gebu ubi keledek. DOH BOLEH! Malaysia punya kebanggaan rasa. Grab yours today 👇 dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH BOLEH",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#kuihkeria", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-kuih-keria.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Kuih Keria Donut Tweet Card"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_b",
+          "slot_name": "Slot B (Tea-Time / Petang Mengantuk)",
+          "scheduled_time": "03:30 PM",
+          "target_audience": "Peminat Pandan wangi & Gula Melaka asli",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Wangi pandan harum satu dapur! DOH SO GOOD! 🌿🥥",
+              "caption": "DOH SO GOOD! Bila ekstrak jus pandan asli bertemu titisan pekat Gula Melaka dan kelapa parut sangai. Donat Pandan Gula Melaka DOH-NUT ni buat petang korang terus bersinar!",
+              "cta": "Order sebelum pukul 4 petang untuk makan petang!",
+              "doh_phrase": "DOH SO GOOD",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#malaysiafoodie", "#viralfood"],
+                "tier_2": ["#pandangulamelaka", "#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/pandan-gula-melaka.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Pandan Gula Melaka Donut Close-up"
+              },
+              "audio_track": "Chill Acoustic Melodies + Malaysian Breeze"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "carousel",
+              "hook": "Aromatic Pandan & Pure Gula Melaka Drizzle. 🌿✨",
+              "caption": "DOH SEDAP! Rasa klasik onde-onde dalam gigitan donat artisan moden. Harum semerbak pandan dengan lelehan manis lemak santan. Sesuai gila untuk minum petang!",
+              "cta": "Tag your tea-time buddy! Order via link in bio.",
+              "doh_phrase": "DOH SEDAP",
+              "story_highlight_tag": "DONUT_MENU",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#pandangulamelaka", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/toasted-coconut.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Toasted Coconut Flakes Donut"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "Bau pandan asli > bau perfume mahal. DOH WEI!",
+              "caption": "DOH WEI, bau pandan asli donat ni buat satu ofis toleh kepala. Gandingan mantap dengan kopi petang.",
+              "cta": "Check menu kat dohnut.my",
+              "doh_phrase": "DOH WEI",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#pandangulamelaka", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/pandan-gula-melaka.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Pandan Donut on Wooden Board"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Pilihan Minum Petang Klasik: Pandan Gula Melaka",
+              "caption": "Nikmati keaslian rasa tempatan petang ini. Donat Pandan Gula Melaka disalut kelapa sangai wangi, memberikan pengalaman kulinari Malaysia yang sebenar. DOH NUT WORRY, penghantaran pantas ke pejabat anda.",
+              "cta": "Pesan di https://dohnut.my sekarang!",
+              "doh_phrase": "DOH NUT WORRY",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#pandangulamelaka", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/pandan-gula-melaka.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Pandan Donut Facebook Post"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "Pandan + Gula Melaka = DOH SEDAP!",
+              "caption": "Pandan wangi + Gula Melaka Melaka = DOH SEDAP! Padanan minum petang paling ngam untuk orang KL. GOOD VIBE. GOOD DOH. 🍩🌿 https://dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH SEDAP",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#pandangulamelaka", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/pandan-gula-melaka.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Pandan Donut Card"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_c",
+          "slot_name": "Slot C (Supper / Night Scroll)",
+          "scheduled_time": "08:45 PM",
+          "target_audience": "Penonton video ASMR lelehan sos gula melaka malam-malam",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Bunyi lelehan sira pekat ni memang bahaya dengar waktu malam... 🍯🤤",
+              "caption": "DOH MY GOSH! Dengar bunyi crunchy sira keria ni bila dipecahkan! Rasa manis legit gula melaka asli yang tak boleh bincang. Siapa yang tengah telan air liur tu cepat mengaku!",
+              "cta": "Komen 'NAK' untuk menang box percuma minggu ni!",
+              "doh_phrase": "DOH MY GOSH",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#viralfood", "#malaysiafoodie"],
+                "tier_2": ["#kuihkeria", "#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-hands-making-donut.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Sira Crunch ASMR Video"
+              },
+              "audio_track": "ASMR Crunch Sound & Deep Bass"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "Sweet dreams are made of glazed donuts... 🌙🍩",
+              "caption": "DOH NUT STRESS, hari esok pasti lebih manis. Rehatkan minda dan nikmati seni pembuatan tactile claymation DOH-NUT. Freshly glazed in KL every single morning.",
+              "cta": "Set your alarm for 9 AM tomorrow! Order link in bio.",
+              "doh_phrase": "DOH NUT STRESS",
+              "story_highlight_tag": "CLAYMATION",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-splash.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Clay Dough Animation Reel"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "DOH NUT OVERTHINK, tidur je lah. Esok pagi order donat.",
+              "caption": "DOH NUT OVERTHINK pasal hal kerja malam ni. Esok pagi bangun, buka dohnut.my, order sekotak donat sira kuih keria. Hidup settle.",
+              "cta": "Sweet dreams KL!",
+              "doh_phrase": "DOH NUT OVERTHINK",
+              "hashtags": {
+                "tier_1": ["#foodtiktok"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-kuih-keria.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Kuih Keria Donut Night Shot"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Rehatkan Minda Malam Ini — DOH-NUT™ Bersama Anda",
+              "caption": "Selepas seharian bertungkus-lumus, anda layak menikmati manisan terbaik. DOH NUT PANIC, jadualkan pesanan awal untuk sarapan pejabat esok pagi dan elakkan kehabisan stok!",
+              "cta": "Pra-pesan sekarang di https://dohnut.my",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_classic4.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Classic Donut Facebook Photo"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "8:45 PM: DOH NUT OVERTHINK!",
+              "caption": "DOH NUT OVERTHINK tentang esok. Malam ni tidur awal, esok sarapan donat sira keria panas. GOOD VIBE. GOOD DOH. 🍩🌙 https://dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH NUT OVERTHINK",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_classic5.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Golden Donut Image"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day_number": 3,
+      "day_title": "Day 3 - Meet DOH BOY™ & The Claymation Universe",
+      "campaign_phase": "Brand Character & Pop-Culture Universe",
+      "theme": "Pengenalan Rasmi Maskot DOH BOY™, DOH CINEMA™, dan Seni Claymation Tactile",
+      "slots": [
+        {
+          "slot_key": "slot_a",
+          "slot_name": "Slot A (Lunch Craving)",
+          "scheduled_time": "11:45 AM",
+          "target_audience": "Peminat seni visual, animasi claymation & maskot comel",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Siapa budak doh kuning ni yang asyik lalu FYP korang? DOH LAH! 🟡🍩",
+              "caption": "Perkenalkan DOH BOY™! Maskot rasmi DOH-NUT Malaysia yang cheeky, kelakar dan obses dengan perisa donat. DOH LAH, jangan tengok je dia menari, order donat sekali!",
+              "cta": "Komen nama perisa feveret korang untuk DOH BOY bagi reaction!",
+              "doh_phrase": "DOH LAH",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#viralfood", "#klfoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-splash.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "DOH BOY Clay Animation Reveal"
+              },
+              "audio_track": "DOH BOY Official Theme Song - Upbeat Pop"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "Meet DOH BOY™ — Chief Vibes Officer at DOH-NUT. 🟡✨",
+              "caption": "DOH BOLEH! Kenalkan kawan baru anda yang sentiasa ceria: DOH BOY™. Tagline dia mudah: GOOD VIBE. GOOD DOH. Freshly made in KL everyday!",
+              "cta": "Say hi to DOH BOY in the comments! Order delivery via link in bio.",
+              "doh_phrase": "DOH BOLEH",
+              "story_highlight_tag": "CLAYMATION",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-commercial.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "DOH BOY Commercial Cut"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "DOH BOY kata lunch hari ni wajib ada gula. DOH SERIOUS LAH!",
+              "caption": "DOH SERIOUS LAH, DOH BOY cakap siapa skip dessert hari ni hidup dia kurang seri 30%. Sila patuh arahan maskot.",
+              "cta": "Order donat kat dohnut.my",
+              "doh_phrase": "DOH SERIOUS LAH",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/dohnut-mascot.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "DOH BOY Avatar"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Kenali Maskot Rasmi Kami: DOH BOY™!",
+              "caption": "Membawakan keceriaan dan rasa autentik Malaysia ke meja anda. DOH BOY™ hadir dengan misi menyebarkan 'GOOD VIBE. GOOD DOH.' ke seluruh Lembah Klang!",
+              "cta": "Layari https://dohnut.my untuk memilih 31 perisa eksklusif kami!",
+              "doh_phrase": "DOH BOLEH",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/dohnut-mascot.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "DOH BOY Mascot Photo"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "Meet DOH BOY™ 🍩🟡",
+              "caption": "Say hello to DOH BOY™ 🍩🟡 Our official mascot and chief hype commander. Rule #1: DOH NUT PANIC, just eat donuts. Order yours 👇 dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/dohnut-mascot.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "DOH BOY Mascot Tweet Card"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_b",
+          "slot_name": "Slot B (Tea-Time / Petang Mengantuk)",
+          "scheduled_time": "03:30 PM",
+          "target_audience": "Peminat kopi putih Ipoh & petang santai",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Donat perisa Kopi Putih Ipoh?! DOH SEDAP wei! ☕🍩",
+              "caption": "DOH SEDAP! Bau aroma panggang kopi putih Ipoh asli meresap ke dalam krim filling donat gebu ni. Pahit manis berlemak ngam teruk untuk recharge tenaga petang!",
+              "cta": "Tekan link bio untuk rasa Ipoh White Coffee Donut sekarang!",
+              "doh_phrase": "DOH SEDAP",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut", "#donutviral", "#bomboloni"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/ipoh-white-coffee.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Ipoh White Coffee Donut Visual"
+              },
+              "audio_track": "Kopitiam Jazz Lo-Fi Vibes"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "carousel",
+              "hook": "Ipoh White Coffee meets Artisan Glaze. ☕🍩",
+              "caption": "DOH MY GOODNESS! Rasa authentic kopitiam yang korang rindu kini dalam bentuk artisan donut. Rich, creamy, and deeply aromatic. The perfect 3:30 PM companion.",
+              "cta": "Share with your coffee-addict colleagues! Order link in bio.",
+              "doh_phrase": "DOH MY GOODNESS",
+              "story_highlight_tag": "DONUT_MENU",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/ipoh-white-coffee.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Ipoh White Coffee Donut Presentation"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "Kopi panas dalam cawan ❌ Kopi dalam donat ✅ DOH BOLEH!",
+              "caption": "DOH BOLEH! Kenapa nak minum kopi kalau boleh kunyah kopi dalam donat? Ipoh White Coffee Donut ready untuk petang korang.",
+              "cta": "Grab now at dohnut.my",
+              "doh_phrase": "DOH BOLEH",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/ipoh-white-coffee.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Coffee Donut on Saucer"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Aroma Kopitiam Dalam Setiap Gigitan — Ipoh White Coffee Donut",
+              "caption": "Bawa kenikmatan sarapan Ipoh ke meja kerja anda petang ini. Donat berinti krim Kopi Putih pekat yang memikat selera. DOH NUT WORRY, penghantaran pantas terus ke pintu anda.",
+              "cta": "Pesan di https://dohnut.my hari ini!",
+              "doh_phrase": "DOH NUT WORRY",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/ipoh-white-coffee.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Ipoh Coffee Donut Facebook Feature"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "Ipoh White Coffee Donut: DOH SEDAP!",
+              "caption": "Ipoh White Coffee Donut: Pahit manis berlemak, aroma roasted coffee padu. DOH SEDAP layan waktu petang ni. Order at dohnut.my ☕🍩",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH SEDAP",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/ipoh-white-coffee.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Ipoh Coffee Tweet Visual"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_c",
+          "slot_name": "Slot C (Supper / Night Scroll)",
+          "scheduled_time": "08:45 PM",
+          "target_audience": "Peminat sinema & parodi DOH CINEMA™ waktu malam",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Trailer filem blockbuster tapi watak utama dia donat?! 🎬🍿",
+              "caption": "DOH CINEMA™ mempersembahkan: The Glaze Awakening! Tengok aksi DOH BOY menyelamatkan donat keria dari dimakan raksasa lapar. DOH NUT PANIC, popcorn simpan dulu, makan donat!",
+              "cta": "Komen filem apa korang nak DOH-NUT parodi lepas ni?",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#viralfood"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-commercial.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "DOH CINEMA Movie Parody Teaser"
+              },
+              "audio_track": "Epic Movie Trailer Orchestral Intro"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "Now Showing at DOH CINEMA™: DOH NUT PANIC! 🎬🍿",
+              "caption": "DOH GILER! Pop-culture parodies meet handcrafted claymation art. Donut entertainment at its finest. GOOD VIBE. GOOD DOH.",
+              "cta": "Double tap if you want a box delivered while watching Netflix! Link in bio.",
+              "doh_phrase": "DOH GILER",
+              "story_highlight_tag": "CLAYMATION",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#viralfood"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohGiler"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-splash.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Cinema Splash Animation"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "Tengok movie malam-malam tanpa snack = DOH KAN?",
+              "caption": "DOH KAN? Tengok wayang kat rumah tapi takde dessert best rasa macam ada plot hole besar dalam hidup.",
+              "cta": "Book your box for tomorrow at dohnut.my",
+              "doh_phrase": "DOH KAN?",
+              "hashtags": {
+                "tier_1": ["#foodtiktok"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_stuffed2.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Stuffed Chocolate Donut"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Malam Minggu Bersama DOH CINEMA™!",
+              "caption": "Kongsikan detik manis bersama keluarga sambil menonton filem kegemaran anda. DOH NUT WORRY, kotak Party Box DOH-NUT sedia menceriakan hujung minggu anda.",
+              "cta": "Layari https://dohnut.my untuk tempahan keluarga!",
+              "doh_phrase": "DOH NUT WORRY",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_sprinkled2.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Party Sprinkled Donut"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "Movie night with DOH-NUT: DOH GILER!",
+              "caption": "Movie night tak lengkap tanpa dessert berkilat. DOH GILER sedap bila makan sambil binge-watch series. GOOD VIBE. GOOD DOH. 🍩🎬 https://dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH GILER",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohGiler"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_stuffed3.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Night Donut Showcase"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day_number": 4,
+      "day_title": "Day 4 - Spicy Dare & Flavor Explosion (Sira Sambal & Spicy Savory)",
+      "campaign_phase": "Viral Flavor Challenge & Taste Test",
+      "theme": "Keberanian Rasa Malaysia: Donat Sira Sambal Pedas Manis yang Menggegarkan Lidah",
+      "slots": [
+        {
+          "slot_key": "slot_a",
+          "slot_name": "Slot A (Lunch Craving)",
+          "scheduled_time": "11:45 AM",
+          "target_audience": "Pencinta makanan pedas dan pemburu makanan viral unik",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Sambal atas donat?! Korang berani cuba tak? DOH APA NI?! 🌶️🍩",
+              "caption": "DOH APA NI?! Jangan terkejut, ini Sira Sambal Donut! Sambal tumis pedas manis karamel disira cantik atas donat gebu. Rasa pedas manis dia meletup dalam mulut. DOH SEDAP!",
+              "cta": "Tag kawan korang yang hantu pedas! Order kat link bio.",
+              "doh_phrase": "DOH APA NI?",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#viralfood", "#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#sirasambal", "#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-sambal.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sira Sambal Artisan Donut with Chili Glaze"
+              },
+              "audio_track": "Spicy Sizzle Beat + Dramatic Bass Drop"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "Sweet, Spicy, & Bold: The Sira Sambal Donut. 🌶️✨",
+              "caption": "DOH BOLEH! Who said donuts can only be sweet? Introducing our Sira Sambal Donut — authentic caramelized sambal meets fluffy artisan dough. A uniquely Malaysian flavour adventure.",
+              "cta": "Would you try this? Tell us in the comments! Order link in bio.",
+              "doh_phrase": "DOH BOLEH",
+              "story_highlight_tag": "DONUT_MENU",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie", "#viralfood"],
+                "tier_2": ["#sirasambal", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-sambal.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sira Sambal Donut Photo Reel"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "Donat sambal: Red flag atau culinary masterpiece? DOH WEI!",
+              "caption": "DOH WEI, orang yang belum rasa sambal atas donat mesti kata pelik. Bila dah kunyah sekali, terus insaf. DOH SEDAP gila.",
+              "cta": "Try it at dohnut.my!",
+              "doh_phrase": "DOH WEI",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#sirasambal", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-sambal.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sira Sambal Plate"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Inovasi Rasa Berani: Sira Sambal Donut Kini Tiba!",
+              "caption": "Cabari citarasa anda tengah hari ini dengan gabungan unik manis dan pedas Malaysia. Sira Sambal Donut menggunakan sambal tumis tradisi yang dikaramelkan sempurna. DOH NUT PANIC, tahap kepedasan mesra semua golongan!",
+              "cta": "Tempah sekarang di https://dohnut.my untuk rasa sensasi ini!",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#sirasambal", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-sambal.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sira Sambal Facebook Feature"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "Sira Sambal Donut is REAL. DOH APA NI?!",
+              "caption": "Sira Sambal Donut is REAL 🌶️🍩 Sweet, savory, caramelized spicy glaze on artisan soft dough. DOH APA NI?! Rasa dia mind-blowing. Dare to try? 👇 dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH APA NI?",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#viralfood"],
+                "tier_2": ["#sirasambal", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-sambal.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sira Sambal Tweet Visual"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_b",
+          "slot_name": "Slot B (Tea-Time / Petang Mengantuk)",
+          "scheduled_time": "03:30 PM",
+          "target_audience": "Pekerja pejabat yang nak kongsi Box of 6 untuk redakan pedas",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Lepas makan pedas, kena basuh tekak dengan manis! DOH NOT BAD! 🥛🍩",
+              "caption": "DOH NOT BAD! Gandingan terbaik Box of 6: 2 Sira Sambal, 2 Classic Glazed, 2 Teh Tarik Kaw. Semua rasa dalam satu kotak untuk ofis korang petang ni!",
+              "cta": "Order Box of 6 kat link bio sekarang sebelum sold out!",
+              "doh_phrase": "DOH NOT BAD",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#klfoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/kuih-burger-malaysia.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Kuih Burger Malaysia Fusion Donut"
+              },
+              "audio_track": "Funky Office Beats + Happy Whistle"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "carousel",
+              "hook": "The Perfect Office Peace Offering: Box of 6. 📦🍩",
+              "caption": "DOH NUT WORRY about afternoon fatigue! Our curated Box of 6 has something for everyone — from bold Sira Sambal to creamy Vanilla Glaze. Freshly boxed in KL.",
+              "cta": "Order now for instant office smiles! Link in bio.",
+              "doh_phrase": "DOH NUT WORRY",
+              "story_highlight_tag": "DELIVERY",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_classic6.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Box of 6 Donut Assortment"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "Cara paling senang nak disukai bos: bawa sekotak DOH-NUT. DOH BOLEH!",
+              "caption": "DOH BOLEH! Masuk bilik meeting bawa Box of 6 DOH-NUT, terus confirm approved bajet projek korang.",
+              "cta": "Order kat dohnut.my",
+              "doh_phrase": "DOH BOLEH",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_sprinkled3.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Celebration Donut"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Pilihan Minum Petang Korporat — Kotak Kombo DOH-NUT™",
+              "caption": "Tingkatkan semangat rakan sekerja anda petang ini dengan Kotak Kombo DOH-NUT. Pilihan perisa manis dan savuri yang memuaskan semua selera. Penghantaran ke seluruh pejabat Lembah Klang.",
+              "cta": "Pesan di https://dohnut.my sekarang!",
+              "doh_phrase": "DOH NUT WORRY",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_classic7.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Assorted Donut Box Photo"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "3:30 PM: DOH NOT BAD!",
+              "caption": "Box of 6 sampai kat ofis tepat 3.30 petang. DOH NOT BAD rasa petang ni! GOOD VIBE. GOOD DOH. Order yours 👇 dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH NOT BAD",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_classic8.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Classic Donut Box Tweet"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_c",
+          "slot_name": "Slot C (Supper / Night Scroll)",
+          "scheduled_time": "08:45 PM",
+          "target_audience": "Malam santai sambil tengok reaksi orang makan Sira Sambal",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Reaksi first-timer cuba Donat Sambal... Tak percaya dia habiskan sekotak! 😱🔥",
+              "caption": "DOH SERIOUS LAH! Dari rasa takut-takut, terus senyum sampai ke telinga. Ini bukti rasa tempatan kita bila digabungkan dengan inovasi memang tiada tandingan! DOH SEDAP!",
+              "cta": "Siapa berani terima cabaran Sira Sambal esok? Drop komen!",
+              "doh_phrase": "DOH SERIOUS LAH",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#viralfood", "#klfoodie"],
+                "tier_2": ["#sirasambal", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-commercial.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Taste Test Reaction Clip"
+              },
+              "audio_track": "Dramatic Suspense into Happy Victory Horns"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "The verdict is in for our Sira Sambal Donut. 🌶️✨",
+              "caption": "DOH SEDAP! You asked for bold, we delivered legendary. A taste experience you literally cannot find anywhere else in KL.",
+              "cta": "Tag a friend who loves adventurous food! Order link in bio.",
+              "doh_phrase": "DOH SEDAP",
+              "story_highlight_tag": "REVIEWS",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#viralfood"],
+                "tier_2": ["#sirasambal", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-hands-making-donut.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Sambal Glaze Sizzle Reel"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "DOH NUT JUDGE orang makan donat sambal kalau sendiri belum cuba.",
+              "caption": "DOH NUT JUDGE pilihan hidup orang lain kalau korang sendiri belum gigit Sira Sambal Donut ni. Trust the process.",
+              "cta": "Cuba esok kat dohnut.my",
+              "doh_phrase": "DOH NUT JUDGE",
+              "hashtags": {
+                "tier_1": ["#foodtiktok"],
+                "tier_2": ["#sirasambal", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-sambal.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sambal Glaze Donut Dark Background"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Maklum Balas Komuniti: Fenomena Sira Sambal!",
+              "caption": "Terima kasih warga KL atas sambutan hangat terhadap inovasi Sira Sambal Donut kami! Rasa unik ini membuktikan kreativiti makanan Malaysia tiada hadnya. DOH NUT PANIC, batch segar akan digoreng seawal pagi esok.",
+              "cta": "Tempah slot pagi esok di https://dohnut.my",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#sirasambal", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-sambal.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sambal Donut Community Response"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "8:45 PM: DOH NUT JUDGE.",
+              "caption": "DOH NUT JUDGE tastebuds orang lain sampai korang rasa sendiri Sira Sambal Donut ni. Malaysia's wildest flavor drop. Check it out 👇 dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH NUT JUDGE",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#sirasambal", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/sira-sambal.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sambal Donut Tweet Card"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day_number": 5,
+      "day_title": "Day 5 - King of Fruits (Musang King Durian Donut)",
+      "campaign_phase": "Luxury Local Indulgence & Aroma Hype",
+      "theme": "Keemasan Rasa Diraja: Musang King Durian Donut dengan Inti Kastard Durian Asli",
+      "slots": [
+        {
+          "slot_key": "slot_a",
+          "slot_name": "Slot A (Lunch Craving)",
+          "scheduled_time": "11:45 AM",
+          "target_audience": "Peminat tegar Durian Musang King dan pencuci mulut premium",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Kastard Durian Musang King melimpah keluar bila picit! DOH GILER! 👑💛",
+              "caption": "DOH GILER! Isi durian Musang King asli Pahang diadun jadi kastard berkrim pekat dalam bomboloni emas DOH-NUT. Bau dia harum padu, rasa manis berlemak pahit hujung lidah!",
+              "cta": "Batch terhad setiap hari! Tekan link bio untuk rebut slot!",
+              "doh_phrase": "DOH GILER",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#viralfood", "#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut", "#bomboloni"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap", "#DohGiler"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/musang-king-durian.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Musang King Durian Donut with Custard Lava"
+              },
+              "audio_track": "Royal Majestic Fanfare into Viral Bass Trap"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "The Royal Treatment: 100% Pure Musang King Durian. 👑✨",
+              "caption": "DOH SEDAP! Raja segala buah kini bersemayam di atas donat artisan paling gebu di Kuala Lumpur. Real Musang King pulp folded into velvety artisan custard. Absolute perfection.",
+              "cta": "Durian lovers, assemble! Tap link in bio to order now.",
+              "doh_phrase": "DOH SEDAP",
+              "story_highlight_tag": "DONUT_MENU",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie", "#viralfood"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/musang-king-durian.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Durian Donut Golden Glow Presentation"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "Musang King masuk donat. DOH MY GOSH, siapa buat hal ni?!",
+              "caption": "DOH MY GOSH, bau durian Musang King ni semerbak sampai tingkat 5. Siapa pencinta durian sila lapor diri sekarang.",
+              "cta": "Beli kat dohnut.my sebelum kehabisan!",
+              "doh_phrase": "DOH MY GOSH",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/musang-king-durian.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Durian Donut Threads Post"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Kenikmatan Diraja: Musang King Durian Donut",
+              "caption": "Alami keenakan isi durian Musang King asli Pahang dalam setiap suapan. Kastard pekat mewah yang dihasilkan setiap pagi oleh pakar artisan kami. DOH BOLEH, penghantaran terus ke kediaman anda di Lembah Klang.",
+              "cta": "Tempah batch istimewa ini di https://dohnut.my",
+              "doh_phrase": "DOH BOLEH",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/musang-king-durian.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Musang King Facebook Promotional Banner"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "Musang King Durian Donut: DOH GILER!",
+              "caption": "Musang King Durian Donut: 100% isi durian asli dalam kastard gebu. DOH GILER sedap bila masuk mulut. King of Fruits for the king of donuts 👑🍩 dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH GILER",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohGiler"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/musang-king-durian.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Durian Donut Tweet Image"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_b",
+          "slot_name": "Slot B (Tea-Time / Petang Mengantuk)",
+          "scheduled_time": "03:30 PM",
+          "target_audience": "Geng ofis yang nak belanja bos donat durian",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Makan donat durian dalam ofis beraircond... Habis satu floor bau wangi! 🏢💛",
+              "caption": "DOH BOLEH! Bila buka je kotak Musang King DOH-NUT ni, semua orang terus serbu pantry. Rasa manis legit kastard durian bikin petang Jumaat korang bertukar riang!",
+              "cta": "Komen kalau korang berani makan durian kat ofis!",
+              "doh_phrase": "DOH BOLEH",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#klfoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-hands-making-donut.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Durian Custard Pipe-in ASMR"
+              },
+              "audio_track": "Upbeat Lofi Instrumental + Laughter"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "carousel",
+              "hook": "Afternoon Tea, Elevated. ☕👑",
+              "caption": "DOH SO GOOD! Pair our rich Musang King Durian Donut with freshly brewed black coffee for the ultimate afternoon balance. Sweet, creamy, and undeniably luxurious.",
+              "cta": "Order now for quick delivery across Klang Valley! Link in bio.",
+              "doh_phrase": "DOH SO GOOD",
+              "story_highlight_tag": "DELIVERY",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/musang-king-durian.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Durian Donut Close-up on Marble"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "Pantang larang ofis: Jangan buka donat durian kalau tak cukup sekotak. DOH WEI!",
+              "caption": "DOH WEI, bau Musang King ni laju gila merebak. Kalau beli satu biji je confirm gaduh. Beli sekotak terus settle masalah.",
+              "cta": "Order kat dohnut.my",
+              "doh_phrase": "DOH WEI",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/musang-king-durian.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Musang King Plate"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Pilihan Mewah Minum Petang — Musang King Series",
+              "caption": "Hadiahkan diri anda kemewahan rasa Durian Musang King petang ini. Dihasilkan dengan teliti untuk mengekalkan keaslian rasa buah sebenar. DOH NUT WORRY, penghantaran selamat dalam kotak eksklusif berinsulasi.",
+              "cta": "Pesan di https://dohnut.my sekarang!",
+              "doh_phrase": "DOH NUT WORRY",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/musang-king-durian.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Musang King FB Tea Time Post"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "3:30 PM: DOH SO GOOD!",
+              "caption": "Musang King Durian Donut + Kopi O panas waktu petang = DOH SO GOOD! Tiada tandingan nikmat rasa Malaysia ni. Order at dohnut.my 👑☕",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH SO GOOD",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/musang-king-durian.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Durian Tweet Visual"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_c",
+          "slot_name": "Slot C (Supper / Night Scroll)",
+          "scheduled_time": "08:45 PM",
+          "target_audience": "Peminat durian yang mengidam supper manis sebelum tidur",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Supper paling berdosa di KL malam ni... DOH NUT JUDGE! 🌙🤤",
+              "caption": "DOH NUT JUDGE! Pukul 8.45 malam makan Musang King Donut memang rasa bersalah, tapi senyuman kat muka tu tak boleh tipu! Manis berkrim lembut macam awan. Esok pagi diet balik!",
+              "cta": "Tekan link bio dohnut.my untuk slot esok!",
+              "doh_phrase": "DOH NUT JUDGE",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#viralfood", "#klfoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutJudge"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-splash.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Late Night Durian Craving Cut"
+              },
+              "audio_track": "Midnight Mood Beats + Chill Saxophone"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "Golden nights with the King of Fruits. 👑🌙",
+              "caption": "DOH SEDAP! When the night cravings strike, nothing hits harder than authentic Musang King custard. Pure indulgence right before bed. GOOD VIBE. GOOD DOH.",
+              "cta": "Save for tomorrow's order! Link in bio.",
+              "doh_phrase": "DOH SEDAP",
+              "story_highlight_tag": "REVIEWS",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-commercial.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Night Durian Commercial Clip"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "DOH NUT LIE, tengah bayangkan bau durian Musang King kan? 🍩",
+              "caption": "DOH NUT LIE, korang yang tengah baring tu mesti terbayang donat durian gebu ni. Esok pagi order terus, jangan simpan rindu.",
+              "cta": "Jumpa esok kat dohnut.my",
+              "doh_phrase": "DOH NUT LIE",
+              "hashtags": {
+                "tier_1": ["#foodtiktok"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/musang-king-durian.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Durian Donut Night Close-up"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Musang King Durian Donut — Penutup Malam Sempurna",
+              "caption": "Jadikan malam anda lebih bermakna bersama yang tersayang dengan menikmati Musang King Durian Donut. DOH NUT PANIC, kuota pesanan dibuka setiap malam untuk penghantaran awal esok hari.",
+              "cta": "Pra-pesan sekarang di https://dohnut.my",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/musang-king-durian.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Durian Donut FB Night Post"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "8:45 PM: DOH NUT LIE!",
+              "caption": "DOH NUT LIE, malam-malam layan Musang King Durian Donut ni level kepuasan dia 100/10. Rehatkan minda, esok order kat dohnut.my 👑🌙",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH NUT LIE",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#musangkingdurian", "#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/musang-king-durian.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Durian Donut Tweet Night Photo"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day_number": 6,
+      "day_title": "Day 6 - Friday TGIF Party Box & Weekend Countdown",
+      "campaign_phase": "Weekend Celebration & Party Box Push",
+      "theme": "TGIF Hype! Keraian Hujung Minggu Bersama Party Box 12-Donut & Perisa Coklat Matcha",
+      "slots": [
+        {
+          "slot_key": "slot_a",
+          "slot_name": "Slot A (Lunch Craving)",
+          "scheduled_time": "11:45 AM",
+          "target_audience": "Geng ofis yang merancang sambutan hari Jumaat & makan-makan",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Hari Jumaat hari belanja kawan! DOH BOLEH kongsi ramai-ramai! 🎉🍩",
+              "caption": "DOH BOLEH! Hari Jumaat paling ngam sambut dengan Party Box 12 DOH-NUT! Ada Blueberry Cheesecake, Matcha White Choco, sampai ke Sira Sambal. Siapa paling lambat sampai pantry dia dapat kotak kosong!",
+              "cta": "Tag squad ofis korang sekarang! Order link kat bio.",
+              "doh_phrase": "DOH BOLEH",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#klfoodie", "#malaysiafoodie", "#viralfood"],
+                "tier_2": ["#dohnut", "#donutviral", "#bomboloni"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohBoleh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/blueberry-cheesecake.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Blueberry Cheesecake Donut"
+              },
+              "audio_track": "TGIF Upbeat Anthem + Party Horns"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "TGIF! Weekend mood is officially UNLOCKED. 🥳🍩",
+              "caption": "DOH SO GOOD! Friday lunch meetings just got 1000% better. Level up your office spread with our signature Party Box of 12. Freshly baked, handcrafted, and guaranteed to spark joy.",
+              "cta": "Order now for instant delivery across KL! Link in bio.",
+              "doh_phrase": "DOH SO GOOD",
+              "story_highlight_tag": "DELIVERY",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-commercial.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "TGIF Celebration Reel"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "Jumaat petang tanpa donat adalah satu pembaziran masa. DOH LAH!",
+              "caption": "DOH LAH, dah sampai hari Jumaat kot! Reward diri korang dengan sekotak DOH-NUT gebu sebelum mula weekend.",
+              "cta": "Order kat dohnut.my",
+              "doh_phrase": "DOH LAH",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/confetti-fiesta.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Confetti Fiesta Celebration Donut"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Keraian Jumaat Bersama Rakan Sekerja — DOH-NUT™ Party Box",
+              "caption": "Sambut kejayaan kerja keras minggu ini bersama Party Box DOH-NUT! Pilihan 12 perisa unik yang menceriakan suasana pantry pejabat anda di seluruh Kuala Lumpur & Selangor. DOH NUT PANIC, pesanan korporat dihantar pantas.",
+              "cta": "Pesan Party Box di https://dohnut.my sekarang!",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/matcha-white-choco.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Matcha White Choco Donut Photo"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "TGIF vibe check: DOH BOLEH!",
+              "caption": "TGIF! Weekend dah mula, mood cuti dah ON. DOH BOLEH sambut dengan Party Box 12 perisa DOH-NUT. Share with your squad 👇 dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH BOLEH",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/confetti-fiesta.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Confetti Donut Tweet Visual"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_b",
+          "slot_name": "Slot B (Tea-Time / Petang Mengantuk)",
+          "scheduled_time": "03:30 PM",
+          "target_audience": "Orang yang nak 'clock out' awal & rancang lepak weekend",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Pukul 3.30 petang Jumaat dah kemas beg nak balik? DOH SEDAP! 🎒🍩",
+              "caption": "DOH SEDAP! Minum petang Jumaat sebelum balik rumah: Matcha White Choco Donut dengan lelehan coklat putih berkrim. Weekend korang confirm tenang dan manis!",
+              "cta": "Tap beg kuning atau order delivery kat link bio!",
+              "doh_phrase": "DOH SEDAP",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#klfoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/matcha-white-choco.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Matcha White Choco Donut Close-up"
+              },
+              "audio_track": "Chillhop Sunset Grooves"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "carousel",
+              "hook": "Matcha Bliss & White Chocolate Drizzle. 🍵✨",
+              "caption": "DOH SO GOOD! Authentic Japanese green tea paired with velvety white chocolate atop our signature golden dough. The most satisfying way to wrap up the work week.",
+              "cta": "Tag your matcha partner! Order link in bio.",
+              "doh_phrase": "DOH SO GOOD",
+              "story_highlight_tag": "DONUT_MENU",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/matcha-white-choco.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Matcha Donut Showcase"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "3.30 petang Jumaat: Badan kat kerusi ofis, roh dah kat kedai donat. DOH WEI!",
+              "caption": "DOH WEI, jangan seksa jiwa korang petang ni. Pesan sekotak DOH-NUT hantar ke ofis sekarang juga.",
+              "cta": "Beli kat dohnut.my",
+              "doh_phrase": "DOH WEI",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/blueberry-cheesecake.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Blueberry Donut on Plate"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Rehat Petang Jumaat — Nikmati Kemewahan Matcha",
+              "caption": "Tamatkan minggu bekerja anda dengan manisan berkualiti tinggi. Donat Matcha White Choco menggabungkan teh hijau asli dan coklat putih berkrim yang mempesonakan. DOH NUT WORRY, penghantaran terus sebelum anda pulang.",
+              "cta": "Pesan di https://dohnut.my sekarang!",
+              "doh_phrase": "DOH NUT WORRY",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/matcha-white-choco.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Matcha Donut Facebook Post"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "3:30 PM Friday: DOH SO GOOD!",
+              "caption": "Matcha White Choco Donut untuk tea-time petang Jumaat ni. DOH SO GOOD rasa dia. Weekend, here we come! 🍵🍩 dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH SO GOOD",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/matcha-white-choco.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Matcha Donut Tweet Image"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_c",
+          "slot_name": "Slot C (Supper / Night Scroll)",
+          "scheduled_time": "08:45 PM",
+          "target_audience": "Geng lepak Bukit Bintang & weekend night owls",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Malam Jumaat di Bukit Bintang: Ramai beratur tunggu batch donat panas! 🏙️🍩",
+              "caption": "DOH GILER! Suasana malam Jumaat di KL memang meriah gila! Bau donat digoreng segar tarik perhatian semua orang yang lalu-lalang. DOH NUT WORRY, kalau malas beratur kami hantar terus ke rumah!",
+              "cta": "Siapa tengah ada kat Bukit Bintang malam ni? Komen!",
+              "doh_phrase": "DOH GILER",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#viralfood", "#klfoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohGiler", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-commercial.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "KL Night Vibes Commercial"
+              },
+              "audio_track": "City Lights & Cyberpunk Bass Synth"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "Friday Night Lights & Freshly Glazed Donuts. ✨🍩",
+              "caption": "DOH SEDAP! Friday night cravings in the heart of Kuala Lumpur. Soft, pillowy dough meets decadent glazes. MAKE IT. PLAY IT. EAT IT. SHARE IT.",
+              "cta": "Order delivery to your staycation or home! Link in bio.",
+              "doh_phrase": "DOH SEDAP",
+              "story_highlight_tag": "REVIEWS",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-hands-making-donut.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Night Glazing Visual Reel"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "Malam Jumaat jangan tidur awal sangat. DOH NUT PANIC.",
+              "caption": "DOH NUT PANIC, esok tak payah bangun pagi pergi kerja! Layan movie malam ni sambil makan Blueberry Cheesecake donut.",
+              "cta": "Order at dohnut.my",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#foodtiktok"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/blueberry-cheesecake.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Blueberry Cheesecake Visual"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Sambut Hujung Minggu Bersama DOH-NUT™",
+              "caption": "Malam Jumaat adalah masa terbaik untuk berkumpul dan berehat. DOH NUT WORRY, perkhidmatan penghantaran kami beroperasi pantas untuk menghantar kotak kegemaran anda terus ke pintu. Nikmati kelazatan donat artisan terbaik KL.",
+              "cta": "Pesan segera di https://dohnut.my",
+              "doh_phrase": "DOH NUT WORRY",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/confetti-fiesta.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Confetti Donut Facebook Post"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "Friday Night: DOH SEDAP!",
+              "caption": "Friday night vibes in KL: DOH SEDAP layan donat gebu sambil jalan-jalan Bukit Bintang. GOOD VIBE. GOOD DOH. 🍩✨ https://dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH SEDAP",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/blueberry-cheesecake.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Blueberry Cheesecake Tweet Photo"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "day_number": 7,
+      "day_title": "Day 7 - Sunday Family & Community Feast (The Master Box)",
+      "campaign_phase": "Community & Weekly Craving Recap",
+      "theme": "Santapan Keluarga Hari Ahad: Ulasan Mingguan Komuniti, Pilihan Ramai & Teaser Perisa Rahsia",
+      "slots": [
+        {
+          "slot_key": "slot_a",
+          "slot_name": "Slot A (Lunch Craving)",
+          "scheduled_time": "11:45 AM",
+          "target_audience": "Keluarga berkumpul untuk makan tengah hari & brunch santai",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Hari Ahad brunch dengan donat artisan satu famili! DOH BOLEH! 👨‍👩‍👧‍👦🍩",
+              "caption": "DOH BOLEH! Pagi Ahad paling bermakna bila ada sekotak The Master Box DOH-NUT atas meja. Dari mak ayah sampai anak-anak, semua ada perisa kegemaran masing-masing. DOH SEDAP!",
+              "cta": "Tempah untuk brunch keluarga kat link bio sekarang!",
+              "doh_phrase": "DOH BOLEH",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut", "#donutviral", "#bomboloni"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohBoleh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-hands-making-donut.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Sunday Family Box Unboxing ASMR"
+              },
+              "audio_track": "Warm Acoustic Guitar + Family Laughter"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "carousel",
+              "hook": "Sunday Brunch, Curated for the Entire Family. 🍩✨",
+              "caption": "DOH SO GOOD! Sundays are made for slow mornings, warm coffee, and freshly glazed artisan donuts. What's your family's top pick today? Tell us in the comments!",
+              "cta": "Order delivery to your doorstep via link in bio.",
+              "doh_phrase": "DOH SO GOOD",
+              "story_highlight_tag": "REVIEWS",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_classic1.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Classic Donut on Sunday Table"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "Ahad pagi: Mak bancuh kopi, anak order DOH-NUT. DOH BOLEH!",
+              "caption": "DOH BOLEH! Ahad santai bersama famili. Sekotak donat fresh hilang dalam masa 10 minit atas meja makan.",
+              "cta": "Order kat dohnut.my",
+              "doh_phrase": "DOH BOLEH",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_sprinkled4.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Sprinkled Donut Family Shot"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Kemesraan Keluarga Hari Ahad Bersama DOH-NUT™",
+              "caption": "Luangkan masa berharga bersama keluarga tersayang hari ini dengan hidangan pencuci mulut terbaik. DOH NUT WORRY, donat kami dibuat segar setiap pagi dengan bahan-bahan berkualiti tinggi dan halal. Pilihan sempurna untuk semua generasi.",
+              "cta": "Pesan set keluarga di https://dohnut.my",
+              "doh_phrase": "DOH NUT WORRY",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_stuffed4.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Stuffed Donut Family Pack"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "Sunday Family Feast: DOH BOLEH!",
+              "caption": "Sunday Brunch with the family hits different when you have DOH-NUT on the table. DOH BOLEH kongsi manis bersama! GOOD VIBE. GOOD DOH. 🍩👨‍👩‍👧‍👦 dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH BOLEH",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_classic2.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Classic Donut Sunday Visual"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_b",
+          "slot_name": "Slot B (Tea-Time / Petang Mengantuk)",
+          "scheduled_time": "03:30 PM",
+          "target_audience": "Minum petang Ahad santai di balkoni atau ruang tamu",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Proses goreng donat claymation paling memuaskan di internet! 🍩🫧",
+              "caption": "DOH GILER! Tengok macam mana doh gebu ni kembang cantik dalam minyak panas. Setiap gigitan adalah hasil gabungan seni claymation dan passion baker kami. DOH SEDAP!",
+              "cta": "Komen donat nombor berapa yang korang dah rasa minggu ni!",
+              "doh_phrase": "DOH GILER",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#viralfood", "#klfoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohGiler", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-splash.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Claymation Frying ASMR"
+              },
+              "audio_track": "Relaxing Lo-Fi Beats & Bubbling Oil ASMR"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "carousel",
+              "hook": "Behind the Scenes: The Art of Slow Dough. ⏳🍩",
+              "caption": "DOH SEDAP! Handcrafted with precision, proofed to perfection, and glazed with authentic Malaysian soul. Thank you for making Week 1 of DOH-NUT unforgettable!",
+              "cta": "Double tap to show love to our kitchen crew! Link in bio.",
+              "doh_phrase": "DOH SEDAP",
+              "story_highlight_tag": "CLAYMATION",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_stuffed5.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Kitchen Fresh Doughnuts"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "Petang Ahad yang tenang, teh panas + donat kelapa. DOH SO GOOD.",
+              "caption": "DOH SO GOOD. Tenangkan fikiran sebelum Isnin datang. Satu donat kelapa sangai wangi, satu cawan teh o panas. Cukup.",
+              "cta": "Order kat dohnut.my",
+              "doh_phrase": "DOH SO GOOD",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/toasted-coconut.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Toasted Coconut Donut"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Seni Di Sebalik Setiap Donat — DOH-NUT™ Kitchen",
+              "caption": "Setiap biji donat yang sampai ke pintu anda adalah hasil dedikasi para tukang artisan kami. Terima kasih atas sokongan luar biasa anda sepanjang minggu pertama kami! DOH NUT WORRY, kami komited menyediakan yang terbaik setiap hari.",
+              "cta": "Layari https://dohnut.my untuk menikmati rasa kegemaran anda!",
+              "doh_phrase": "DOH NUT WORRY",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_stuffed6.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Artisan Doughnut Crafting Photo"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "3:30 PM Sunday: DOH SO GOOD!",
+              "caption": "Sunday tea-time with Toasted Coconut Donut. DOH SO GOOD aroma kelapa sangai dia. Menghitung detik minggu baru dengan hati gembira. 🥥🍩 dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH SO GOOD",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohSedap"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/toasted-coconut.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Toasted Coconut Tweet Visual"
+              }
+            }
+          }
+        },
+        {
+          "slot_key": "slot_c",
+          "slot_name": "Slot C (Supper / Night Scroll)",
+          "scheduled_time": "08:45 PM",
+          "target_audience": "Malam Ahad sebelum Isnin: Persediaan mental & teaser perisa baru",
+          "platforms": {
+            "tiktok": {
+              "platform": "tiktok",
+              "post_type": "video",
+              "hook": "Esok dah Isnin balik?! DOH NUT PANIC, kami ada berita baik! 😱✨",
+              "caption": "DOH NUT PANIC! Isnin takkan sendu bila ada DOH-NUT! Minggu depan kami akan drop perisa rahsia baru yang korang tak pernah bayangkan. Siapa boleh teka perisa apa? Komen kat bawah!",
+              "cta": "Lock slot sarapan Isnin korang kat link bio sekarang!",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#foodtiktok", "#viralfood", "#klfoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic", "#DohBoleh"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-commercial.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "Week 2 Mystery Flavor Teaser Video"
+              },
+              "audio_track": "Mystery Teaser Sound + Catchy Bass Drop"
+            },
+            "instagram": {
+              "platform": "instagram",
+              "post_type": "reel",
+              "hook": "Monday is coming... But DOH NUT PANIC! 🍩💥",
+              "caption": "DOH NUT WORRY! Beat the Monday blues before they even start. Pre-order your morning box tonight and wake up to the freshest donuts in KL. Ready for Week 2? Something big is taking shape!",
+              "cta": "Pre-order link in bio for Monday delivery! 📦✨",
+              "doh_phrase": "DOH NUT PANIC",
+              "story_highlight_tag": "DONUT_MENU",
+              "hashtags": {
+                "tier_1": ["#klfoodie", "#malaysiafoodie"],
+                "tier_2": ["#dohnut", "#donutviral"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/videos/dohnut-hands-making-donut.mp4",
+                "asset_type": "video/mp4",
+                "aspect_ratio": "9:16",
+                "description": "DOH-NUT Week 1 Recap Reel"
+              }
+            },
+            "threads": {
+              "platform": "threads",
+              "post_type": "text_media",
+              "hook": "DOH NUT STRESS pasal hari Isnin esok. Makan donat.",
+              "caption": "DOH NUT STRESS, hari Isnin adalah peluang baru untuk makan donat sedap. Selamat malam semua, jumpa esok pagi.",
+              "cta": "Lock your breakfast at dohnut.my",
+              "doh_phrase": "DOH NUT STRESS",
+              "hashtags": {
+                "tier_1": ["#foodtiktok"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutWorry"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_stuffed7.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Night Donut Close-up"
+              }
+            },
+            "facebook": {
+              "platform": "facebook",
+              "post_type": "post_with_link_cta",
+              "hook": "Persediaan Hari Isnin Anda — DOH-NUT™ Sarapan Pagi",
+              "caption": "Mulakan minggu kerja anda dengan senyuman dan tenaga positif! DOH NUT PANIC, pra-pesanan sarapan pagi Isnin kini dibuka. Kami menghantar donat panas terus ke meja anda seawal jam 9 pagi di seluruh Lembah Klang.",
+              "cta": "Pra-pesan sarapan Isnin di https://dohnut.my",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#malaysiafoodie", "#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/donuts/donut_stuffed8.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "Monday Breakfast Donut Box"
+              }
+            },
+            "x": {
+              "platform": "x",
+              "post_type": "tweet_with_media",
+              "hook": "Sunday 8:45 PM: DOH NUT PANIC!",
+              "caption": "Esok Isnin? DOH NUT PANIC 🍩💥 Fresh glaze, soft dough, and good vibes delivered straight to your office. Lock your morning slot now 👇 dohnut.my",
+              "cta": "dohnut.my",
+              "doh_phrase": "DOH NUT PANIC",
+              "hashtags": {
+                "tier_1": ["#klfoodie"],
+                "tier_2": ["#dohnut"],
+                "tier_3": ["#GoodVibeGoodDoh", "#DohNutPanic"]
+              },
+              "media_asset": {
+                "file_path": "public/brand/dohnut-mascot.png",
+                "asset_type": "image/png",
+                "aspect_ratio": "1:1",
+                "description": "DOH BOY Good Night Mascot"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

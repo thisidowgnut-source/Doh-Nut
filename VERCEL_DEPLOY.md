@@ -1,8 +1,8 @@
 ---
 title: "Deploying DOH-NUT to Vercel"
 document_id: "SMS-DOHNUT-DEPLOY-001"
-version: "1.5.0"
-last_updated: "2026-09-10 10:25:00"
+version: "1.6.4"
+last_updated: "2026-09-16 04:20:00"
 maintainer: "Antigravity / Sovereign Architect"
 classification: "Internal / Operations Runbook"
 lifecycle_status: "Active / Living Standard"
@@ -10,7 +10,7 @@ lifecycle_status: "Active / Living Standard"
 
 # Deploying DohNut to Vercel
 
-> **Current alignment — 2026-09-10:** `bun run build` is the release verification command. Local preview uses `bun run dev` on port 3000; verify `/` and `/wireframe`. The Home → Slider Framer Motion transition is client-side and needs no additional Vercel environment variable.
+> **Current alignment — 2026-09-16:** `bun run build` is the release verification command (14/14 static & dynamic pages generated OK). Local preview uses `bun run dev` on port 3000; verify `/` and `/wireframe`. The continuous 360° Framer Motion donut rotation (0° Home ➔ 360° 3D Slider ➔ 720° Split Detail at 2.1s `easeInOutCubic`) is purely client-side and requires no extra Vercel environment variables.
 
 DohNut is a Next.js 16 app. It deploys to Vercel out of the box. Two things to know:
 
@@ -187,6 +187,7 @@ With these set, hitting checkout redirects to the Billplz sandbox page. Leave th
 ## 📋 Audit & Revision Ledger (SMS-v1.0)
 | Version | Timestamp (MYT) | Author | Why (Intent / Trigger) | How (Modifications & Touched Areas) | Validation Proof |
 | :--- | :--- | :--- | :--- | :--- | :--- |
+| `1.6.4` | 2026-09-16 04:20:00 | Sovereign Conductor & 8-Agent Squad | Putaran Donat 360° Menyeluruh & Kelajuan 2.1s | Selaras dokumentasi runtime: 14/14 static & dynamic pages OK, 0° ➔ 360° ➔ 720° client motion | `bun test`: 62/62 pass, `bun run build`: 14/14 OK |
 | `1.4.0` | 2026-09-07 19:10:00 | Sovereign Conductor | Selaras laluan DB & audit hardening | Baiki rujukan /tmp/dowgnut.db & catat perlindungan keselamatan | `bun test`: 49/49 tests pass |
 | `1.2.0` | 2026-09-05 09:30:00 | Sovereign Conductor | Alignment semua dokumen projek (.md) | Tambah SMS-v1.0 frontmatter & ledger; selaras 31 SKU katalog, repo URL | `bun run build`: 13/13 pages OK |
 | `1.0.0` | 2026-08-25 12:00:00 | Core Team | Dokumentasi deployment Vercel awal | Prosedur deploy serverless SQLite & Postgres | Vercel production pass |

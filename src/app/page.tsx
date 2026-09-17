@@ -25,18 +25,28 @@ import { classifyPaymentState } from "@/lib/payment-state";
 import type { Order } from "@/lib/types";
 
 const viewVariants: Variants = {
-  initial: { opacity: 0, x: 40 },
-  animate: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.25, ease: "easeOut" },
-  },
-  exit: (nextView: string) =>
-    nextView === "slider"
+  initial: (view: string) =>
+    view === "slider" || view === "shop"
+      ? { opacity: 1, x: 0 }
+      : { opacity: 0, x: 40 },
+  animate: (view: string) =>
+    view === "slider" || view === "shop"
       ? {
           opacity: 1,
           x: 0,
-          transition: { duration: 1.45, ease: [0.22, 1, 0.36, 1] },
+          transition: { duration: 2.1, ease: [0.37, 0, 0.63, 1] },
+        }
+      : {
+          opacity: 1,
+          x: 0,
+          transition: { duration: 0.25, ease: "easeOut" },
+        },
+  exit: (view: string) =>
+    view === "slider" || view === "shop"
+      ? {
+          opacity: 0,
+          x: 0,
+          transition: { duration: 0.65, ease: [0.37, 0, 0.63, 1] },
         }
       : {
           opacity: 0,
@@ -158,7 +168,7 @@ export default function Home() {
             className="absolute inset-0 overflow-y-auto overscroll-contain"
           >
             <LayoutGroup>
-              <AnimatePresence initial={false} mode="sync">
+              <AnimatePresence initial={false} mode="popLayout">
                 <motion.div
                   key={view}
                   custom={view}

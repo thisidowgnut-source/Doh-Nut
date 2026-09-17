@@ -1,8 +1,8 @@
 ---
 title: "DOH-NUT Repository Guidelines"
 document_id: "SMS-DOHNUT-AGENTS-001"
-version: "1.3.0"
-last_updated: "2026-09-10 10:25:00"
+version: "1.7.0"
+last_updated: "2026-09-16 14:15:00"
 maintainer: "Antigravity / Sovereign Architect"
 classification: "Internal / Developer Guidelines"
 lifecycle_status: "Active / Living Standard"
@@ -45,6 +45,15 @@ Copy `.env.example` to `.env.local`; never commit credentials or database files.
 ## 📋 Audit & Revision Ledger (SMS-v1.0)
 | Version | Timestamp (MYT) | Author | Why (Intent / Trigger) | How (Modifications & Touched Areas) | Validation Proof |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `1.2.0` | 2026-09-05 09:30:00 | Sovereign Conductor | Alignment dokumen projek (.md) | Tambah SMS-v1.0 frontmatter, ledger, dan segerakkan 31 perisa katalog | `bun run build`: 13/13 pages OK |
+| `1.7.0` | 2026-09-16 14:15:00 | Sovereign Conductor & 8-Agent Squad | Pemasangan Suite Kemahiran UI/UX FRONTEND S-Rank | Pasang `ui-ux-pro-max` (global + CLI), `frontend-design` (Anthropic), `design-taste-frontend` (Leonxlnx), scaffold `.agents/skills` | `python search.py`: OK, `bun test`: 62/62 pass |
+| `1.6.5` | 2026-09-16 07:20:00 | Sovereign Conductor & 8-Agent Squad | Penalaan Heuristik P1 (CTA Pink, Kontras Rating, Scrollbar-None) | Selaras CTA Favorites ke Frosting Pink, tingkatkan kontras rating ★4.9 (Navy + Amber star), buang palang skrol kelabu pelayar | `bun test`: 62/62 pass, `bun run build`: 14/14 OK |
+| `1.6.4` | 2026-09-16 04:20:00 | Sovereign Conductor & 8-Agent Squad | Penalaan Kelajuan Animasi Donat 20% Lebih Pantas (2.1s) | Durasi putaran dan gelungsuran 2.6s ➔ 2.1s (ShopHome, RingCard, Half-Donut), delay siblings 0.7s, delay kad bawah 0.75s, delay nutrisi 0.4s-0.7s | `bun test`: 62/62 pass, `bun run build`: 14/14 OK |
+| `1.6.3` | 2026-09-16 04:15:00 | Sovereign Conductor & 8-Agent Squad | Putaran Donat 360° Menyeluruh (1 ➔ 2 ➔ 3) | 1(0°) ➔ 2(360°) ➔ 3(720°), siblings ring fade in delay 0.85s, kad bawah delay 0.95s, viewVariants x:0 | `bun test`: 62/62 pass, `bun run build`: 14/14 OK |
+| `1.6.2` | 2026-09-16 04:05:00 | Sovereign Conductor & 8-Agent Squad | Penalaan Donat Berguling 360° (2.6s & easeInOutCubic) | Tambah 30% durasi kepada 2.6s, putaran penuh 360°, easeInOutCubic [0.37, 0, 0.63, 1], Home ➔ Slider 1.6s | `bun test`: 62/62 pass, `bun run build`: 14/14 OK |
+| `1.6.1` | 2026-09-16 03:55:00 | Sovereign Conductor & 8-Agent Squad | Penalaan Transisi Sinematik Donat (2.0s Slow Rolling & Glide) | Donat layout & rotate duration 2.0s (ease [0.16, 1, 0.3, 1]), selaras kad nutrisi & total, Home ➔ Slider 1.2s | `bun test`: 62/62 pass, `bun run build`: 14/14 OK |
+| `1.6.0` | 2026-09-16 03:15:00 | Sovereign Conductor & 8-Agent Squad | Transisi Donat Berterusan (Zero Blink / Zero Disappear) | `popLayout` mode pada `page.tsx`, `slider` initial opacity 1, `RingCard` unmount image bila `detailOpen`, donat glide perlahan ke kanan (0.75s) | `bun test`: 62/62 pass, `bun run build`: 14/14 OK |
+| `1.5.0` | 2026-09-15 22:55:00 | Sovereign Conductor & 8-Agent Squad | Penaiktarafan Wireframe v2.0 (100% Konsep Doh-Nut) | Bina semula wireframe-board.tsx menyamai 100% struktur asal: 3-donat stack, 3D ring, 44%/56% split detail, 4-item bottom-nav | `bun test`: 62/62 pass, `bun run build`: 14/14 OK, HTTP 200 on /wireframe |
+| `1.4.0` | 2026-09-15 22:05:00 | Sovereign Conductor & 8-Agent Squad | Audit UI/UX menyeluruh & delegasi sub-ejen | Brand hygiene (Doh-Nut), Next.js Image style fix, scrollbar-none pills, safe area padding, Sound Effects toggle | `bun test`: 62/62 pass, `bun run build`: 14/14 OK, console: 0 errors / 0 warnings |
 | `1.3.0` | 2026-09-10 10:25:00 | Copilot | Selaraskan dokumentasi dengan transition Home → Slider, wireframe, preview, dan plugin workflow | Dokumentasikan `LayoutGroup`/`AnimatePresence`, `layoutId`, `/wireframe`, build gate, dan Bun tests | `bun run build`: berjaya |
+| `1.2.0` | 2026-09-05 09:30:00 | Sovereign Conductor | Alignment dokumen projek (.md) | Tambah SMS-v1.0 frontmatter, ledger, dan segerakkan 31 perisa katalog | `bun run build`: 13/13 pages OK |
 | `1.0.0` | 2026-08-25 12:00:00 | Core Team | Inisialisasi garis panduan repositori | Asas panduan kod, struktur modul, dan sekuriti | Baseline approval |
