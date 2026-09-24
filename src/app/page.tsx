@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, LayoutGroup, motion, type Variants } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { useShop } from "@/store/use-shop";
 import { useToast } from "@/hooks/use-toast";
 import { SplashScreen } from "@/components/dohnut/splash-screen";
@@ -24,20 +24,22 @@ import { apiFetch } from "@/lib/api";
 import { classifyPaymentState } from "@/lib/payment-state";
 import type { Order } from "@/lib/types";
 
-// Sheet motion language (matches detail-modal 2nd→3rd): every view enters
-// sliding UP from the bottom (300ms) and exits sliding back DOWN (250ms) —
-// identical in BOTH navigation directions, like a sheet stack.
+// Sheet-stack motion language (matches the 2nd→3rd detail sheet exactly):
+// The base shop view is ALWAYS mounted underneath. Every other view is a
+// SHEET that slides UP from the bottom OVER the current screen (300ms) and
+// slides back DOWN (250ms) when dismissed — identical in BOTH navigation
+// directions, exactly like a bottom-sheet stack.
 const viewVariants: Variants = {
-  initial: { opacity: 0, y: "100%" },
+  initial: { opacity: 0.6, y: "100%" },
   animate: {
     opacity: 1,
     y: 0,
     transition: { duration: 0.3, ease: "easeOut" },
   },
   exit: {
-    opacity: 0,
+    opacity: 0.6,
     y: "100%",
-    transition: { duration: 0.25, ease: [0.5, 0, 0.75, 0] },
+    transition: { duration: 0.25, ease: "easeIn" },
   },
 };
 
@@ -146,28 +148,35 @@ export default function Home() {
       <DohnutHeader scrollContainer={scrollContainer} />
       <ErrorBoundary>
         <main className="relative flex flex-1 flex-col overflow-hidden">
-          {/* Keep scrolling on a persistent host so keyed view transitions
-            cannot detach the header's scroll listener. AnimatePresence still
-            owns the keyed motion child directly, preserving exit transitions. */}
+          {/* ── SHEET STACK ───────────────────────────────────────────────
+            The base shop (1st) view is ALWAYS mounted underneath. Every
+            other view is a SHEET that slides up over the current screen
+            (exactly like the 2nd→3rd detail sheet), in both directions.
+            AnimatePresence popLayout keeps outgoing sheets mounted during
+            their exit slide-down; they unmount after completion. ───────── */}
           <div
             ref={attachScrollContainer}
             className="absolute inset-0 overflow-y-auto overscroll-contain"
           >
-            <LayoutGroup>
-              <AnimatePresence initial={false} mode="popLayout">
+            {/* 1st — base shop, always mounted, never unmounts */}
+            <div
+              className={`min-h-full pb-[calc(4rem+env(safe-area-inset-bottom,0px))] flex flex-col ${view !== "shop" ? "pointer-events-none" : ""}`}
+            >
+              <ShopHome />
+            </div>
+          </div>
+          {/* Sheets layer — slides over the base */}
+          <div className="absolute inset-0 z-30">
+            <AnimatePresence initial={false} mode="popLayout">
+              {view !== "shop" && (
                 <motion.div
                   key={view}
-                  custom={view}
                   variants={viewVariants}
                   initial="initial"
                   animate="animate"
                   exit="exit"
-                  // RX-12: pb must account for safe-area-inset-bottom, otherwise
-                  // an iPhone home indicator creates a 34px gap between the last
-                  // row of content and the bottom nav.
-                  className="min-h-full pb-[calc(4rem+env(safe-area-inset-bottom,0px))] flex flex-col"
+                  className="absolute inset-0 pb-[calc(4rem+env(safe-area-inset-bottom,0px))] bg-[var(--background)] overflow-y-auto overscroll-contain flex flex-col"
                 >
-                  {view === "shop" && <ShopHome />}
                   {view === "slider" && <DonutSlider />}
                   {view === "swipe" && <SwipeView />}
                   {view === "favorites" && <FavoritesView />}
@@ -176,8 +185,8 @@ export default function Home() {
                   {view === "tracking" && <OrderTrackingView />}
                   {view === "admin" && <AdminDashboard />}
                 </motion.div>
-              </AnimatePresence>
-            </LayoutGroup>
+              )}
+            </AnimatePresence>
           </div>
         </main>
       </ErrorBoundary>
