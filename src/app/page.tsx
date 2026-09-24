@@ -24,35 +24,21 @@ import { apiFetch } from "@/lib/api";
 import { classifyPaymentState } from "@/lib/payment-state";
 import type { Order } from "@/lib/types";
 
+// Sheet motion language (matches detail-modal 2nd→3rd): every view enters
+// sliding UP from the bottom (300ms) and exits sliding back DOWN (250ms) —
+// identical in BOTH navigation directions, like a sheet stack.
 const viewVariants: Variants = {
-  initial: (view: string) =>
-    view === "slider" || view === "shop"
-      ? { opacity: 1, x: 0 }
-      : { opacity: 0, x: 24 },
-  animate: (view: string) =>
-    view === "slider" || view === "shop"
-      ? {
-          opacity: 1,
-          x: 0,
-          transition: { duration: 2.1, ease: [0.37, 0, 0.63, 1] },
-        }
-      : {
-          opacity: 1,
-          x: 0,
-          transition: { duration: 0.3, ease: "easeOut" },
-        },
-  exit: (view: string) =>
-    view === "slider" || view === "shop"
-      ? {
-          opacity: 0,
-          x: 0,
-          transition: { duration: 0.65, ease: [0.37, 0, 0.63, 1] },
-        }
-      : {
-          opacity: 0,
-          x: -24,
-          transition: { duration: 0.25, ease: "easeOut" },
-        },
+  initial: { opacity: 0, y: "100%" },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.3, ease: "easeOut" },
+  },
+  exit: {
+    opacity: 0,
+    y: "100%",
+    transition: { duration: 0.25, ease: [0.5, 0, 0.75, 0] },
+  },
 };
 
 // NOTE: AdminDashboard (recharts) + OrderTrackingView (socket.io-client) were

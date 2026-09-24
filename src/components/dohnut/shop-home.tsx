@@ -157,14 +157,13 @@ export function ShopHome() {
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{
                 opacity: isSibling ? 0 : 1,
-                scale: isSibling ? 0.82 : selectedType ? 1.15 : 1,
-                rotate: selectedType && !isSibling ? 360 : 0,
-                y: isSibling ? (i < selectedIdx ? -36 : 36) : selectedType ? -40 : 0,
+                scale: isSibling ? 0.82 : 1,
+                y: isSibling ? (i < selectedIdx ? -36 : 36) : 0,
                 filter: isSibling ? "blur(5px)" : "none",
               }}
               transition={{
                 delay: selectedType ? 0 : 0.05 + i * 0.08,
-                duration: selectedType ? 0.55 : undefined,
+                duration: selectedType ? 0.5 : undefined,
                 type: selectedType ? "tween" : "spring",
                 stiffness: 240,
                 damping: 22,
