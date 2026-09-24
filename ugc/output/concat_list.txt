@@ -1,0 +1,4 @@
+file 'C:/Users/User/projects/Doh-Nut/ugc/output/clip_1.mp4'
+file 'C:/Users/User/projects/Doh-Nut/ugc/output/clip_2.mp4'
+file 'C:/Users/User/projects/Doh-Nut/ugc/output/clip_3.mp4'
+file 'C:/Users/User/projects/Doh-Nut/ugc/output/clip_4.mp4'

@@ -30,13 +30,9 @@ export function DohnutHeader({ scrollContainer }: DohnutHeaderProps) {
   const setDesignerOpen = useShop((s) => s.setDesignerOpen);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [soundOn, setSoundOn] = useState(true);
+  const [soundOn, setSoundOn] = useState(isSoundEnabled);
 
   const cartCount = cart.reduce((n, c) => n + c.quantity, 0);
-
-  useEffect(() => {
-    setSoundOn(isSoundEnabled());
-  }, []);
 
   useEffect(() => {
     const target = scrollContainer ?? window;
@@ -77,11 +73,11 @@ export function DohnutHeader({ scrollContainer }: DohnutHeaderProps) {
           {/* Cart with animated badge and fly-to-cart receiver anchor */}
           <motion.button
             id="dohnut-cart-btn"
-            onClick={() => setCartOpen(true)}
+            onClick={() => { setCartOpen(true); setMobileOpen(false); }}
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
             animate={cartCount > 0 ? { scale: [1, 1.18, 1], transition: { duration: 0.35, ease: [0.23, 1, 0.32, 1] } } : {}}
-            className="relative inline-flex size-10 items-center justify-center rounded-full bg-[var(--color-dowgnut-pink)] text-white shadow-sm transition-colors"
+            className="relative inline-flex size-11 items-center justify-center rounded-full bg-[var(--color-dowgnut-pink)] text-white shadow-sm transition-colors"
             aria-label="Open cart"
           >
             <ShoppingCart className="size-4" />
@@ -104,7 +100,7 @@ export function DohnutHeader({ scrollContainer }: DohnutHeaderProps) {
           {/* AI Concierge quick access button */}
           <button
             onClick={() => setConciergeOpen(true)}
-            className={`inline-flex size-10 items-center justify-center rounded-full transition-colors cursor-pointer ${
+            className={`inline-flex size-11 items-center justify-center rounded-full transition-colors cursor-pointer ${
               scrolled
                 ? "bg-white/10 text-white hover:bg-white/20"
                 : "bg-[var(--color-dowgnut-blue-dark)]/15 text-[var(--color-dowgnut-blue-dark)] hover:bg-[var(--color-dowgnut-blue-dark)]/25"
@@ -119,7 +115,7 @@ export function DohnutHeader({ scrollContainer }: DohnutHeaderProps) {
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
               <button
-                className={`inline-flex size-10 items-center justify-center rounded-full transition-colors ${
+                className={`inline-flex size-11 items-center justify-center rounded-full transition-colors ${
                   scrolled
                     ? "bg-white/10 text-white"
                     : "bg-[var(--color-dowgnut-blue-dark)]/15 text-[var(--color-dowgnut-blue-dark)]"

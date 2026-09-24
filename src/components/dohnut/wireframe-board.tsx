@@ -1171,11 +1171,7 @@ export function WireframeBoard() {
   const [active, setActive] = useState<ScreenId>("home");
   const [viewMode, setViewMode] = useState<ViewMode>("device");
   const [showSpecs, setShowSpecs] = useState(true);
-  const [soundOn, setSoundOn] = useState(true);
-
-  useEffect(() => {
-    setSoundOn(isSoundEnabled());
-  }, []);
+  const [soundOn, setSoundOn] = useState(isSoundEnabled);
 
   const toggleSound = () => {
     const next = !soundOn;

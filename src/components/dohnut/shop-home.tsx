@@ -2,10 +2,13 @@
 
 import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useShop } from "@/store/use-shop";
 import { useGamification } from "@/store/use-gamification";
 import { playTap } from "@/lib/sounds";
 import { ParticleBackground } from "./particle-background";
+import { FilterBar } from "./filter-bar";
+import { DonutGrid } from "./donut-grid";
 import { cn } from "@/lib/utils";
 import type { Donut } from "@/lib/types";
 
@@ -44,6 +47,18 @@ export function ShopHome() {
   const orderedTypes = useGamification((s) => s.orderedTypes);
   const orderedDonutNames = useGamification((s) => s.orderedDonutNames);
   const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [browseAll, setBrowseAll] = useState(false);
+
+  const openBrowse = () => {
+    playTap(700);
+    setFilterType("all");
+    setBrowseAll(true);
+  };
+
+  const closeBrowse = () => {
+    playTap(420);
+    setBrowseAll(false);
+  };
 
   const earnedBadges = [
     { id: "first-order", label: "First Bite", emoji: "🍩", earned: orderedDonutNames.length > 0 },
@@ -66,6 +81,31 @@ export function ShopHome() {
       {/* Floating sprinkle particles */}
       <ParticleBackground count={32} />
 
+      {browseAll ? (
+        /* ── ALL FLAVORS browse mode: FilterBar + DonutGrid (31 perisa) ── */
+        <div className="relative z-10 flex w-full flex-1 flex-col items-center gap-4 pt-2">
+          <div className="flex w-full max-w-7xl items-center justify-between">
+            <button
+              onClick={closeBrowse}
+              aria-label="Back to featured"
+              className="inline-flex h-11 items-center gap-1 rounded-full bg-white/80 px-4 text-xs font-bold uppercase tracking-wide text-[var(--color-dowgnut-blue-dark)] shadow-sm transition-colors hover:bg-white"
+            >
+              <ArrowLeft className="size-4" /> Back
+            </button>
+            <h2 className="graffiti-text text-xl text-[var(--color-dowgnut-blue-dark)] sm:text-2xl">
+              ALL FLAVORS
+            </h2>
+            <span className="text-xs font-bold text-[var(--color-dowgnut-blue-dark)]/50">
+              {donuts.length} {donuts.length === 1 ? "flavor" : "flavors"}
+            </span>
+          </div>
+          <FilterBar />
+          <div className="w-full max-w-7xl flex-1 overflow-y-auto pb-8">
+            <DonutGrid />
+          </div>
+        </div>
+      ) : (
+        <>
       {/* Iconic Heading */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
@@ -181,6 +221,20 @@ export function ShopHome() {
             </span>
           ))}
         </motion.div>
+      )}
+
+      {/* ALL FLAVORS entry — unlock full 31-flavor catalog */}
+      <motion.button
+        onClick={openBrowse}
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.96 }}
+        className="relative z-10 inline-flex h-11 items-center gap-2 rounded-full bg-[var(--color-dowgnut-blue-dark)] px-5 text-xs font-bold uppercase tracking-widest text-white shadow-md transition-colors hover:bg-[var(--color-dowgnut-blue)]"
+        aria-label="Browse all 31 flavors"
+      >
+        All Flavors
+        <ArrowRight className="size-4" />
+      </motion.button>
+        </>
       )}
     </div>
   );

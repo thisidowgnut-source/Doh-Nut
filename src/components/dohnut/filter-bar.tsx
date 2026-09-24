@@ -18,6 +18,7 @@ const PILLS = [
   { key: "sprinkled", label: "Sprinkled" },
   { key: "stuffed", label: "Stuffed" },
   { key: "specialty", label: "Specialty" },
+  { key: "savory", label: "Savory" },
 ];
 
 export function FilterBar() {

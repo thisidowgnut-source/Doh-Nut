@@ -69,6 +69,11 @@ lint-output.txt
 tsc-out.txt
 # Tool results (verification artifacts)
 /tool-results/
+# Stray uploads, backups, pid files
+/upload/
+*.zbak
+*.BAK
+*.pid
 
 
 # Agent local cache & tooling

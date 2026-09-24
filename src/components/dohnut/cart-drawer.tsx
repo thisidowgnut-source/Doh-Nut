@@ -28,6 +28,8 @@ export function CartDrawer() {
   const updateCartQty = useShop((s) => s.updateCartQty);
   const removeFromCart = useShop((s) => s.removeFromCart);
   const clearCart = useShop((s) => s.clearCart);
+  const addToCart = useShop((s) => s.addToCart);
+  const donuts = useShop((s) => s.donuts);
   const setView = useShop((s) => s.setView);
   const { toast } = useToast();
 
@@ -36,6 +38,36 @@ export function CartDrawer() {
   const remaining = Math.max(0, FREE_DELIVERY_THRESHOLD - subtotal);
   const progressPct = Math.min(100, (subtotal / FREE_DELIVERY_THRESHOLD) * 100);
   const itemCount = cart.reduce((n, c) => n + c.quantity, 0);
+
+  // Upsell nudge: when the cart is close to the free-delivery threshold
+  // (remaining ≤ RM10), suggest the cheapest donut that still closes the
+  // gap on its own. Falls back to the cheapest donut overall when nothing
+  // fits under the remaining amount.
+  const showUpsellChip = cart.length > 0 && remaining > 0 && remaining <= 10;
+  const upsellSuggestion = showUpsellChip
+    ? [...donuts]
+        .filter((d) => d.stock > 0)
+        .sort((a, b) => a.price - b.price)
+        .find((d) => d.price <= remaining) ??
+      [...donuts].filter((d) => d.stock > 0).sort((a, b) => a.price - b.price)[0]
+    : undefined;
+
+  const onUpsellAdd = async () => {
+    if (!upsellSuggestion) return;
+    try {
+      await addToCart(upsellSuggestion.id, 1);
+      toast({
+        title: "Added to your box!",
+        description: `${upsellSuggestion.name} · RM${upsellSuggestion.price.toFixed(2)}`,
+      });
+    } catch {
+      toast({
+        title: "Couldn't add that donut",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   const onCheckout = () => {
     if (cart.length === 0) return;
@@ -129,6 +161,25 @@ export function CartDrawer() {
                 value={progressPct}
                 className="mt-1.5 h-1.5 bg-black/5"
               />
+              {showUpsellChip && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  onClick={() => void onUpsellAdd()}
+                  disabled={!upsellSuggestion}
+                  aria-live="polite"
+                  className="mt-2 flex h-11 w-full items-center justify-center gap-1.5 truncate rounded-full bg-[var(--color-dowgnut-pink)] px-4 text-xs font-extrabold text-[var(--color-dowgnut-blue-dark)] shadow-sm transition-colors hover:bg-[var(--color-dowgnut-pink-dark)] hover:text-white active:scale-[0.98] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <Sparkles className="size-3.5 shrink-0" />
+                  {upsellSuggestion ? (
+                    <span className="truncate">
+                      + Add {upsellSuggestion.name} · RM{upsellSuggestion.price.toFixed(2)}
+                    </span>
+                  ) : (
+                    <span>No quick add available</span>
+                  )}
+                </motion.button>
+              )}
             </motion.div>
           )}
         </SheetHeader>

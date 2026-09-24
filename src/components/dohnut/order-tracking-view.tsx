@@ -89,6 +89,31 @@ export function OrderTrackingView() {
   const socketRef = useRef<Socket | null>(null);
   const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Live ETA countdown — a 60s "clock" state drives re-renders while the
+  // remaining minutes are derived (createdAt + etaMinutes − now). The
+  // interval is the only side effect, so nothing leaks between view
+  // switches, and the clock stops once the order is delivered.
+  const isTerminal = payload?.status === "delivered";
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    if (isTerminal) return;
+    const interval = setInterval(() => setNow(Date.now()), 60_000);
+    return () => clearInterval(interval);
+  }, [isTerminal]);
+
+  const etaBaseMinutes = payload?.etaMinutes ?? order?.etaMinutes ?? 0;
+  const etaMsLeft =
+    order && etaBaseMinutes
+      ? new Date(order.createdAt).getTime() + etaBaseMinutes * 60_000 - now
+      : null;
+  const etaLabel =
+    order && etaBaseMinutes && !isTerminal
+      ? etaMsLeft !== null && etaMsLeft <= 0
+        ? "Arriving any moment now 🔥"
+        : `Arriving in ~${etaMsLeft !== null ? Math.ceil(etaMsLeft / 60_000) : etaBaseMinutes} min`
+      : null;
+
   // Fetch order details once we have an id
   useEffect(() => {
     if (!trackingOrderId) return;
@@ -309,10 +334,10 @@ export function OrderTrackingView() {
             {payload?.message ?? "Tracking your order…"}
           </motion.p>
         </AnimatePresence>
-        {!isDelivered && payload && (
+        {!isDelivered && etaLabel && (
           <p className="mt-3 inline-flex items-center gap-2 text-sm text-white/80">
             <Timer className="size-4" />
-            ETA ~{payload.etaMinutes} min
+            {etaLabel}
           </p>
         )}
       </Card>

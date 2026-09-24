@@ -53,7 +53,7 @@ const PRESET_ADDRESSES = [
   { label: "KLCC, Kuala Lumpur", city: "Kuala Lumpur", state: "WP Kuala Lumpur", zip: "50450", address: "Suria KLCC, Jalan Ampang" },
   { label: "Petaling Jaya, Selangor", city: "Petaling Jaya", state: "Selangor", zip: "47301", address: "Jalan SS 21/37, Damansara Utama" },
   { label: "Shah Alam, Selangor", city: "Shah Alam", state: "Selangor", zip: "40000", address: "Seksyen 7, Persiaran Masjid" },
-  { label: "Georgetown, Penang", city: "Georgetown", state: "Pulau Pinang", zip: "10200", address: "Gurney Drive" },
+  { label: "Bangsar, Kuala Lumpur", city: "Kuala Lumpur", state: "WP Kuala Lumpur", zip: "59100", address: "Jalan Telawi, Bangsar" },
 ];
 
 const PAYMENTS: {
@@ -374,7 +374,7 @@ export function CheckoutView() {
           <button
             onClick={() => setView("shop")}
             aria-label="Back to shop"
-            className="inline-flex size-10 items-center justify-center rounded-full bg-white text-[var(--color-dowgnut-blue)] shadow-xs hover:bg-[var(--color-dowgnut-blue)] hover:text-white transition-colors"
+            className="inline-flex size-11 items-center justify-center rounded-full bg-white text-[var(--color-dowgnut-blue)] shadow-xs hover:bg-[var(--color-dowgnut-blue)] hover:text-white transition-colors"
           >
             <ArrowLeft className="size-5" />
           </button>

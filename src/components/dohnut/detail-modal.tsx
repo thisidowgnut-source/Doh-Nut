@@ -57,7 +57,7 @@ export function DetailModal() {
     return (
       <Dialog open={open} onOpenChange={(o) => !o && closeDetail()}>
         <DialogContent className="bg-transparent p-0">
-          <DialogTitle className="sr-only">Loading</DialogTitle>
+          <DialogTitle className="sr-only">Loading donut details</DialogTitle>
           <div className="flex items-center justify-center py-8 text-[var(--color-dowgnut-blue)]">
             <Loader2 className="size-6 animate-spin" />
           </div>

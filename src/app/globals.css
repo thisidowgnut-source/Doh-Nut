@@ -43,89 +43,89 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* Doh-Nut official brand tokens — from the logo: yellow #FDE047, red #EF233C, navy #1D3557 */
-  --color-dowgnut-blue: #3d5a80;
-  --color-dowgnut-blue-light: #98c1d9;
-  --color-dowgnut-blue-dark: #1d3557;
-  --color-dowgnut-pink: #ef233c;
-  --color-dowgnut-pink-soft: #fde0e3;
-  --color-dowgnut-pink-dark: #c1121f;
-  --color-dowgnut-lime: #fde047;
-  --color-dowgnut-lime-bright: #fef9d8;
+  /* Doh-Nut official brand tokens v2.0.0 — Frosting Pink, Navy, Butter (01-brand-truth.md) */
+  --color-dowgnut-blue: #297abe;
+  --color-dowgnut-blue-light: #a8cbe8;
+  --color-dowgnut-blue-dark: #07334f;
+  --color-dowgnut-pink: #ef9fbd;
+  --color-dowgnut-pink-soft: #fdefeb;
+  --color-dowgnut-pink-dark: #d97ba2;
+  --color-dowgnut-lime: #fede33;
+  --color-dowgnut-lime-bright: #fff6c9;
   --color-dowgnut-lime-dark: #d4b106;
-  --color-dowgnut-cream: #fff9db;
+  --color-dowgnut-cream: #fdefeb;
   --color-dowgnut-dough: #e8c468;
   --color-dowgnut-grey: #aea294;
 }
 
 :root {
   --radius: 0.75rem;
-  /* Doh-Nut theme: logo yellow bg + red actions + navy ink */
-  --background: #fde047;          /* signature logo yellow app bg */
-  --foreground: #1d3557;          /* logo navy text */
-  --card: #fff9db;                /* butter cream surface */
-  --card-foreground: #1d3557;
-  --popover: #fff9db;
-  --popover-foreground: #1d3557;
-  --primary: #ef233c;             /* logo red — hero actions */
-  --primary-foreground: #ffffff;
-  --secondary: #1d3557;           /* logo navy accent */
+  /* Doh-Nut theme v2: butter yellow bg + frosting pink actions + navy ink */
+  --background: #fede33;          /* butter cream yellow app bg */
+  --foreground: #07334f;          /* high-contrast navy text */
+  --card: #fdefeb;                /* cream dough surface */
+  --card-foreground: #07334f;
+  --popover: #fdefeb;
+  --popover-foreground: #07334f;
+  --primary: #ef9fbd;             /* frosting pink — hero actions */
+  --primary-foreground: #07334f;  /* navy on pink (high contrast) */
+  --secondary: #297abe;           /* classic blue accent */
   --secondary-foreground: #ffffff;
-  --muted: #fff9db;
-  --muted-foreground: #3a4f63;    /* AA on yellow bg (~5.5:1) */
-  --accent: #ef233c;              /* logo red accent */
-  --accent-foreground: #ffffff;
+  --muted: #fdefeb;
+  --muted-foreground: #3a5a73;    /* AA on yellow bg */
+  --accent: #ef9fbd;              /* frosting pink accent */
+  --accent-foreground: #07334f;
   --destructive: #c1121f;
-  --border: #1d35571f;
-  --input: #fff9db;
-  --ring: #ef233c;
-  --chart-1: #ef233c;
-  --chart-2: #1d3557;
+  --border: #07334f1f;
+  --input: #fdefeb;
+  --ring: #ef9fbd;
+  --chart-1: #ef9fbd;
+  --chart-2: #07334f;
   --chart-3: #d4b106;
   --chart-4: #e8c468;
-  --chart-5: #98c1d9;
-  --sidebar: #fff9db;
-  --sidebar-foreground: #1d3557;
-  --sidebar-primary: #ef233c;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #fde047;
-  --sidebar-accent-foreground: #1d3557;
-  --sidebar-border: #1d35571a;
-  --sidebar-ring: #ef233c;
+  --chart-5: #297abe;
+  --sidebar: #fdefeb;
+  --sidebar-foreground: #07334f;
+  --sidebar-primary: #ef9fbd;
+  --sidebar-primary-foreground: #07334f;
+  --sidebar-accent: #fede33;
+  --sidebar-accent-foreground: #07334f;
+  --sidebar-border: #07334f1a;
+  --sidebar-ring: #ef9fbd;
 }
 
 .dark {
-  --background: #1d3557;
-  --foreground: #fff9db;
-  --card: #26436b;
-  --card-foreground: #fff9db;
-  --popover: #26436b;
-  --popover-foreground: #fff9db;
-  --primary: #ef233c;
-  --primary-foreground: #ffffff;
-  --secondary: #fde047;
-  --secondary-foreground: #1d3557;
-  --muted: #26436b;
-  --muted-foreground: #d6e2ec;    /* slightly lighter for AA on #26436b */
-  --accent: #98c1d9;
-  --accent-foreground: #1d3557;
+  --background: #07334f;
+  --foreground: #fdefeb;
+  --card: #0d4568;
+  --card-foreground: #fdefeb;
+  --popover: #0d4568;
+  --popover-foreground: #fdefeb;
+  --primary: #ef9fbd;
+  --primary-foreground: #07334f;
+  --secondary: #fede33;
+  --secondary-foreground: #07334f;
+  --muted: #0d4568;
+  --muted-foreground: #d6e6f2;    /* AA on #0d4568 */
+  --accent: #a8cbe8;
+  --accent-foreground: #07334f;
   --destructive: #c1121f;
-  --border: #fff9db1a;
-  --input: #26436b;
-  --ring: #ef233c;
-  --chart-1: #ef233c;
-  --chart-2: #fde047;
-  --chart-3: #98c1d9;
+  --border: #fdefeb1a;
+  --input: #0d4568;
+  --ring: #ef9fbd;
+  --chart-1: #ef9fbd;
+  --chart-2: #fede33;
+  --chart-3: #a8cbe8;
   --chart-4: #e8c468;
-  --chart-5: #fff9db;
-  --sidebar: #26436b;
-  --sidebar-foreground: #fff9db;
-  --sidebar-primary: #ef233c;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #98c1d9;
-  --sidebar-accent-foreground: #1d3557;
-  --sidebar-border: #fff9db1a;
-  --sidebar-ring: #ef233c;
+  --chart-5: #fdefeb;
+  --sidebar: #0d4568;
+  --sidebar-foreground: #fdefeb;
+  --sidebar-primary: #ef9fbd;
+  --sidebar-primary-foreground: #07334f;
+  --sidebar-accent: #a8cbe8;
+  --sidebar-accent-foreground: #07334f;
+  --sidebar-border: #fdefeb1a;
+  --sidebar-ring: #ef9fbd;
 }
 
 @layer base {
@@ -167,7 +167,7 @@
     line-height: 1;
   }
   .brand-stroke {
-    -webkit-text-stroke: 2px #1d3557;
+    -webkit-text-stroke: 2px #07334f;
     paint-order: stroke fill;
   }
   .drip-shadow {
@@ -283,13 +283,13 @@
     background: transparent;
   }
   .scrollbar-dowgnut::-webkit-scrollbar-thumb {
-    background: #1d355755;
+    background: #07334f55;
     border-radius: 999px;
     border: 2px solid transparent;
     background-clip: content-box;
   }
   .scrollbar-dowgnut::-webkit-scrollbar-thumb:hover {
-    background: #1d355799;
+    background: #07334f99;
     background-clip: content-box;
   }
   /* Sleek native mobile app scrolling: hides raw desktop scrollbars while preserving full scrollability */

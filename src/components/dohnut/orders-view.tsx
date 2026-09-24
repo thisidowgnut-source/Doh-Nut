@@ -6,6 +6,7 @@ import { useShop } from "@/store/use-shop";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SocialProofStrip } from "@/components/dohnut/social-proof-strip";
 
 const STATUS_LABEL: Record<string, string> = {
   pending_payment: "Awaiting payment",
@@ -92,6 +93,8 @@ export function OrdersView() {
           </h1>
         </div>
       </header>
+
+      <SocialProofStrip />
 
       {orders.length === 0 ? (
         <div className="flex flex-col items-center gap-4 rounded-3xl border-2 border-dashed border-[var(--color-dowgnut-blue-dark)]/15 bg-[var(--color-dowgnut-cream)] p-10 text-center">

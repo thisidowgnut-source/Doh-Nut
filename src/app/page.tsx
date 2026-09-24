@@ -28,7 +28,7 @@ const viewVariants: Variants = {
   initial: (view: string) =>
     view === "slider" || view === "shop"
       ? { opacity: 1, x: 0 }
-      : { opacity: 0, x: 40 },
+      : { opacity: 0, x: 24 },
   animate: (view: string) =>
     view === "slider" || view === "shop"
       ? {
@@ -39,7 +39,7 @@ const viewVariants: Variants = {
       : {
           opacity: 1,
           x: 0,
-          transition: { duration: 0.25, ease: "easeOut" },
+          transition: { duration: 0.3, ease: "easeOut" },
         },
   exit: (view: string) =>
     view === "slider" || view === "shop"
@@ -168,7 +168,7 @@ export default function Home() {
             className="absolute inset-0 overflow-y-auto overscroll-contain"
           >
             <LayoutGroup>
-              <AnimatePresence initial={false} mode="popLayout">
+              <AnimatePresence initial={false} mode="wait">
                 <motion.div
                   key={view}
                   custom={view}
