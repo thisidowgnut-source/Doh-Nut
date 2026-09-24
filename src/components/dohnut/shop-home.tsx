@@ -148,18 +148,23 @@ export function ShopHome() {
                 playTap(520 + i * 80);
                 setSelectedType(t.key);
                 setFilterType(t.key);
+                // Half-donut cinematic: the home stack spins the chosen
+                // donut up (rotate+y below) while the view cross-fades;
+                // the slider's center donut then spins up from below on
+                // mount — no timer choreography, deterministic.
                 setView("slider");
               }}
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{
                 opacity: isSibling ? 0 : 1,
-                scale: isSibling ? 0.82 : 1,
-                y: isSibling ? (i < selectedIdx ? -36 : 36) : 0,
+                scale: isSibling ? 0.82 : selectedType ? 1.15 : 1,
+                rotate: selectedType && !isSibling ? 360 : 0,
+                y: isSibling ? (i < selectedIdx ? -36 : 36) : selectedType ? -40 : 0,
                 filter: isSibling ? "blur(5px)" : "none",
               }}
               transition={{
                 delay: selectedType ? 0 : 0.05 + i * 0.08,
-                duration: selectedType ? 0.5 : undefined,
+                duration: selectedType ? 0.55 : undefined,
                 type: selectedType ? "tween" : "spring",
                 stiffness: 240,
                 damping: 22,
@@ -187,8 +192,11 @@ export function ShopHome() {
                 )}
               />
 
+              {/* No layoutId here: a shared layoutId with the slider's center
+                  donut deadlocks AnimatePresence mode="wait" (exit never
+                  completes, next view never mounts). The half-donut spin
+                  continuity is carried by the timed spin-out/spin-in pair. */}
               <motion.img
-                layoutId={`category-donut-${t.key}`}
                 src={imgSrc}
                 alt={t.label}
                 className="size-48 sm:size-56 md:size-64 object-contain drop-shadow-2xl filter transition-transform duration-200"

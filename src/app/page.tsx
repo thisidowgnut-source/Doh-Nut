@@ -168,7 +168,7 @@ export default function Home() {
             className="absolute inset-0 overflow-y-auto overscroll-contain"
           >
             <LayoutGroup>
-              <AnimatePresence initial={false} mode="wait">
+              <AnimatePresence initial={false} mode="popLayout">
                 <motion.div
                   key={view}
                   custom={view}

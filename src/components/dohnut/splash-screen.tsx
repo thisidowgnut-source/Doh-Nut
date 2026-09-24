@@ -27,6 +27,18 @@ export function SplashScreen() {
   // (AnimatePresence handles the unmount, but this is a belt-and-braces
   // safety net for slow-render edge cases.)
   const [dismissed, setDismissed] = useState(false);
+  // Hydration gate: zustand persist rehydrates from localStorage in a
+  // microtask AFTER the first render. Rendering the splash before hydration
+  // settles makes it replay (and stick at opacity 1) for return visitors
+  // whose persisted splashDone=true. Never paint the splash until the
+  // store has settled — a requestAnimationFrame callback always runs
+  // after pending microtasks, so by then hydration is complete.
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setReady(true));
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   const dismiss = () => {
     setVisible(false);
@@ -55,7 +67,7 @@ export function SplashScreen() {
 
   return (
     <AnimatePresence>
-      {!splashDone && (
+      {!splashDone && ready && (
         <motion.div
           key="splash"
           initial={{ opacity: 1 }}
@@ -70,20 +82,6 @@ export function SplashScreen() {
           role="dialog"
           aria-label="DowgNut splash screen"
         >
-          <video
-            className="pointer-events-none absolute inset-0 size-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-          >
-            <source src="/videos/dohnut-splash.mp4" type="video/mp4" />
-          </video>
-
-          <div className="pointer-events-none absolute inset-0 bg-[var(--color-dowgnut-blue-dark)]/25" />
-
           {/* Sprinkle particles */}
           {SPRINKLES.map((s, i) => (
             <motion.div

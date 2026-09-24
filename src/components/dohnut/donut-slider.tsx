@@ -146,17 +146,25 @@ function RingCard({
               : "drop-shadow-lg scale-95 opacity-80"
           )}
           draggable={false}
-          initial={isCenter ? false : { opacity: 0, scale: 0.6 }}
+          initial={
+            isCenter
+              ? // Half-donut cinematic spin-in: the clicked donut continues its
+                // journey — spins up from below the ring into center stage.
+                { opacity: 0, scale: 0.4, rotate: -160, y: 140 }
+              : { opacity: 0, scale: 0.6 }
+          }
           animate={{
             rotate: 360,
             opacity: 1,
             scale: 1,
+            y: 0,
           }}
           transition={{
             layout: { duration: 2.2, ease: [0.16, 1, 0.3, 1] },
             rotate: { duration: 2.2, ease: [0.16, 1, 0.3, 1] },
             opacity: { duration: 0.8, delay: isCenter ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] },
             scale: { duration: 0.8, delay: isCenter ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] },
+            y: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
           }}
         />
       )}
